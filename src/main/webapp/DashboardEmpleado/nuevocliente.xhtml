@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/empleadoT.xhtml">
+	<ui:define name="Angel">
+
+		<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table me-1"></i> Agregar Cliente
+			</div>
+			<div class="card-body">
+				<H2 class="text-warning"
+					style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">Nuevo
+					Cliente</H2>
+				<HR />
+				<h:form style="display: flex;justify-content: center; ">
+					<h:panelGrid>
+
+						<h:outputText value="Numero documento"></h:outputText>
+						<h:inputText
+							style="padding:7px 100px; border-left:6px solid black;"
+							class="form-control" value="#{clienteBean.cliente.numDoc}"></h:inputText>
+
+						<h:outputText value="Nombres"></h:outputText>
+						<h:inputText
+							style="padding:7px 100px; border-left:6px solid black;"
+							class="form-control" value="#{clienteBean.cliente.nombreCliente}"></h:inputText>
+
+						<h:outputText value="Apellidos"></h:outputText>
+						<h:inputText
+							style="padding:7px 100px; border-left:6px solid black;"
+							class="form-control"
+							value="#{clienteBean.cliente.apellidoCliente}"></h:inputText>
+
+						<h:outputText value="Telefono"></h:outputText>
+						<h:inputText
+							style="padding:7px 100px; border-left:6px solid black;"
+							class="form-control" value="#{clienteBean.cliente.teleCliente}"></h:inputText>
+
+						<h:outputText value="Email"></h:outputText>
+						<h:inputText
+							style="padding:7px 100px; border-left:6px solid black;"
+							class="form-control" value="#{clienteBean.cliente.emailCliente}"></h:inputText>
+
+						<label for="tipo_Documento">Tipo de documento</label>
+						<h:selectOneMenu
+							style="padding:7px 100px; border-left:6px solid black;"
+							value="#{clienteBean.tipo_Documento.id_Tipo_Documento}"
+							class="form-control">
+							<f:selectItems value="#{clienteBean.obtenerDocumentos}"
+								var="documentos" itemValue="#{documentos.id_Tipo_Documento}" />
+						</h:selectOneMenu>
+
+						<hr />
+
+						<f:facet name="footer">
+							<h:commandButton class="btn btn-outline-warning"
+								action="#{clienteBean.guardard()}" value="Guardar"></h:commandButton>
+						</f:facet>
+
+					</h:panelGrid>
+				</h:form>
+			</div>
+		</div>
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

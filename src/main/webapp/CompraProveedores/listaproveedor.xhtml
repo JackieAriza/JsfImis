@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+
+		<h:form>
+			<div class="card mb-4">
+				<div class="card-header">
+					<i class="fas fa-table me-1"></i> Proveedor
+				</div>
+				<div class="card-body">
+
+					<div class="card">
+						<h:form id="form">
+							<div class="card crud-demo">
+
+
+
+								<p:toolbar>
+									<p:toolbarGroup>
+										<h:commandButton class="btn btn-outline-success"
+											action="#{proveedorBean.listar()}" value="Nuevo Proveedor"></h:commandButton>
+									<h:commandButton class="btn btn-outline-success"
+											action="#{proveedorBean.prueba()}" value="Reporte Proveedor"></h:commandButton>
+									
+									</p:toolbarGroup>
+									
+									<p:toolbarGroup>
+										
+									</p:toolbarGroup>
+									
+									<p:toolbarGroup align="right">
+
+										<p:commandButton value="Excel" icon="pi pi-upload"
+											styleClass="ui-button-help" ajax="false" >
+											<p:dataExporter type="xls" target="dt-products"
+												fileName="Proveedor" visibleOnly="true" />
+										</p:commandButton>
+									</p:toolbarGroup>
+								</p:toolbar>
+								<p:dataTable id="dt-products" widgetVar="dtProducts"
+									var="proveedor" value="#{proveedorBean.obtenerProveedores()}"
+									reflow="true" styleClass="products-table"
+									selection="#{proveedorBean.obtenerProveedores()}"
+									rowKey="#{proveedor.id_proveedor}" paginator="true" rows="10"
+									rowSelectMode="add" paginatorPosition="bottom">
+									<p:column filterBy="#{proveedor.id_proveedor}"
+										visible="#{proveedorBean.list[0]}"
+										exportable="#{proveedorBean.list[0]}">
+										<f:facet name="header">Id</f:facet>
+										<h:outputText value="#{proveedor.id_proveedor}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{proveedor.tipo_documento}"
+										visible="#{proveedorBean.list[1]}"
+										exportable="#{proveedorBean.list[1]}">
+										<f:facet name="header">TP documento</f:facet>
+										<h:outputText value="#{proveedor.tipo_documento}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{proveedor.numero_documento}"
+										visible="#{proveedorBean.list[2]}"
+										exportable="#{proveedorBean.list[2]}">
+										<f:facet name="header">Nº Documento</f:facet>
+										<h:outputText value="#{proveedor.numero_documento}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{proveedor.nombre_proveedor}"
+										visible="#{proveedorBean.list[3]}"
+										exportable="#{proveedorBean.list[3]}">
+										<f:facet name="header">Nombres</f:facet>
+										<h:outputText value="#{proveedor.nombre_proveedor}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{proveedor.apellido_proveedor}"
+										visible="#{proveedorBean.list[4]}"
+										exportable="#{proveedorBean.list[4]}">
+										<f:facet name="header">Apellidos</f:facet>
+										<h:outputText value="#{proveedor.apellido_proveedor}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{proveedor.email_proveedor}"
+										visible="#{proveedorBean.list[5]}"
+										exportable="#{proveedorBean.list[5]}">
+										<f:facet name="header">Email</f:facet>
+										<h:outputText value="#{proveedor.email_proveedor}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{proveedor.fecha_creado_proveedor}"
+										visible="#{proveedorBean.list[6]}"
+										exportable="#{proveedorBean.list[6]}">
+										<f:facet name="header">Fecha creado</f:facet>
+										<h:outputText value="#{proveedor.fecha_creado_proveedor}"></h:outputText>
+									</p:column>
+
+
+									<p:column exportable="false">
+										<f:facet name="header">Acciones</f:facet>
+										<h:commandButton class="btn btn-outline-info"
+											action="#{proveedorBean.editar(proveedor.id_proveedor)}"
+											value="Editar"></h:commandButton>
+
+										<h:commandButton class="btn btn-outline-danger"
+											action="#{proveedorBean.eliminar(proveedor.id_proveedor)}"
+											value="Eliminar"></h:commandButton>
+									</p:column>
+
+
+
+								</p:dataTable>
+
+							</div>
+						</h:form>
+					</div>
+
+				</div>
+			</div>
+		</h:form>
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+
+		<h:form>
+			<div class="card mb-4">
+				<div class="card-header">
+					<i class="fas fa-table me-1"></i> Usuarios
+				</div>
+				<div class="card-body">
+
+					<div class="card">
+						<h:form id="form">
+							<div class="card crud-demo">
+
+
+
+								<p:toolbar>
+									<p:toolbarGroup>
+										<h:commandButton class="btn btn-outline-success"
+											action="#{usuarioBean.nuevo()}" value="Nuevo Usuario"></h:commandButton>
+									</p:toolbarGroup>
+									<p:toolbarGroup align="right">
+
+										<p:commandButton value="Excel" icon="pi pi-upload"
+											styleClass="ui-button-help" ajax="false" >
+											<p:dataExporter type="xls" target="dt-products"
+												fileName="Usuarios" visibleOnly="true" />
+										</p:commandButton>
+									</p:toolbarGroup>
+								</p:toolbar>
+
+
+
+
+								<p:dataTable id="dt-products" widgetVar="dtProducts"
+									var="usuario" value="#{usuarioBean.obtenerUsuarios()}"
+									reflow="true" styleClass="products-table"
+									selection="#{usuarioBean.obtenerUsuarios()}"
+									rowKey="#{usuario.id_usuario}" paginator="true" rows="10"
+									rowSelectMode="add" paginatorPosition="bottom">
+
+
+
+
+									<p:column filterBy="#{usuario.id_usuario}"
+										>
+										<f:facet name="header">Id</f:facet>
+										<h:outputText value="#{usuario.id_usuario}"></h:outputText>
+									</p:column>
+
+									<p:column filterBy="#{usuario.numDocumento}"
+										>
+										<f:facet name="header">Numero Documento</f:facet>
+										<h:outputText value="#{usuario.numDocumento}"></h:outputText>
+									</p:column>
+
+									<p:column filterBy="#{usuario.nomUsuario}"
+									>
+										<f:facet name="header">Nombre</f:facet>
+										<h:outputText value="#{usuario.nomUsuario}"></h:outputText>
+									</p:column>
+
+									<p:column filterBy="#{usuario.apeUsuario}"
+										>
+										<f:facet name="header">Apellido</f:facet>
+										<h:outputText value="#{usuario.apeUsuario}"></h:outputText>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Telefono</f:facet>
+										<h:outputText value="#{usuario.telUsuario}"></h:outputText>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Email</f:facet>
+										<h:outputText value="#{usuario.emailUsuario}"></h:outputText>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Contraseña</f:facet>
+										<h:outputText value="#{usuario.passUsuario}"></h:outputText>
+									</p:column>
+
+									<p:column filterBy="#{usuario.estadoUsuario}"
+									>
+										<f:facet name="header">Estado</f:facet>
+										<h:outputText value="#{usuario.estadoUsuario}"></h:outputText>
+									</p:column>
+
+									<p:column filterBy="#{usuario.rol}"
+										>
+										<f:facet name="header">Id rol</f:facet>
+										<h:outputText value="#{usuario.rol}"></h:outputText>
+									</p:column>
+
+									<p:column filterBy="#{usuario.tipo_documento}"
+									>
+										<f:facet name="header">Tipo Documento</f:facet>
+										<h:outputText value="#{usuario.tipo_documento}"></h:outputText>
+									</p:column>
+									
+
+
+									<p:column exportable="false">
+										<f:facet name="header">Acciones</f:facet>
+										<h:commandButton class="btn btn-outline-info"
+											action="#{usuarioBean.editar(usuario.id_usuario)}"
+											value="Editar"></h:commandButton>
+
+										<h:commandButton class="btn btn-outline-danger"
+											action="#{usuarioBean.eliminar(usuario.id_usuario)}"
+											value="Eliminar"></h:commandButton>
+									</p:column>
+
+
+
+								</p:dataTable>
+
+							</div>
+						</h:form>
+					</div>
+
+				</div>
+			</div>
+		</h:form>
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

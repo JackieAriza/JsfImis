@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Iniciar Sesion</title>
+	<h:outputStylesheet library="css" name="stylessLogin.css"></h:outputStylesheet>
+	<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
+		crossorigin="anonymous"></script>
+</h:head>
+<h:body>
+
+
+
+	<video class="bg-video"
+		style="position: fixed; height: auto; width: 100%"
+		playsinline="playsinline" autoplay="autoplay" muted="muted"
+		loop="loop">
+		<source src="./resources/mp4/video.mp4" type="video/mp4" />
+	</video>
+
+
+	<div id="layoutAuthentication">
+		<div id="layoutAuthentication_content">
+			<main>
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-5">
+							<div class="card shadow-lg border-0 rounded-lg mt-5">
+								<div class="card-header">
+									<h3 class="text-center font-weight-light my-4">Inicio de
+										sesion</h3>
+								</div>
+								<div class="card-body">
+									<script type="text/javascript">
+										function handleLoginRequest(xhr,
+												status, args) {
+											if (args.validationFailed
+													|| !args.loggedIn) {
+												PF('dlg').jq.effect("shake", {
+													times : 5
+												}, 100);
+											} else {
+												PF('dlg').hide();
+												$('#loginLink').fadeOut();
+											}
+										}
+									</script>
+
+
+
+									<h:form>
+										<p:growl id="growl" sticky="true" showDetail="true"
+											life="3000" />
+										<div>
+
+											<h:outputLabel for="username" value="Correo Electronico"></h:outputLabel>
+											<h:inputText id="username" class="form-control"
+												required="true" value="#{loginBean.usuario.emailUsuario}"
+												requiredMessage="Ingresa Correo Electronico."
+												validatorMessage="Correo Electronico Invalido">
+												<f:validateRegex
+													pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+											</h:inputText>
+										</div>
+										<div>
+											<h:outputLabel for="password" value="Contraseña"></h:outputLabel>
+											<h:inputSecret id="password" class="form-control" type="password"
+												required="true" value="#{loginBean.usuario.passUsuario}"
+												requiredMessage="Ingresa Contraseña."
+												validatorMessage="Invalid password format"></h:inputSecret>
+										</div>
+										<div class="form-check mb-3">
+											<input class="form-check-input" id="inputRememberPassword"
+												type="checkbox" value="" /> <label class="form-check-label"
+												for="inputRememberPassword">recordar contraseña</label>
+										</div>
+
+										<div
+											class="d-flex align-items-center justify-content-between mt-4 mb-0">
+
+											<a class="small" href="recuperar.jsf">Recuperar
+												Contraseña</a>
+
+											<h:commandButton
+												class=" btn btn-primary d-flex align-items-center justify-content-between mt-4 mb-0"
+												update="growl" action="#{loginBean.iniciarSession()}"
+												oncomplete="handleLoginRequest(xhr, status, args)"
+												value="Iniciar"></h:commandButton>
+
+
+										</div>
+
+
+
+
+
+
+									</h:form>
+									
+									
+
+								</div>
+								<div class="card-footer text-center py-3">
+									<div class="small">
+										<a href="registrar.jsf">no te has registrado? registrate!</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script src="./resources/js/scripts.js"></script>
+
+</h:body>
+</html>

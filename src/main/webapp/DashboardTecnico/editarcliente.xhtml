@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/tecnico.xhtml">
+	<ui:define name="tecnico">
+			
+					<div class="card mb-4">
+						<div class="card-header">
+							<i class="fas fa-table me-1"></i> Editar Cliente
+						</div>
+						<div class="card-body" >
+							
+									<H2 class="text-warning" style="font-size:30px; font-family:Arial, Helvetica, Verdana; font-weight: 500;  text-align: center; ">Editar Clientes</H2>
+									<HR />
+							<h:form style="display: flex;justify-content: center; "  >
+								<h:panelGrid >
+									<h:outputText for="numo" value="Numero documento"></h:outputText>
+						<h:inputText id="numo" required="true"
+							requiredMessage="Ingresa numero documento."
+							style="padding:7px 100px; border-left:6px solid black;"
+							class="form-control" value="#{cliente.numDoc}">
+							<f:validateLength minimum="2" />
+						</h:inputText>
+						<p:message for="numo" display="default" />
+
+						<h:outputText for="nm" value="Nombres"></h:outputText>
+						<h:inputText id="nm" required="true"
+							requiredMessage="Ingresa tu nombre."
+							style="padding:7px 100px; border-left:6px solid black;"
+							class="form-control" value="#{cliente.nombreCliente}">
+							<f:validateLength minimum="2" />
+						</h:inputText>
+						<p:message for="nm" display="default" />
+
+						<h:outputText for="ap" value="Apellido"></h:outputText>
+						<h:inputText id="ap" required="true"
+							requiredMessage="Ingresa tu apellido."
+							style="padding:7px 100px; border-left:6px solid black;"
+							class="form-control" value="#{cliente.apellidoCliente}">
+							<f:validateLength minimum="2" />
+						</h:inputText>
+						<p:message for="ap" display="default" />
+
+						<h:outputText for="te" value="Telefono"></h:outputText>
+						<h:inputText id="te" required="true"
+							requiredMessage="Ingresa tu telefono."
+							style="padding:7px 100px; border-left:6px solid black;"
+							class="form-control" value="#{cliente.teleCliente}">
+							<f:validateLength minimum="2" />
+						</h:inputText>
+						<p:message for="te" display="default" />
+
+						<h:outputText for="em" value="Email"></h:outputText>
+						<h:inputText id="em" required="true"
+							requiredMessage="Ingresa tu correo electronico."
+							validatorMessage="Correo Electronico Invalido"
+							style="padding:7px 100px; border-left:6px solid black;"
+							class="form-control" value="#{cliente.emailCliente}">
+							<f:validateLength minimum="2" />
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</h:inputText>
+						<p:message for="em" display="default" />
+
+						<label for="tipo_Documento">Tipo de documento</label>
+						<h:selectOneMenu
+							style="padding:7px 100px; border-left:6px solid black;"
+							value="#{clienteBean.tipo_Documento.id_Tipo_Documento}"
+							class="form-control">
+							<f:selectItems value="#{clienteBean.obtenerDocumentos}"
+								var="documentos" itemValue="#{documentos.id_Tipo_Documento}" />
+						</h:selectOneMenu>
+									
+									<hr/>
+
+
+									<f:facet name="footer"> 
+										<h:commandButton  class="btn btn-outline-warning" action="#{clienteBean.actualizart(cliente)}"
+											value="Actualizar"></h:commandButton>
+
+									</f:facet>
+
+								</h:panelGrid>
+							</h:form>
+					
+						
+						</div>
+					</div>
+				
+			
+			<footer class="py-4 bg-light mt-auto">
+				<div class="container-fluid px-4">
+					<div
+						class="d-flex align-items-center justify-content-between small">
+
+
+					</div>
+				</div>
+			</footer>
+	
+
+</ui:define>
+</ui:composition>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+
+		<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table me-1"></i> Agregar Usuario
+			</div>
+			<div class="card-body">
+				<DIV class="">
+					<H2 class="text-warning"
+						style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">Agregar
+						Usuario</H2>
+					<HR />
+					<h:form style="display: flex;justify-content: center; ">
+						<h:panelGrid>
+							<f:facet name="header">
+								<h:outputText value="Nuevo Usuario"></h:outputText>
+							</f:facet>
+
+							<h:outputText value="Nombres"></h:outputText>
+							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{usuarioBean.usuario.nomUsuario}"
+								id="nombre" required="true"
+							    requiredMessage="Por favor ingrese un nombre de usuario">
+							    </h:inputText>
+								<p:message for="nombre" display="default" />
+
+							<h:outputText value="Numero de Documento"></h:outputText>
+							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{usuarioBean.usuario.numDocumento}"
+								id="NumerodeDocumento" required="true"
+							    requiredMessage="Por favor ingrese un numero de documento">
+							    </h:inputText>
+								<p:message for="NumerodeDocumento" display="default" />
+
+							<h:outputText value="Apellidos"></h:outputText>
+							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{usuarioBean.usuario.apeUsuario}"
+								id="Apellidos" required="true"
+							    requiredMessage="Por favor ingrese un Apellido de usuario">
+							    </h:inputText>
+								<p:message for="Apellidos" display="default" />
+
+							<h:outputText value="Telefono"></h:outputText>
+							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{usuarioBean.usuario.telUsuario}">
+							    </h:inputText>
+							
+
+							<h:outputText for="email" value="Email"></h:outputText>
+							<h:inputText id="email" required="true"
+								requiredMessage="Por favor ingrese un correo"
+								validatorMessage="Correo Electronico Invalido"
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{usuarioBean.usuario.emailUsuario}">
+								<f:validateRegex
+									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							</h:inputText>
+							<p:message for="email" display="default" />
+
+							<h:outputText value="Contraseña"></h:outputText>
+							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{usuarioBean.usuario.passUsuario}"
+								id="Contraseña" required="true"
+							    requiredMessage="Por favor ingrese una contraseña para usuario">
+							    </h:inputText>
+								<p:message for="Contraseña" display="default" />
+
+							<h:outputText value="Estado"></h:outputText>
+							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{usuarioBean.usuario.estadoUsuario}"
+								id="Estado" required="true"
+							    requiredMessage="Activo/Inactivo">
+							    </h:inputText>
+								<p:message for="Estado" display="default" />
+
+							<label for="rol">Rol</label>
+							<h:selectOneMenu value="#{usuarioBean.rol.idRol}"
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control">
+								<f:selectItems value="#{usuarioBean.obtenerRoles}" var="rol"
+									itemValue="#{rol.idRol}" />
+							</h:selectOneMenu>
+
+							<label for="tipo_Documento">Tipo de documento</label>
+							<h:selectOneMenu
+								value="#{usuarioBean.tipo_Documento.id_Tipo_Documento}"
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control">
+								<f:selectItems value="#{usuarioBean.obtenerDocumentos}"
+									var="documentos" itemValue="#{documentos.id_Tipo_Documento}" />
+							</h:selectOneMenu>
+							<hr/>
+
+							<f:facet name="footer">
+								<h:commandButton class="btn btn-outline-warning" action="#{usuarioBean.guardar()}"
+									value="Guardar"></h:commandButton>
+							</f:facet>
+
+						</h:panelGrid>
+					</h:form>
+				</DIV>
+			</div>
+		</div>
+
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

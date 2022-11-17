@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+
+		<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table me-1"></i> Editar proveedor
+			</div>
+			<div class="card-body">
+				<DIV class="">
+					<H2 class="text-warning"
+						style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">Editar
+						proveedor</H2>
+					<HR />
+					<h:form style="display: flex;justify-content: center; ">
+						<h:panelGrid>
+
+							<label for="tipo_Documento">Tipo de documento</label>
+							<h:selectOneMenu
+								value="#{proveedorBean.tipo_Documento.id_Tipo_Documento}"
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control">
+								<f:selectItems value="#{proveedorBean.obtenerDocumentos}"
+									var="documentos" itemValue="#{documentos.id_Tipo_Documento}"
+									itemLabel="#{documentos.nombre_doc}" />
+							</h:selectOneMenu>
+
+							<h:outputText for="numero" value="Numero documento"></h:outputText>
+							<h:inputText id="numero" required="true"
+								requiredMessage="Por favor ingresa el numero de documento."
+								validatorMessage="Formato de cedula no valido"
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{proveedor.numero_documento}">
+								<f:validateLength minimum="8" />
+							</h:inputText>
+							<p:message for="numero" display="default" />
+
+							<h:outputText for="nombre" value="Nombres"></h:outputText>
+							<h:inputText id="nombre" required="true"
+								requiredMessage="Por favor asignar un nombre."
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{proveedor.nombre_proveedor}">
+							</h:inputText>
+							<p:message for="nombre" display="default" />
+
+							<h:outputText for="apellido" value="Apellidos"></h:outputText>
+							<h:inputText id="apellido" required="true"
+								requiredMessage="Por favor asignar un apellido."
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{proveedor.apellido_proveedor}">
+
+							</h:inputText>
+							<p:message for="apellido" display="default" />
+
+							<h:outputText for="email" value="Email"></h:outputText>
+							<h:inputText id="email" required="true"
+								requiredMessage="Por favor ingrese un correo"
+								validatorMessage="Correo Electronico Invalido"
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{proveedor.email_proveedor}">
+								<f:validateRegex
+									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+
+							</h:inputText>
+							<p:message for="email" display="default" />
+							<hr />
+
+							<f:facet name="footer">
+								<h:commandButton class="btn btn-outline-warning"
+									action="#{proveedorBean.actualizar(proveedor)}"
+									value="Actualizar"></h:commandButton>
+							</f:facet>
+
+						</h:panelGrid>
+					</h:form>
+				</DIV>
+			</div>
+		</div>
+
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

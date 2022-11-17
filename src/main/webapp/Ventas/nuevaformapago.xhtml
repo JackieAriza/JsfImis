@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+
+		<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table me-1"></i> Agregar Forma De Pago
+			</div>
+			<div class="card-body">
+				<DIV class="">
+					<H2 class="text-warning"
+						style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">Agregar
+						Forma de pago </H2>
+					<HR />
+					<h:form style="display: flex;justify-content: center; ">
+						<h:panelGrid >
+						
+
+							<h:outputText value="Tipo de Pago"></h:outputText>
+							<h:inputText
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{formapago.tipoPago}"></h:inputText>
+
+
+
+							<hr />
+
+
+
+							<f:facet name="footer">
+								<h:commandButton class="btn btn-outline-warning"
+									
+									action="#{formapagoBean.guardar(formapago)}" value="Guardar"></h:commandButton>
+							</f:facet>
+						</h:panelGrid>
+					</h:form>
+				</DIV>
+			</div>
+		</div>
+
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+
+		<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table me-1"></i> Editar Orden
+			</div>
+			<div class="card-body">
+				<DIV class="">
+					<H2 class="text-warning"
+						style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">Editar
+						Orden</H2>
+					<HR />
+					<h:form style="display: flex;justify-content: center; ">
+						<h:panelGrid>
+
+
+
+							<h:outputText  for="cantidad" value="Cantidad"></h:outputText>
+							<h:inputText
+								id="cantidad" required="true" requiredMessage="Por favor ingresa una cantidad"
+								validatorMessage="Cantidad minima no permitida"
+								 style="padding:7px 100px; border-left:6px solid black;"
+								
+								
+								class="form-control" value="#{ordendecompra.cantidad}">
+								<f:validateLength minimum="1" />
+								</h:inputText>
+								<p:message for="cantidad" display="default" />
+
+							<label for="proveedor">Proveedor</label>
+							<h:selectOneMenu
+								value="#{ordendecompraBean.proveedor.id_proveedor}"
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control">
+								<f:selectItems value="#{ordendecompraBean.obtenerProveedor}"
+									var="proveedor" itemValue="#{proveedor.id_proveedor}"
+									itemLabel="#{documentos.nombre_doc}" />
+							</h:selectOneMenu>
+
+							<label for="producto">Productos</label>
+							<h:selectOneMenu
+								value="#{ordendecompraBean.producto.idProductos}"
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control">
+								<f:selectItems value="#{ordendecompraBean.obtenerProducto}"
+									var="producto" itemValue="#{producto.idProductos}"
+									itemLabel="#{documentos.nombre_doc}" />
+							</h:selectOneMenu>
+
+
+							<hr />
+
+							<f:facet name="footer">
+								<h:commandButton class="btn btn-outline-warning"
+									action="#{ordendecompraBean.actualizar(ordendecompra)}"
+									value="Actualizar"></h:commandButton>
+							</f:facet>
+
+						</h:panelGrid>
+					</h:form>
+				</DIV>
+			</div>
+		</div>
+
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

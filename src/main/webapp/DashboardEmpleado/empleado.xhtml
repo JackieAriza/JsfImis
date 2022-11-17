@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/empleadoT.xhtml">
+	<ui:define name="Angel">
+		<div class="row ">
+			<div class="col-xl-3 col-md-6">
+				<div class="card bg-primary text-white mb-4">
+					<div class="card-body">Nuevos Clientes</div>
+					<div
+						class="card-footer d-flex align-items-center justify-content-between">
+						<a class="small text-white stretched-link" href="#">Ver Mas</a>
+						<div class="small text-white">
+							<i class="fas fa-angle-right"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6">
+				<div class="card bg-warning text-white mb-4">
+					<div class="card-body">Soportes Pendientes</div>
+					<div
+						class="card-footer d-flex align-items-center justify-content-between">
+						<a class="small text-white stretched-link" href="#">Ver Mas</a>
+						<div class="small text-white">
+							<i class="fas fa-angle-right"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6">
+				<div class="card bg-success text-white mb-4">
+					<div class="card-body">Nuevos Productos</div>
+					<div
+						class="card-footer d-flex align-items-center justify-content-between">
+						<a class="small text-white stretched-link" href="#">Ver Mas</a>
+						<div class="small text-white">
+							<i class="fas fa-angle-right"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6">
+				<div class="card bg-danger text-white mb-4">
+					<div class="card-body">Ventas</div>
+					<div
+						class="card-footer d-flex align-items-center justify-content-between">
+						<a class="small text-white stretched-link" href="#">Ver Mas</a>
+						<div class="small text-white">
+							<i class="fas fa-angle-right"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-6">
+				<div class="card mb-4">
+					<div class="card-header">
+						<i class="fas fa-chart-area me-1"></i> Ventas
+					</div>
+					<div class="card-body">
+						<canvas id="myAreaChart" width="100%" height="40"></canvas>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-6">
+				<div class="card mb-4">
+					<div class="card-header">
+						<i class="fas fa-chart-pie me-1"></i> Informacion en general
+					</div>
+					<div class="card-body">
+						<canvas id="myPieChart" width="100%" height="50"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<h:form>
+			<div class="card mb-4">
+				<div class="card-header">
+					<i class="fas fa-table me-1"></i> Clientes
+				</div>
+				<div class="card-body">
+
+					<div class="card">
+						<h:form id="form">
+							<div class="card crud-demo">
+
+								<p:toolbar>
+									<p:toolbarGroup>
+										<h:commandButton class="btn btn-outline-success"
+											action="#{clienteBean.nuevoemple()}" value="Nuevo Cliente"></h:commandButton>
+									</p:toolbarGroup>
+									<p:toolbarGroup align="right">
+
+										<p:commandButton value="Export" icon="pi pi-upload"
+											styleClass="ui-button-help" ajax="false">
+											<p:dataExporter type="pdf" target="dt-products"
+												fileName="products" />
+										</p:commandButton>
+									</p:toolbarGroup>
+								</p:toolbar>
+
+
+								<p:dataTable id="dt-products" widgetVar="dtProducts"
+									var="cliente" value="#{clienteBean.obtenerClientesd()}"
+									reflow="true" styleClass="products-table"
+									selection="#{clienteBean.obtenerClientesd()}"
+									rowKey="#{cliente.idCliente}" paginator="true" rows="10"
+									rowSelectMode="add" paginatorPosition="bottom">
+
+
+
+
+									<p:column>
+										<f:facet name="header">id</f:facet>
+										<h:outputText value="#{cliente.idCliente}"></h:outputText>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Numero documento</f:facet>
+										<h:outputText value="#{cliente.numDoc}"></h:outputText>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Nombres</f:facet>
+										<h:outputText value="#{cliente.nombreCliente}"></h:outputText>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Apellido</f:facet>
+										<h:outputText value="#{cliente.apellidoCliente}"></h:outputText>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Telefono</f:facet>
+										<h:outputText value="#{cliente.teleCliente}"></h:outputText>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Email</f:facet>
+										<h:outputText value="#{cliente.emailCliente}"></h:outputText>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Tipo_Documento</f:facet>
+										<h:outputText value="#{cliente.tipo_documento}"></h:outputText>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header"></f:facet>
+
+										<h:commandButton class="btn btn-outline-info"
+											action="#{clienteBean.editard(cliente.idCliente)}"
+											value="Editar"></h:commandButton>
+
+
+
+
+										<f:facet name="header">Acciones</f:facet>
+										<h:commandButton class="btn btn-outline-danger"
+											icon="pi pi-trash"
+											action="#{clienteBean.eliminard(cliente.idCliente)}"
+											value="Eliminar"></h:commandButton>
+									</p:column>
+
+
+
+								</p:dataTable>
+
+							</div>
+						</h:form>
+					</div>
+
+				</div>
+			</div>
+		</h:form>
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/empleadoT.xhtml">
+	<ui:define name="Angel">
+
+		<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table me-1"></i> Editar Factura
+			</div>
+			<div class="card-body">
+				<DIV class="">
+					<H2 class="text-warning"
+						style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">Editar
+						Factura</H2>
+					<HR />
+					<h:form style="display: flex;justify-content: center; ">
+						<h:panelGrid>
+
+
+							<h:column>
+								<h:outputText value="Cantidad"></h:outputText>
+
+								<h:inputText
+									style="padding:7px 100px; border-left:6px solid black;"
+									class="form-control"
+									value="#{detalle_por_factura.cantidadDetalle}"></h:inputText>
+							</h:column>
+							<h:column>
+								<h:outputText value="Valor unitario"></h:outputText>
+
+								<h:inputText
+									style="padding:7px 100px; border-left:6px solid black;"
+									class="form-control"
+									value="#{detalle_por_factura.valorUnitario}"></h:inputText>
+							</h:column>
+							<h:column>
+								<h:outputText value="Iva"></h:outputText>
+
+								<h:inputText
+									style="padding:7px 100px; border-left:6px solid black;"
+									class="form-control" value="#{detalle_por_factura.iva}"></h:inputText>
+							</h:column>
+							<h:column>
+								<h:outputText value="Cantidad"></h:outputText>
+
+								<h:inputText
+									style="padding:7px 100px; border-left:6px solid black;"
+									class="form-control" value="#{detalle_por_factura.subTotal}"></h:inputText>
+							</h:column>
+							<h:column>
+								<h:outputText value="Total General"></h:outputText>
+
+								<h:inputText
+									style="padding:7px 100px; border-left:6px solid black;"
+									class="form-control"
+									value="#{detalle_por_factura.totalGeneral}"></h:inputText>
+							</h:column>
+
+							<label for="factura">Factura</label>
+							<h:selectOneMenu
+								value="#{detalleporfacturaBean.factura.idFactura}"
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control">
+								<f:selectItems value="#{detalleporfacturaBean.obtenerFactura}"
+									var="factura" itemValue="#{factura.idFactura}" />
+							</h:selectOneMenu>
+
+							<label for="producto">Producto</label>
+							<h:selectOneMenu value="#{detalle_por_factura.producto}"
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control">
+								<f:selectItems
+									value="#{detalleporfacturaBean. obtenerProductos}"
+									var="categoria" itemValue="#{producto.id_Productos}" />
+							</h:selectOneMenu>
+							<hr />
+
+							<f:facet name="footer">
+								<h:commandButton class="btn btn-outline-warning"
+									action="#{detalleporfacturaBean.actualizar(detalle_por_factura)}"
+									value="Actualizar"></h:commandButton>
+							</f:facet>
+
+						</h:panelGrid>
+					</h:form>
+				</DIV>
+			</div>
+		</div>
+
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

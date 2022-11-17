@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+
+		<h:form>
+			<div class="card mb-4">
+				<div class="card-header">
+					<i class="fas fa-table me-1"></i> Forma de pago
+				</div>
+				<div class="card-body">
+
+					<div class="card">
+						<h:form id="form">
+							<div class="card crud-demo">
+
+
+
+								<p:toolbar>
+									<p:toolbarGroup>
+										<h:commandButton class="btn btn-outline-success"
+											action="#{formapagoBean.nuevo()}" value="Nueva Forma de pago"></h:commandButton>
+									</p:toolbarGroup>
+									<p:toolbarGroup align="right">
+
+										<p:commandButton action="#{equipoBean.exportar()}"
+											value="Excel" icon="pi pi-upload"
+											styleClass="ui-button-help" ajax="false">
+
+										</p:commandButton>
+									</p:toolbarGroup>
+								</p:toolbar>
+
+
+
+
+								<p:dataTable id="dt-products" widgetVar="dtProducts"
+									var="formaPago" value="#{formapagoBean.obtenerFormaPagos()}"
+									reflow="true" styleClass="products-table"
+									selection="#{formapagoBean.obtenerFormaPagos()}"
+									rowKey="#{formaPago.idPago}" paginator="true" rows="10"
+									rowSelectMode="add" paginatorPosition="bottom">
+
+
+
+									<p:column>
+										<f:facet name="header">Id Pago</f:facet>
+										<h:outputText value="#{formaPago.idPago}"></h:outputText>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Tipo Pago</f:facet>
+										<h:outputText value="#{formaPago.tipoPago}"></h:outputText>
+									</p:column>
+									
+									
+
+									<p:column>
+										<f:facet name="header">Acciones</f:facet>
+										<h:commandButton class="btn btn-outline-info"
+											action="#{formapagoBean.editar(formaPago.idPago)}"
+											value="Editar"></h:commandButton>
+
+										<h:commandButton class="btn btn-outline-danger"
+											action="#{formapagoBean.eliminar(formaPago.idPago)}"
+											value="Eliminar"></h:commandButton>
+									</p:column>
+
+
+
+								</p:dataTable>
+
+							</div>
+						</h:form>
+					</div>
+
+				</div>
+			</div>
+		</h:form>
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

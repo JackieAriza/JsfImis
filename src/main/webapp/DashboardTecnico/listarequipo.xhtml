@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/tecnico.xhtml">
+	<ui:define name="tecnico">
+
+
+		<h:form>
+			<div class="card mb-4">
+				<div class="card-header">
+					<i class="fas fa-table me-1"></i> Equipos
+				</div>
+				<div class="card-body">
+
+					<div class="card">
+						<h:form id="form">
+							<div class="card crud-demo">
+
+
+
+								<p:toolbar>
+									<p:toolbarGroup>
+										<h:commandButton class="btn btn-outline-success"
+											action="#{equipoBean.nuevo()}" value="Nuevo Equipo"></h:commandButton>
+									</p:toolbarGroup>
+									<p:toolbarGroup align="right">
+										<p:commandButton value="Excel" icon="pi pi-upload"
+											styleClass="ui-button-help" ajax="false">
+											<p:dataExporter type="xls" target="dt-products"
+												fileName="Equipo" visibleOnly="true" />
+										</p:commandButton>
+									</p:toolbarGroup>
+								</p:toolbar>
+
+
+
+
+								<p:dataTable id="dt-products" widgetVar="dtProducts"
+									var="equipo" value="#{equipoBean.obtenerEquipose()}"
+									reflow="true" styleClass="products-table"
+									selection="#{equipoBean.obtenerEquipose()}"
+									rowKey="#{equipo.id_equipos}" paginator="true" rows="10"
+									rowSelectMode="add" paginatorPosition="bottom">
+
+
+
+
+									<p:column filterBy="#{equipo.id_equipos}">
+										<f:facet name="header">id equipo</f:facet>
+										<h:outputText value="#{equipo.id_equipos}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{equipo.marca}">
+										<f:facet name="header">Marca</f:facet>
+										<h:outputText value="#{equipo.marca}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{equipo.cantidad}">
+										<f:facet name="header">Cantidad</f:facet>
+										<h:outputText value="#{equipo.cantidad}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{equipo.fecha_Entrega}">
+										<f:facet name="header">Fecha.E</f:facet>
+										<h:outputText value="#{equipo.fecha_Entrega}"></h:outputText>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Descripcion</f:facet>
+										<h:outputText value="#{equipo.estado}"></h:outputText>
+									</p:column>
+									<p:column exportable="false">
+										<f:facet name="header">Acciones</f:facet>
+										<h:commandButton class="btn btn-outline-info"
+											action="#{equipoBean.editare(equipo.id_equipos)}"
+											value="Editar"></h:commandButton>
+
+										<h:commandButton class="btn btn-outline-danger"
+											action="#{equipoBean.eliminare(equipo.id_equipos)}"
+											value="Eliminar"></h:commandButton>
+									</p:column>
+
+
+
+								</p:dataTable>
+
+							</div>
+						</h:form>
+					</div>
+
+				</div>
+			</div>
+		</h:form>
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

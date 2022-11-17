@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+
+		<h:form>
+			<div class="card mb-4">
+				<div class="card-header">
+					<i class="fas fa-table me-1"></i> Factura
+				</div>
+				<div class="card-body">
+
+					<div class="card">
+						<h:form id="form">
+							<div class="card crud-demo">
+
+
+
+								<p:toolbar>
+									<p:toolbarGroup>
+										<h:commandButton class="btn btn-outline-success"
+											 action="#{facturaBean.nuevo()}" value="Nueva Factura"></h:commandButton>
+									</p:toolbarGroup>
+									<p:toolbarGroup align="right">
+
+										<p:commandButton action="#{facturaBean.exportar()}"
+											value="Excel" icon="pi pi-upload"
+											styleClass="ui-button-help" ajax="false">
+
+										</p:commandButton>
+									</p:toolbarGroup>
+								</p:toolbar>
+
+
+
+
+								<p:dataTable id="dt-products" widgetVar="dtProducts"
+									var="factura" value="#{facturaBean.obtenerFacturas()}"
+									reflow="true" styleClass="products-table"
+									selection="#{facturaBean.obtenerFacturas()}"
+									rowKey="#{factura.idFactura}" paginator="true" rows="10"
+									rowSelectMode="add" paginatorPosition="bottom">
+
+
+
+
+									<p:column>
+										<f:facet name="header">Id Factura</f:facet>
+										<h:outputText value="#{factura.idFactura}"></h:outputText>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Total</f:facet>
+										<h:outputText value="#{factura.totalfactura}"></h:outputText>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Cliente</f:facet>
+										<h:outputText value="#{factura.cliente}"></h:outputText>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Forma de pago</f:facet>
+										<h:outputText value="#{factura.formaPago}"></h:outputText>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Usuario</f:facet>
+										<h:outputText value="#{factura.usuario}"></h:outputText>
+									</p:column>
+
+									<p:column>
+
+										<f:facet name="header">Fecha</f:facet>
+										<h:outputText value="#{factura.fecha_registro}"></h:outputText>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Acciones</f:facet>
+										<h:commandButton class="btn btn-outline-info"
+											action="#{facturaBean.editar(factura.idFactura)}"
+											value="Editar"></h:commandButton>
+								
+										<h:commandButton class="btn btn-outline-danger"
+											action="#{facturaBean.eliminar(factura.idFactura)}"
+											value="Eliminar"></h:commandButton>
+									</p:column>
+
+
+
+								</p:dataTable>
+
+							</div>
+						</h:form>
+					</div>
+
+				</div>
+			</div>
+		</h:form>
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

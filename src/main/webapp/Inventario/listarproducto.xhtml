@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+	<h:form>
+						<div class="card mb-4">
+							<div class="card-header">
+								<i class="fas fa-table me-1"></i> Productos
+							</div>
+							<div class="card-body">
+
+								<div class="card">
+									<h:form id="form">
+										<div class="card crud-demo">
+
+
+
+											<p:toolbar>
+												<p:toolbarGroup>
+													<h:commandButton class="btn btn-outline-success" action="#{productoBean.nuevo()}"
+														value="Nuevo producto"></h:commandButton>
+														
+														<h:commandButton class="btn btn-outline-success"
+											action="#{productoBean.reporte()}" value="Reporte Productos" ajax="false">
+											</h:commandButton>
+
+							
+												</p:toolbarGroup>
+												<p:toolbarGroup align="right">
+
+													<p:commandButton value="Excel" icon="pi pi-upload"
+											styleClass="ui-button-help" ajax="false" >
+											<p:dataExporter type="xls" target="dt-products"
+												fileName="Lista Productos" visibleOnly="true" />
+										</p:commandButton>
+												</p:toolbarGroup>
+											</p:toolbar>
+
+
+
+
+											<p:dataTable id="dt-products" widgetVar="dtProducts"
+												var="producto" value="#{productoBean.obtenerProducto()}"
+												reflow="true" styleClass="products-table"
+												selection="#{productoBean.obtenerProducto()}"
+												rowKey="#{producto.idProductos}" paginator="true" rows="10"
+												rowSelectMode="add" paginatorPosition="bottom">
+
+
+
+
+												<p:column filterBy="#{producto.idProductos}"
+										visible="#{productoBean.list[0]}"
+										exportable="#{productoBean.list[0]}">
+													<f:facet name="header">Id</f:facet>
+													<h:outputText value="#{producto.idProductos}"></h:outputText>
+												</p:column>
+												<p:column filterBy="#{producto.nombreProducto}"
+										visible="#{productoBean.list[1]}"
+										exportable="#{productoBean.list[1]}">
+													<f:facet name="header">Nombre</f:facet>
+													<h:outputText value="#{producto.nombreProducto}"></h:outputText>
+												</p:column>
+												<p:column filterBy="#{producto.valorProducto}"
+										visible="#{productoBean.list[2]}"
+										exportable="#{productoBean.list[2]}">
+													<f:facet name="header">Valor</f:facet>
+													<h:outputText value="#{producto.valorProducto}"></h:outputText>
+												</p:column>
+												<p:column filterBy="#{producto.estadoProducto}"
+										visible="#{productoBean.list[3]}"
+										exportable="#{productoBean.list[3]}">
+													<f:facet name="header">Estado Producto</f:facet>
+													<h:outputText value="#{producto.estadoProducto}"></h:outputText>
+												</p:column>
+												<p:column filterBy="#{producto.stock}"
+										visible="#{productoBean.list[4]}"
+										exportable="#{productoBean.list[4]}">
+													<f:facet name="header">Stock</f:facet>
+													<h:outputText value="#{producto.stock}"></h:outputText>
+												</p:column>
+												<p:column filterBy="#{producto.categoriaproducto}"
+										visible="#{productoBean.list[5]}"
+										exportable="#{productoBean.list[5]}">
+													<f:facet name="header">Categoria</f:facet>
+													<h:outputText value="#{producto.categoriaproducto}"></h:outputText>
+												</p:column>
+												<p:column exportable="false">
+													<f:facet name="header">Acciones</f:facet>
+													<h:commandButton class="btn btn-outline-info"
+														action="#{productoBean.editar(producto.idProductos)}"
+														value="Editar"></h:commandButton>
+
+													<h:commandButton class="btn btn-outline-danger"
+														action="#{productoBean.eliminar(producto.idProductos)}"
+														value="Eliminar"></h:commandButton>
+													</p:column>
+											</p:dataTable>
+
+										</div>
+									</h:form>
+								</div>
+
+							</div>
+						</div>
+					</h:form>
+
+</ui:define>
+</ui:composition>

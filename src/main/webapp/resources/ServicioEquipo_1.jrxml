@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Proveedores" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9308e2d9-0230-4d93-adeb-e7690b026d25">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<field name="id_servicios" class="java.lang.Long"/>
+	<field name="nombre_Servicio" class="java.lang.String"/>
+	<field name="valor_servicio" class="java.lang.Double"/>
+	<field name="cliente.idCliente" class="java.lang.Long"/>
+	<field name="equipo.id_equipos" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="130" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="10" width="90" height="100" uuid="1c71fdfb-4224-41e4-8612-65ca6dd476a0"/>
+				<imageExpression><![CDATA["C:/Users/YakelinAriza/Downloads/WhatsApp Image 2022-09-14 at 2.31.24 PM.jpeg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="93" y="0" width="90" height="40" uuid="8f9b095c-8f7a-443e-9283-927aee7d7d08"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Administrador:
+Elonk Musk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="33" width="110" height="20" uuid="d488daca-8a59-4215-ac73-8571a2d6add0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cra 104 a bis - 61 a 59]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="5" width="100" height="30" uuid="7ba3faad-5880-44dc-b3a9-4cbc320e09c1"/>
+				<text><![CDATA[Fecha y hora:]]></text>
+			</staticText>
+			<textField pattern="HH:mm">
+				<reportElement x="390" y="5" width="100" height="30" uuid="59014b6f-0750-45d8-bc91-923ed141638b"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="93" y="59" width="120" height="30" uuid="4b5254dc-5e7a-4b45-a906-0ae9fa851e6a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email:
+Stivenarboleda510@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="100" width="100" height="30" uuid="da21e5d4-c878-472f-8c7b-8f09514a852f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cel: 3227504575]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="60" width="100" height="30" uuid="3d4a0de4-8b30-49cb-bdf6-ee2489921306"/>
+				<textElement>
+					<font fontName="SansSerif" size="22" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[BETHEL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="92" splitType="Stretch">
+			<staticText>
+				<reportElement x="170" y="15" width="230" height="63" uuid="a69d322b-e5ff-45bb-aa37-376a292feb00"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Servicio Equipo]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="54">
+			<staticText>
+				<reportElement x="36" y="23" width="100" height="30" uuid="4e2205d7-3896-432e-a08a-93d4952adb9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ID	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="136" y="23" width="100" height="30" uuid="b3c01308-9936-44b5-bd1e-eb269cd56e05"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="23" width="100" height="30" uuid="4b47ac58-13dd-4644-9fbe-38ee145beb96"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[VALOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="23" width="100" height="30" uuid="8d789022-4f46-426b-b0d6-5f3c392d10ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="436" y="23" width="100" height="30" uuid="2d71326d-45f7-49b3-b4e5-c220b766a9fb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[EQUIPO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="36" y="10" width="100" height="30" uuid="3e3d83e9-a975-4716-8b1a-a9eb9201ed4b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id_servicios}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="136" y="10" width="100" height="30" uuid="2ebb0f88-ba95-4d87-8577-6e4aed016c2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_Servicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="10" width="100" height="30" uuid="7fbe6c0b-b656-45be-b215-84d0d2679794"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{valor_servicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="10" width="100" height="30" uuid="1f199b6f-80ac-41c8-9447-3ed50f5df1b2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cliente.idCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="10" width="100" height="30" uuid="b83e65bb-a83e-49af-a5df-bec7cd4a545b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{equipo.id_equipos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement x="437" y="13" width="103" height="17" uuid="55a018df-dda2-4fbf-ad5b-8363a70faa04"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="1" width="60" height="29" uuid="bdc91a62-0a93-40a8-a3e9-a29b44ffe088"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[IMIS-2022]]></text>
+			</staticText>
+			<textField pattern="HH:mm">
+				<reportElement x="473" y="39" width="98" height="21" uuid="0d210f76-d630-4de2-9ab6-b6226953e5cf"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="403" y="0" width="50" height="30" uuid="d2866241-3a10-44a7-9b23-298c8d9ba904"/>
+				<text><![CDATA[Numero de 
+pagina:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

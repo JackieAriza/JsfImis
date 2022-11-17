@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+			
+					<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table me-1"></i> Agregar Equipo
+			</div>
+			<div class="card-body">
+				<DIV class="">
+					<H2 class="text-warning"
+						style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">Agregar
+						Equipo</H2>
+					<HR />
+					<h:form style="display: flex;justify-content: center; ">
+						<h:panelGrid>
+
+							<h:outputText for="mar" value="Marca"></h:outputText>
+							<h:inputText id="mar" required="true"
+								requiredMessage="Ingresa la marca."
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{equipo.marca}">
+								<f:validateLength minimum="2" />
+								</h:inputText>
+								<p:message for="mar" display="default" />
+
+							<h:outputText for="can" value="Cantidad"></h:outputText>
+							<h:inputText id="can" required="true"
+								requiredMessage="Ingresa la cantidad."
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{equipo.cantidad}">
+								<f:validateLength minimum="1" />
+								</h:inputText>
+								<p:message for="can" display="default" />
+
+							<h:outputText for="des" value="Descripcion"></h:outputText>
+							<h:inputText id="des" required="true"
+								requiredMessage="Describe como se encuentra el equipo."
+								style="padding:7px 100px; border-left:6px solid black;"
+								class="form-control" value="#{equipo.estado}">
+								<f:validateLength minimum="2" />
+								</h:inputText>
+								<p:message for="des" display="default" />
+
+							<hr />
+
+							<f:facet name="footer">
+								<h:commandButton class="btn btn-outline-warning"
+									action="#{equipoBean.guardar(equipo)}" value="Guardar"></h:commandButton>
+							</f:facet>
+
+						</h:panelGrid>
+					</h:form>
+				</DIV>
+			</div>
+		</div>
+				
+				
+			
+			<footer class="py-4 bg-light mt-auto">
+				<div class="container-fluid px-4">
+					<div
+						class="d-flex align-items-center justify-content-between small">
+
+
+					</div>
+				</div>
+			</footer>
+	
+
+</ui:define>
+</ui:composition>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<ui:composition lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+
+		<h:form>
+			<div class="card mb-4">
+				<div class="card-header">
+					<i class="fas fa-table me-1"></i> Orden de compra
+				</div>
+				<div class="card-body">
+
+					<div class="card">
+						<h:form id="form">
+							<div class="card crud-demo">
+
+
+
+								<p:toolbar>
+									<p:toolbarGroup>
+										<h:commandButton class="btn btn-outline-success"
+											action="#{ordendecompraBean.listar()}" value="Nueva Orden"></h:commandButton>
+											<h:commandButton class="btn btn-outline-success"
+											action="#{ordendecompraBean.reporteOrden()}" value="Reporte Orden"></h:commandButton>
+									</p:toolbarGroup>
+									<p:toolbarGroup align="right">
+									<p:commandButton value="Excel" icon="pi pi-upload"
+											styleClass="ui-button-help" ajax="false" >
+											<p:dataExporter type="xls" target="dt-products"
+												fileName="ordendecompra" visibleOnly="true" />
+										</p:commandButton>
+									</p:toolbarGroup>
+								</p:toolbar>
+
+
+
+
+								<p:dataTable id="dt-products" widgetVar="dtProducts"
+									var="orden" value="#{ordendecompraBean.obtenerOrdenes_de_compra()}"
+									reflow="true" styleClass="products-table"
+									selection="#{ordendecompraBean.obtenerOrdenes_de_compra()}"
+									rowKey="#{orden.id_orden_compra}" paginator="true" rows="10"
+									rowSelectMode="add" paginatorPosition="bottom">
+									
+									
+									<p:column filterBy="#{orden.id_orden_compra}"
+										visible="#{ordendecompraBean.list[0]}"
+										exportable="#{ordendecompraBean.list[0]}">
+
+										<f:facet name="header">id</f:facet>
+										<h:outputText value="#{orden.id_orden_compra}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{orden.cantidad}"
+										visible="#{ordendecompraBean.list[1]}"
+										exportable="#{ordendecompraBean.list[1]}">
+
+										<f:facet name="header">Cantidad</f:facet>
+										<h:outputText value="#{orden.cantidad}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{orden.proveedor}"
+										visible="#{ordendecompraBean.list[2]}"
+										exportable="#{ordendecompraBean.list[2]}">
+										<f:facet name="header">Proveedor</f:facet>
+										<h:outputText value="#{orden.proveedor}"></h:outputText>
+									</p:column>
+
+									<p:column filterBy="#{orden.producto}"
+										visible="#{ordendecompraBean.list[3]}"
+										exportable="#{ordendecompraBean.list[3]}">
+										<f:facet name="header">Productos</f:facet>
+										<h:outputText value="#{orden.producto}"></h:outputText>
+									</p:column>
+									<p:column filterBy="#{orden.fecha_orden_compra}"
+										visible="#{ordendecompraBean.list[4]}"
+										exportable="#{ordendecompraBean.list[4]}">
+
+										<f:facet name="header">Fecha orden</f:facet>
+										<h:outputText value="#{orden.fecha_orden_compra}"></h:outputText>
+									</p:column>
+
+
+									<p:column exportable="false">
+										<f:facet name="header">Acciones</f:facet>
+										<h:commandButton class="btn btn-outline-info"
+											action="#{ordendecompraBean.editar(orden.id_orden_compra)}"
+											value="Editar"></h:commandButton>
+
+										<h:commandButton class="btn btn-outline-danger"
+											action="#{ordendecompraBean.eliminar(orden.id_orden_compra)}"
+											value="Eliminar"></h:commandButton>
+									</p:column>
+
+
+
+								</p:dataTable>
+
+							</div>
+						</h:form>
+					</div>
+
+				</div>
+			</div>
+		</h:form>
+
+
+		<footer class="py-4 bg-light mt-auto">
+			<div class="container-fluid px-4">
+				<div class="d-flex align-items-center justify-content-between small">
+
+
+				</div>
+			</div>
+		</footer>
+
+
+	</ui:define>
+</ui:composition>

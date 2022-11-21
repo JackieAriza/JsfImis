@@ -19,7 +19,7 @@ public class MailBean implements Serializable {
 	private String destino;
 	private String asusto;
 	private String texto;
-	
+	private String correos;
 	
 	public MailBean() {
 

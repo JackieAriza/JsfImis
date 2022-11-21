@@ -15,14 +15,14 @@ public class EmailSender {
 
 	public static boolean enviarEmail(String destinatario, String asunto, String cuerpo) {
 
-		String remitente = "arizajackelin9@gmail.com";
+		String remitente = "horaciostiven.000@gmail.com";
 
 		Properties props = System.getProperties();
 		props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.ssl.trust", "*");
 		props.put("mail.smtp.user", remitente);
-		props.put("mail.smtp.clave", "rapyfhqsegcxgyof");
+		props.put("mail.smtp.clave", "kgrbkpuauavvtzqn");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.port", "587");
@@ -231,11 +231,11 @@ public class EmailSender {
 			message.setFrom(new InternetAddress(remitente));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
 			message.setSubject(asunto);
-			message.setText(cuerpo);
+			
 			message.setContent(BODY, "text/html");
 
 			Transport transport = session.getTransport("smtp");
-			String clave = "rapyfhqsegcxgyof";
+			String clave = "kgrbkpuauavvtzqn";
 			transport.connect("smtp.gmail.com", remitente, clave);
 			transport.sendMessage(message, message.getAllRecipients());
 			return true;

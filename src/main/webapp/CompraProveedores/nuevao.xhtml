@@ -8,17 +8,14 @@
 	<ui:define name="tuvariable">
 			<p:panel>
 				<p:growl id="message" showDetail="true" showSummary="true"></p:growl>
-		<div class="card mb-4">
-			<div class="card-header">
-				<i class="fas fa-table me-1"></i> Agregar orden de compra
-			</div>
-			<div class="card-body">
-				<DIV class="">
-					<H2 class="text-warning"
+		
+			
+				 <DIV class=""> 
+					 <H2 class="text-warning"
 						style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">Agregar
-						orden de compra</H2>
+						orden de compra</H2>  
 						
-						
+						 
 					<HR />
 					
 						
@@ -26,11 +23,9 @@
 					<h:form id="detallesOrden" enctype="multipart/form-data" style="display: flex;justify-content: left; ">
 						<h:panelGrid>
 						
-							<f:facet name="header">
-								<h:outputText value="Nueva Orden de compra"></h:outputText>
-							</f:facet>
+						
 
-							<h:outputText for="cantidad" value="Cantidad"></h:outputText>
+							<!-- <h:outputText for="cantidad" value="Cantidad"></h:outputText>
 							<h:inputText id="cantidad" required="true"
 							requiredMessage="Por favor ingresa una cantidad"	
 							validatorMessage="Cantidad minima no permitida"					
@@ -38,9 +33,9 @@
 								class="form-control" value="#{ordendecompraBean.ordendecompra.cantidad}">
 								<f:validateLength minimum="1" />
 								</h:inputText>
-								<p:message for="cantidad" display="default" />
+								<p:message for="cantidad" display="default" />  -->
 								
-							<label for="proveedor">Proveedor</label>
+							<!-- <label for="proveedor">Proveedor</label>
 							<h:selectOneMenu
 								value="#{ordendecompraBean.proveedor.id_proveedor}"
 								style="padding:7px 100px; border-left:6px solid black;"
@@ -58,14 +53,15 @@
 								<f:selectItems value="#{ordendecompraBean.obtenerProducto}"
 									var="producto" itemValue="#{producto.idProductos}"
 									itemLabel="#{documentos.nombre_doc}" />
-							</h:selectOneMenu>
+							</h:selectOneMenu> -->
 
 
 							<hr />
 							
-								<f:facet name="header">
+							
+								<!-- <f:facet name="header">
 								<h:outputText value="Nueva Orden de compra"></h:outputText>
-							</f:facet>
+							</f:facet>  -->
 
 							<f:facet name="footer">
 								<h:commandButton class="btn btn-outline-warning"
@@ -73,10 +69,7 @@
 									action="#{ordendecompraBean.direccionar}" value="Guardar"></h:commandButton>
 							</f:facet>
 							
-						
-								<h:commandButton class="btn btn-outline-warning"
-									actionListener="#{ordendecompraBean.guardar}"
-									action="#{ordendecompraBean.direccionar}" value="Añadir"></h:commandButton>
+																
 								<p:commandButton value="Agregar producto" onclick="PF('dlgl2').show()"
 									style="background-color: ; border-color: ; margin-top: 1%; font-family: Fredoka One, cursive" />
 								<p:dataTable value="#{ordendecompraBean.carritoOrdenes}" var="orden"
@@ -85,14 +78,98 @@
 								<p:column headerText="Nombre producto">
 							<h:outputText value="#{ordendecompraBean.obtenerProducto}"></h:outputText>
 						</p:column>
-							
-								</p:dataTable>
+						
+						<p:column headerText="Cantidad">
+							<h:outputText value="#{ordendecompraBean.cantidad}"></h:outputText>
+						</p:column>
+						
+						<p:column headerText="Acciones">
+							<p:commandButton onclick="PF('dlgl').show()" icon="pi pi-pencil"
+								class="rounded-button ui-button-flat ui-button-danger"
+								style=" color: #000000" />
+							<p:commandButton actionListener="#{OrdendecompraBean.deleteOrden(ordendecompra)}"
+								update="datosOrden" class="rounded-button ui-button-danger"
+								icon="pi pi-trash"
+								style="color: #ffffff; background-color: #841c26; border-color: #841c26">
+								<p:confirm type="popup" header="Confirmacion"
+									message="¿Estas seguro de eliminarlo?"
+									icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
 						</h:panelGrid>
-					</h:form>		
-				</DIV>
-			</div>
-		</div>
+					</h:form>	
+					
+					<p:dialog widgetVar="dlgl2" showEffect="fade" resizable="false"
+					header="Agregar producto">
+					<h:form>
+						<p:panelGrid columns="4">
 
+							<p:outputLabel for="codi" value="Productos" />
+							<p:selectOneMenu editable="true" id="codi"
+								class="focus:border-primary shadow-4"
+								value="#{ProductoBean.productos.idProductos}">
+								<f:selectItems value="#{OrdendecompraBean.productos}" var="p"
+									itemValue="#{p.idProducto}" itemLabel="#{p.nombreProducto}"></f:selectItems>
+							</p:selectOneMenu>
+
+							<p:commandButton value="Buscar"
+								actionListener="#{detalle_por_factura.producto()}" update=""
+								style="background-color: #; border-color: #841c26; color: #ffffff" />
+						</p:panelGrid>
+					</h:form>	
+					
+					<h:form id="datosProducto">
+						<h:inputHidden value="#{ProductoBean.producto.nombreProducto}" />
+						<h:inputHidden value="#{ProductoBean.producto.idProducto}" />
+						<p:panelGrid columns="4">
+							<p:outputLabel for="nombreProducto" value="Nombre del producto" />
+							<p:inputText id="nombreProducto" disabled="true"
+								value="#{ProductoBean.producto.nombreProducto}"></p:inputText>
+
+
+							<p:outputLabel for="preciounidad" value="Precio por unidad" />
+							<p:inputNumber id="preciounidad"
+								value="#{ProductoBean.producto.valorProducto}"></p:inputNumber>
+
+							<p:outputLabel for="cantidad" value="Cantidad" />
+							<p:inputNumber id="cantidad" value="#{DetallePorFacturaBean.CantidadDetalle}"></p:inputNumber>
+							<p:commandButton value="Agregar" oncomplete="PF('dlgl2').hide()"
+								actionListener="#{OrdendecompraBean.agregar()}"
+								style="background-color: #; border-color: #841c26; color: #ffffff" />
+						</p:panelGrid>
+					</h:form>
+					</p:dialog>
+						<h:form id="datosCliente">
+						<p:growl id="message2" showDetail="true" showSummary="true"></p:growl>
+						<p:panelGrid columns="2" class="mt-5">
+							<p:outputLabel for="codi" value="Seleccione el proveedor" />
+							<p:selectOneMenu id="codi" class="focus:border-primary shadow-4"
+								value="#{OrdendecompraBean.proveedor.idProveedor}" filter="true"
+								filterMatchMode="startsWith" required="true"
+								requiredMessage="El proveedor no puede quedar vacío">
+								<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+								<f:selectItems value="#{OrdendecompraBean.proveedores}" var="p"
+									itemValue="#{p.idProveedor}"
+									itemLabel="#{p.proveedor.nombreProveedor} #{p.proveedor.apellidoProveedor}"></f:selectItems>
+							</p:selectOneMenu>
+
+							
+							<h:commandButton value="Generar orden" update=""
+								action="#{OrdendecompraBean.generarDetalle()}" class="m-3"
+								style="background-color: #; border-color: #; color: #"></h:commandButton>
+
+						</p:panelGrid>
+					</h:form>
+					<p:confirmPopup global="true">
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirm-popup-no ui-button-flat"
+							style="background-color: #; border-color: #; color: #" />
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirm-popup-yes"
+							style="background-color: #; border-color: #" />
+					</p:confirmPopup>
+		
 
 
 		<footer class="py-4 bg-light mt-auto">
@@ -103,6 +180,8 @@
 				</div>
 			</div>
 		</footer>
+			</DIV>
 		</p:panel>
+	
 	</ui:define>
 </ui:composition>

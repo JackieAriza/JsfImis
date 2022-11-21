@@ -16,6 +16,7 @@ import com.gaes3.imisG.facadeImp.FacturaDAO;
 import com.gaes3.imisG.facadeImp.ProductoDAO;
 import com.gaes3.imisG.modelo.Detalle_Por_Factura;
 import com.gaes3.imisG.modelo.Factura;
+import com.gaes3.imisG.modelo.Orden_de_compra;
 import com.gaes3.imisG.modelo.Producto;
 
 @ManagedBean(name = "detalleporfacturaBean")
@@ -31,6 +32,7 @@ public class DetallePorFacturaBean implements Serializable {
 	private List<Producto> obtenerProductos;
 	private Producto producto;
 	private List<Detalle_Por_Factura> detalleporfacturarp;
+	private Orden_de_compra ordendecompra;
 
 	public Detalle_Por_Factura getDetalleporfactura() {
 		return detalleporfactura;

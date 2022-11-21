@@ -54,4 +54,7 @@ public class OrdendecompraDAO {
 			listaOrden_de_compra= q.getResultList();
 			return listaOrden_de_compra;
 		}
+		
+		
+		
 }

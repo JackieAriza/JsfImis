@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.gaes3.imisG.modelo.JPAUtil;
+import com.gaes3.imisG.modelo.Orden_de_compra;
 import com.gaes3.imisG.modelo.Producto;
 
 
@@ -54,5 +55,12 @@ public class ProductoDAO {
 		Query q= entity.createQuery("SELECT p FROM Producto p");
 		listaProductos= q.getResultList();
 		return listaProductos;
+	}
+	
+	public Producto finsById(long id) throws Exception{
+		Producto producto = new Producto();
+		producto = this.entity.find(Producto.class, id);
+		
+		return producto;
 	}
 }

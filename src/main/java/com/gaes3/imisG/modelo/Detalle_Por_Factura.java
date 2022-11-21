@@ -22,13 +22,13 @@ public class Detalle_Por_Factura {
 	
 	private long CantidadDetalle;
 	
-	private String ValorUnitario;
+	private Double ValorUnitario;
 	
-	private String Iva;
+	private Double Iva;
 	
-	private String SubTotal;
+	private Double SubTotal;
 	
-	private String TotalGeneral;
+	private Double TotalGeneral;
 
 	@ManyToOne 
 	@JoinColumn(name="fk_idFactura")
@@ -53,28 +53,29 @@ public class Detalle_Por_Factura {
 	public void setCantidadDetalle(long cantidadDetalle) {
 		CantidadDetalle = cantidadDetalle;
 	}
-	public String getValorUnitario() {
+
+	public Double getValorUnitario() {
 		return ValorUnitario;
 	}
-	public void setValorUnitario(String valorUnitario) {
+	public void setValorUnitario(Double valorUnitario) {
 		ValorUnitario = valorUnitario;
 	}
-	public String getIva() {
+	public Double getIva() {
 		return Iva;
 	}
-	public void setIva(String iva) {
+	public void setIva(Double iva) {
 		Iva = iva;
 	}
-	public String getSubTotal() {
+	public Double getSubTotal() {
 		return SubTotal;
 	}
-	public void setSubTotal(String subTotal) {
+	public void setSubTotal(Double subTotal) {
 		SubTotal = subTotal;
 	}
-	public String getTotalGeneral() {
+	public Double getTotalGeneral() {
 		return TotalGeneral;
 	}
-	public void setTotalGeneral(String totalGeneral) {
+	public void setTotalGeneral(Double totalGeneral) {
 		TotalGeneral = totalGeneral;
 	}
 	public Factura getFactura() {
@@ -95,8 +96,8 @@ public class Detalle_Por_Factura {
 				+ ", ValorUnitario=" + ValorUnitario + ", Iva=" + Iva + ", SubTotal=" + SubTotal + ", TotalGeneral="
 				+ TotalGeneral + ", factura=" + factura + ", producto=" + producto + "]";
 	}
-	public Detalle_Por_Factura(long idDetalle, long cantidadDetalle, String valorUnitario, String iva, String subTotal,
-			String totalGeneral, Factura factura, Producto producto) {
+	public Detalle_Por_Factura(long idDetalle, long cantidadDetalle, Double valorUnitario, Double iva, Double subTotal,
+			Double totalGeneral, Factura factura, Producto producto) {
 		super();
 		IdDetalle = idDetalle;
 		CantidadDetalle = cantidadDetalle;

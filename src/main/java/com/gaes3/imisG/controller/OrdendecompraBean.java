@@ -21,11 +21,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.PrimeFaces;
+
 import com.gaes3.imisG.facadeImp.ClienteDAO;
 import com.gaes3.imisG.facadeImp.OrdendecompraDAO;
 import com.gaes3.imisG.facadeImp.ProductoDAO;
 import com.gaes3.imisG.facadeImp.ProveedorDAO;
 import com.gaes3.imisG.modelo.Cliente;
+import com.gaes3.imisG.modelo.Detalle_Por_Factura;
 import com.gaes3.imisG.modelo.Orden_de_compra;
 import com.gaes3.imisG.modelo.Producto;
 import com.gaes3.imisG.modelo.Proveedor;
@@ -46,18 +49,41 @@ public class OrdendecompraBean implements Serializable {
 	private Orden_de_compra ordendecompra = new Orden_de_compra() ;
 	private static final long serialVersionUID = 1L;
 	
+	//Carrito ordenes
+
+	
 	private List<Proveedor> obtenerProveedor;
 	private Proveedor proveedor;
 	
 	private List<Producto> obtenerProducto;
 	private Producto producto;
-	private List<Orden_de_compra> Ordendecompra;
+	//carrito
+	private ProductoDAO productoDAO = new ProductoDAO();
+	private List<Orden_de_compra> Ordendecompras;
 	
 	private OrdendecompraDAO o = new OrdendecompraDAO();
 	private OrdendecompraDAO on = new OrdendecompraDAO();
+	//carrito
+	private Orden_de_compra orden;
+	private Detalle_Por_Factura detalle = new Detalle_Por_Factura();
 
 	private static List<Boolean> list = Arrays.asList(true,true,true,true,true);
 	
+	//variable carrito
+	private long cantidad =0;
+	
+	
+	//Agrego lista para carrito de ordenes
+	private static final  ArrayList<Detalle_Por_Factura> carritoOrdenes = new ArrayList<Detalle_Por_Factura>();
+
+	//Agrego get de carrito de ordenes
+	/*public static ArrayList<Orden_de_compra> getCarritoordenes() {
+		return carritoOrdenes;
+		}*/
+	
+	public List<Detalle_Por_Factura> getCarritoOrdenes (){
+		return carritoOrdenes;
+	}
 
 	public List<Boolean> getList() {
 		return list;
@@ -210,9 +236,45 @@ public class OrdendecompraBean implements Serializable {
 
 		
 	}
-
-
+	//acciones carrito ordenes
 	
+	public void addOrden() {
+		try {
+			orden.setProveedor(proveedor);
+			this.o.guardar(ordendecompra);
+			PrimeFaces.current().ajax().update("DadosOrden:Orden");
+			init();
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+		}
+	}
+		
+		public void updateOrden(Orden_de_compra ordendecompra) {
+			try {
+				this.o.editar(this.ordendecompra);
+				PrimeFaces.current().ajax().update("datosOrden:Orden");
+				init();
+			}catch (Exception e) {
+				e.printStackTrace();
+				e.getMessage();
+			
+		}
+}
+		public void deleteOrden(Orden_de_compra ordendecompra) {
+			try {
+				//this.o.delete(ordendecompra);
+				this.Ordendecompras.remove(ordendecompra);
+				PrimeFaces.current().ajax().update("datosOrden:Orden");
+			} catch (Exception e) {
+				e.printStackTrace();
+				e.getMessage();
+			}
+		}
+				
+				
 	public String reporteOrden() throws FileNotFoundException, JRException {
 		List<Orden_de_compra> or = new ArrayList<>();
 		or = o.obtenerOrdenes_de_compra();
@@ -247,9 +309,71 @@ public class OrdendecompraBean implements Serializable {
 		JasperExportManager.exportReportToPdfFile(jasperPrint,URLpdf);
 		return "Bieno";
 	}
-
-
 	
+	//carrito orden encontrar producto
+	
+	public void encontar() throws Exception{
+		producto = productoDAO.finsById(producto.getIdProductos());
+		if(producto!=null) {
+			addMessage("Encontrado", "El producto" + producto.getNombreProducto() + "fue encontrado");
+			PrimeFaces.current().ajax().update("datosOrdenes:Orden");
+		}else {
+			addMessageError("Error","El producto con id" + producto.getIdProductos() + "no existe ");
+			
+		}
+	}
+	
+	public void agregar() {
+		if(cantidad>0) {
+			detalle.setCantidadDetalle(cantidad);
+			detalle.setProducto(producto);
+			detalle.setValorUnitario(producto.getValorProducto());
+			detalle.setTotalGeneral(cantidad*producto.getValorProducto());
+			carritoOrdenes.add(detalle);
+			System.out.println(carritoOrdenes);
+			detalle = new Detalle_Por_Factura();
+			producto = new Producto();
+			cantidad = 0;
+			PrimeFaces.current().ajax().update("datosDetalle");
+			PrimeFaces.current().ajax().update("detalleOrden:detalles");						
+		}else {
+			addMessageError("Error", "La cantidad no puede ser igual o menor a 0");
+			detalle= new Detalle_Por_Factura();
+			producto = new Producto();
+			cantidad = 0;
+			PrimeFaces.current().ajax().update("message");
+		}
+	}
+	
+	public void generarDetalle() {
+		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+		Date fehca = new Date();
+		orden.setFecha_orden_compra(fehca);
+		proveedor.getId_proveedor();
+		long precio = 0;
+		for(Detalle_Por_Factura v: carritoOrdenes) {
+			precio +=v.getSubTotal();
+		}
+		detalle.getTotalGeneral();
+	
+		
+	}
+	
+	
+	
+		public void addMessageError(String summary, String detail) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+
+		public void addMessage(String summary, String detail) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		public void limpiar() {
+			carritoOrdenes.clear();
+		}
 
 	}
 	

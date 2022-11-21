@@ -211,6 +211,22 @@
 											 
 											</h:inputText>
 										<p:message for="cuerpo" display="default" />
+														<h:panelGrid columns="2" cellspacing="6">
+						<h:outputLabel for="dest" value="Destino" />
+						<p:autoComplete id="dest" dropdown="true"
+							value="#{mailBean.correos}"
+							completeMethod="#{mailBean.listacorreos()}" scrollHeight="250" />
+
+
+						<p:commandButton ajax="false" type="submit" value="Agregar correo"
+							update="correostabla"
+							actionListener="#{mailBean.agregarcorreo()}" />
+						<h:outputLabel value="" />
+						<h:outputLabel for="asunt" value="Asunto" />
+						<p:inputText id="txtasunto" value="#{mailBean.asusto}" />
+						<h:outputLabel for="cuerpo" value="Cuerpo" />
+						<p:inputText id="txtcuerpo" value="#{mailBean.texto}" />
+					</h:panelGrid>
 
 									
 

@@ -1,19 +1,26 @@
 package com.gaes3.imisG.Utilities;
 
+import java.util.List;
 import java.util.Properties;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import com.google.common.collect.Lists;
+
+
 
 public class EmailSender {
 
 	private static String BODY;
 
-	public static boolean enviarEmail(String destinatario, String asunto, String cuerpo) {
+	public static boolean enviarEmail(List<String> lista , String asusto, String cuerpo) {
 
 		String remitente = "horaciostiven.000@gmail.com";
 
@@ -229,15 +236,16 @@ public class EmailSender {
 
 		try {
 			message.setFrom(new InternetAddress(remitente));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
-			message.setSubject(asunto);
-			
+			Address[] correo = getAddresses(lista);
+			message.addRecipients(Message.RecipientType.TO,correo);
+			message.setSubject(asusto);
 			message.setContent(BODY, "text/html");
 
 			Transport transport = session.getTransport("smtp");
 			String clave = "kgrbkpuauavvtzqn";
 			transport.connect("smtp.gmail.com", remitente, clave);
 			transport.sendMessage(message, message.getAllRecipients());
+			transport.close();
 			return true;
 
 		} catch (MessagingException me) {
@@ -246,6 +254,19 @@ public class EmailSender {
 			return false;
 		}
 
+	}
+	private static Address[] getAddresses(List<String> toList) {
+		List<InternetAddress> addresses = Lists.newArrayListWithCapacity(toList.size());
+
+		for (String to : toList) {
+			try {
+				addresses.add(new InternetAddress(to));
+			} catch (AddressException t) {
+				System.out.println(t.getMessage());
+			}
+		}
+
+		return addresses.toArray(new InternetAddress[addresses.size()]);
 	}
 
 }

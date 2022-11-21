@@ -49,7 +49,7 @@ public class MailBean implements Serializable {
 		this.texto = texto;
 	}
 
-	public void notificar() {
+	public void notificarr() {
 		if (EmailSender.enviarEmail(destino, asusto, texto)) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Muy Bien","Correo Enviado Correctamente"));
 		} else {

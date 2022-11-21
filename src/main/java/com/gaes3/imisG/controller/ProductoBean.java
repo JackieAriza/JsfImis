@@ -14,10 +14,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
+
+import org.primefaces.PrimeFaces;
+
 import com.gaes3.imisG.facadeImp.CategoriaproductoDAO;
 import com.gaes3.imisG.facadeImp.ProductoDAO;
 import com.gaes3.imisG.modelo.Categoriaproducto;
@@ -48,7 +52,8 @@ public class ProductoBean implements Serializable {
 	private List<Producto> productorp;
     private static List<Boolean> list = Arrays.asList(true,true,true,true,true,true);
     private ProductoDAO p = new ProductoDAO();
-	
+	private ProductoDAO productoDAO = new ProductoDAO();
+
 	
 	
 	
@@ -195,4 +200,26 @@ public class ProductoBean implements Serializable {
 		JasperExportManager.exportReportToPdfFile(jasperPrint,URLpdf);
 		return "Bien";
 	}
+	//carrito orden encontrar producto
+	
+		public void encontar() throws Exception{
+			producto = productoDAO.finsById(producto.getIdProductos());
+			if(producto!=null) {
+				addMessage("Encontrado", "El producto" + producto.getNombreProducto() + "fue encontrado");
+				PrimeFaces.current().ajax().update("datosOrdenes:Orden");
+			}else {
+				addMessageError("Error","El producto con id" + producto.getIdProductos() + "no existe ");
+				
+			}
+		}
+		public void addMessageError(String summary, String detail) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+
+		public void addMessage(String summary, String detail) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
 }
+

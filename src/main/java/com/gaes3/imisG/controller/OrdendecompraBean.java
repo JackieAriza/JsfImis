@@ -265,7 +265,7 @@ public class OrdendecompraBean implements Serializable {
 }
 		public void deleteOrden(Orden_de_compra ordendecompra) {
 			try {
-				//this.o.delete(ordendecompra);
+				this.o.eliminar(cantidad);
 				this.Ordendecompras.remove(ordendecompra);
 				PrimeFaces.current().ajax().update("datosOrden:Orden");
 			} catch (Exception e) {

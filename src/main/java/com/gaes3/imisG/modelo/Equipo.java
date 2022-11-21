@@ -19,7 +19,7 @@ public class Equipo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_equipos;
 	private String marca;
-	private String cantidad;
+	private long cantidad;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha_Entrega;
 	private String estado;
@@ -40,11 +40,13 @@ public class Equipo {
 		this.marca = marca;
 	}
 
-	public String getCantidad() {
+	
+
+	public long getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(String cantidad) {
+	public void setCantidad(long cantidad) {
 		this.cantidad = cantidad;
 	}
 

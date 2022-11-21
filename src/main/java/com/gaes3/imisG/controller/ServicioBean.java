@@ -5,8 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,7 +23,7 @@ import javax.faces.context.FacesContext;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.primefaces.model.file.UploadedFile;
@@ -47,6 +49,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class ServicioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 
 	private Servicio servicio;
 	private List<Cliente> obtenerClientes;
@@ -58,6 +61,7 @@ public class ServicioBean implements Serializable {
 
 	private static List<Boolean> list = Arrays.asList(true, true, true, true, true, true);
 
+	
 	public UploadedFile getFile() {
 		return file;
 	}
@@ -268,6 +272,41 @@ public class ServicioBean implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_FATAL, "AVISO", "Por Favor Seleciones un Archivo"));
 		}
 
+	}
+	public void upload() {
+		Date date = new Date();
+		try {
+			InputStream input = file.getInputStream();
+			System.out.println(file);
+			@SuppressWarnings("resource")
+			XSSFWorkbook libro = new XSSFWorkbook(input);
+			Sheet sheet = libro.getSheetAt(0);
+			Iterator<Row> iterator = sheet.iterator();
+			int i = 0;
+			while (iterator.hasNext()) {
+				Row currentRow = iterator.next();
+				if (i > 0) {
+					servicio.setNombre_Servicio(currentRow.getCell(1).getStringCellValue());
+					servicio.setValor_servicio(currentRow.getCell(2).getNumericCellValue());
+					cliente.setIdCliente((long) currentRow.getCell(3).getNumericCellValue());
+					equipo.setId_equipos((long) currentRow.getCell(4).getNumericCellValue());
+					servicio.setCliente(cliente);
+					servicio.setEquipo(equipo);
+					if (currentRow.getCell(0).getNumericCellValue() > 0) {
+						servicio.setId_servicios((int) currentRow.getCell(0).getNumericCellValue());
+						s.editar(servicio);
+					} else {
+						s.guardar(servicio);
+					}
+					servicio = new Servicio();
+				}
+				i++;
+			}
+			System.out.println("Ingresados exitosamente");
+			PrimeFaces.current().ajax().update("datosVenta:Venta");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public void onToggle(ToggleEvent e) {

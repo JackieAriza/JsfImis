@@ -3,12 +3,14 @@ package com.gaes3.imisG.controller;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,10 +20,16 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.primefaces.PrimeFaces;
+import org.primefaces.model.file.UploadedFile;
+
 import com.gaes3.imisG.facadeImp.EquipoDAO;
 import com.gaes3.imisG.facadeImp.ServicioDAO;
 import com.gaes3.imisG.modelo.Equipo;
-
+import com.gaes3.imisG.modelo.Servicio;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -37,8 +45,24 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class EquipoBean {
 	private List<Equipo> equipo;
 	private EquipoDAO e = new EquipoDAO();
+	private UploadedFile fileq;
+	private Equipo equipop;
+	
+	
 	
 
+	public Equipo getEquipop() {
+		return equipop;
+	}
+	public void setEquipop(Equipo equipop) {
+		this.equipop = equipop;
+	}
+	public UploadedFile getFileq() {
+		return fileq;
+	}
+	public void setFileq(UploadedFile fileq) {
+		this.fileq = fileq;
+	}
 	public String listar() {
 		Equipo e= new Equipo();
 		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -143,6 +167,45 @@ public class EquipoBean {
 		String URLpdf="C:\\Users\\YakelinAriza\\eclipse-workspace\\imisG\\src\\main\\webapp\\resources\\reporteEquipo_.pdf";
 		JasperExportManager.exportReportToPdfFile(jasperPrint,URLpdf);
 		return "Bien";
+	}
+	
+	@PostConstruct
+	public void init() {
+		equipop = new Equipo();
+	}
+	public void cargae() {
+		Date date = new Date();
+		try {
+			InputStream input = fileq.getInputStream();
+			System.out.println(fileq);
+			@SuppressWarnings("resource")
+			XSSFWorkbook libro = new XSSFWorkbook(input);
+			Sheet sheet = libro.getSheetAt(0);
+			Iterator<Row> iterator = sheet.iterator();
+			int i = 0;
+			while (iterator.hasNext()) {
+				Row currentRow = iterator.next();
+				if (i > 0) {
+					equipop.setMarca(currentRow.getCell(1).getStringCellValue());
+					equipop.setCantidad((long)currentRow.getCell(2).getNumericCellValue());
+					equipop.setFecha_Entrega(currentRow.getCell(3).getDateCellValue());
+					equipop.setEstado(currentRow.getCell(4).getStringCellValue());
+					
+					if (currentRow.getCell(0).getNumericCellValue() > 0) {
+						equipop.setId_equipos((long) currentRow.getCell(0).getNumericCellValue());
+						e.editar(equipop);
+					} else {
+						e.guardar(equipop);
+					}
+					equipop = new Equipo();
+				}
+				i++;
+			}
+			System.out.println("Ingresados exitosamente");
+			PrimeFaces.current().ajax().update("datosVenta:Venta");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 

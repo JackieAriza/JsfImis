@@ -7,125 +7,131 @@
 	template="../Template/template.xhtml">
 	<ui:define name="tuvariable">
 
-	
-			<div class="card mb-4">
-				<div class="card-header">
-					<i class="fas fa-table me-1"></i> Servicios
-				</div>
-				<div class="card-body">
 
-					<div class="card">
-						<h:form id="form" enctype="multipart/form-data">
-
-							<div class="card crud-demo">
-
-
-								<p:toolbar>
-									<p:toolbarGroup>
-										<h:commandButton class="btn btn-outline-success"
-											action="#{servicioBean.listar()}" value="Nuevo Servicio"></h:commandButton>
-										<h:commandButton class="btn btn-outline-success"
-											action="#{servicioBean.reportes()}" value="Reportes"></h:commandButton>
-									</p:toolbarGroup>
-									<p:toolbarGroup align="right">
-
-										<p:commandButton value="Excel" icon="pi pi-upload"
-											styleClass="ui-button-help" ajax="false">
-											<p:dataExporter type="xls" target="dt-products"
-												fileName="Servicios" visibleOnly="true" />
-										</p:commandButton>
-
-
-										<p:commandButton id="toggler" value="Columnas" type="button" />
-										<p:columnToggler datasource="dt-products" trigger="toggler">
-											<p:ajax event="toggle" listener="#{servicioBean.onToggle}" />
-										</p:columnToggler>
-
-										
-											<p:growl showDetail="true">
-											</p:growl>
-											
-										
-
-									</p:toolbarGroup>
-									<div class="card">
-										<h5>Multiple</h5>
-
-									</div>
-								</p:toolbar>
-								<p:fileUpload mode="simple" label="Importar excel"
-												accept=".xlsx" chooseIcon="pi pi-download"
-												value="#{servicioBean.file}" />
-
-											<p:commandButton value="Submit" ajax="false"
-												action="#{servicioBean.upload()}" update="datosPedido"
-												
-												styleClass="mt-3 ui-button-outlined block" />
-
-
-								<p:dataTable id="dt-products" widgetVar="dtProducts"
-									var="servicio" value="#{servicioBean.obtenerServicios()}"
-									reflow="true" styleClass="products-table"
-									selection="#{servicioBean.obtenerServicios()}"
-									rowKey="#{servicio.id_servicios}" paginator="true" rows="10"
-									rowSelectMode="add" paginatorPosition="bottom">
-
-									<p:column filterBy="#{servicio.id_servicios}"
-										visible="#{servicioBean.list[0]}"
-										exportable="#{servicioBean.list[0]}">
-
-										<f:facet name="header">id servicio</f:facet>
-										<h:outputText value="#{servicio.id_servicios}"></h:outputText>
-									</p:column>
-									<p:column filterBy="#{servicio.nombre_Servicio}"
-										exportable="#{servicioBean.list[1]}"
-										visible="#{servicioBean.list[1]}">
-										<f:facet name="header">Nombre Servicio</f:facet>
-										<h:outputText value="#{servicio.nombre_Servicio}">
-
-										</h:outputText>
-
-									</p:column>
-									<p:column filterBy="#{servicio.valor_servicio}"
-										exportable="#{servicioBean.list[2]}"
-										visible="#{servicioBean.list[2]}">
-										<f:facet name="header">Valor</f:facet>
-										<h:outputText value="#{servicio.valor_servicio}"></h:outputText>
-									</p:column>
-
-									<p:column filterBy="#{servicio.cliente}"
-										exportable="#{servicioBean.list[3]}"
-										visible="#{servicioBean.list[3]}">
-										<f:facet name="header">Cliente</f:facet>
-										<h:outputText value="#{servicio.cliente}"></h:outputText>
-									</p:column>
-									<p:column filterBy="#{servicio.equipo}"
-										exportable="#{servicioBean.list[4]}"
-										visible="#{servicioBean.list[4]}">
-										<f:facet name="header">Equipo</f:facet>
-										<h:outputText value="#{servicio.equipo}"></h:outputText>
-									</p:column>
-
-									<p:column exportable="false" visible="#{servicioBean.list[5]}">
-										<f:facet name="header">Acciones</f:facet>
-										<h:commandButton class="btn btn-outline-info"
-											action="#{servicioBean.editar(servicio.id_servicios)}"
-											value="Editar"></h:commandButton>
-
-
-										<h:commandButton class="btn btn-outline-danger"
-											action="#{servicioBean.eliminar(servicio.id_servicios)}"
-											value="Eliminar"></h:commandButton>
-									</p:column>
-								</p:dataTable>
-
-							</div>
-						</h:form>
-					</div>
-
-				</div>
+		<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table me-1"></i> Servicios
 			</div>
-	
+			<div class="card-body">
+
+				<div class="card">
+					<h:form id="form" enctype="multipart/form-data">
+
+						<div class="card crud-demo">
+
+
+							<p:toolbar>
+								<p:toolbarGroup>
+									<h:commandButton class="btn btn-outline-success"
+										action="#{servicioBean.listar()}" value="Nuevo Servicio"></h:commandButton>
+									<h:commandButton class="btn btn-outline-success"
+										action="#{servicioBean.reportes()}" value="Reportes"></h:commandButton>
+								</p:toolbarGroup>
+								<p:toolbarGroup align="right">
+
+									<p:commandButton value="Excel" icon="pi pi-save"
+										styleClass="ui-button-help" ajax="false">
+										<p:dataExporter type="xlsx" target="dt-products"
+											fileName="Servicios" visibleOnly="true" />
+									</p:commandButton>
+
+
+									<p:commandButton icon="pi pi-align-justify" id="toggler"
+										value="Columnas" type="button"
+										styleClass="ui-button-outlined block" />
+									<p:columnToggler datasource="dt-products" trigger="toggler">
+										<p:ajax event="toggle" listener="#{servicioBean.onToggle}" />
+									</p:columnToggler>
+									<p:fileUpload mode="simple" skinSimple="true" styleClass=""
+										label="Importar excel" accept=".xlsx"
+										value="#{servicioBean.file}" />
+
+									<p:commandButton value="Subir Excel" ajax="false"
+										icon="pi pi-upload" action="#{servicioBean.upload()}"
+										update="datosPedido" styleClass="ui-button-outlined block" />
+
+
+
+									<p:growl showDetail="true">
+
+									</p:growl>
+
+
+
+
+								</p:toolbarGroup>
+
+								<div class="card">
+									<h5>Multiple</h5>
+
+								</div>
+							</p:toolbar>
+
+
+
+							<p:dataTable id="dt-products" widgetVar="dtProducts"
+								var="servicio" value="#{servicioBean.obtenerServicios()}"
+								reflow="true" styleClass="products-table"
+								selection="#{servicioBean.obtenerServicios()}"
+								rowKey="#{servicio.id_servicios}" paginator="true" rows="10"
+								rowSelectMode="add" paginatorPosition="bottom">
+
+								<p:column filterBy="#{servicio.id_servicios}"
+									visible="#{servicioBean.list[0]}"
+									exportable="#{servicioBean.list[0]}">
+
+									<f:facet name="header">id servicio</f:facet>
+									<h:outputText value="#{servicio.id_servicios}"></h:outputText>
+								</p:column>
+								<p:column filterBy="#{servicio.nombre_Servicio}"
+									exportable="#{servicioBean.list[1]}"
+									visible="#{servicioBean.list[1]}">
+									<f:facet name="header">Nombre Servicio</f:facet>
+									<h:outputText value="#{servicio.nombre_Servicio}">
+
+									</h:outputText>
+
+								</p:column>
+								<p:column filterBy="#{servicio.valor_servicio}"
+									exportable="#{servicioBean.list[2]}"
+									visible="#{servicioBean.list[2]}">
+									<f:facet name="header">Valor</f:facet>
+									<h:outputText value="#{servicio.valor_servicio}"></h:outputText>
+								</p:column>
+
+								<p:column filterBy="#{servicio.cliente}"
+									exportable="#{servicioBean.list[3]}"
+									visible="#{servicioBean.list[3]}">
+									<f:facet name="header">Cliente</f:facet>
+									<h:outputText value="#{servicio.cliente}"></h:outputText>
+								</p:column>
+								<p:column filterBy="#{servicio.equipo}"
+									exportable="#{servicioBean.list[4]}"
+									visible="#{servicioBean.list[4]}">
+									<f:facet name="header">Equipo</f:facet>
+									<h:outputText value="#{servicio.equipo}"></h:outputText>
+								</p:column>
+
+								<p:column exportable="false" visible="#{servicioBean.list[5]}">
+									<f:facet name="header">Acciones</f:facet>
+									<h:commandButton class="btn btn-outline-info"
+										action="#{servicioBean.editar(servicio.id_servicios)}"
+										value="Editar"></h:commandButton>
+
+
+									<h:commandButton class="btn btn-outline-danger"
+										action="#{servicioBean.eliminar(servicio.id_servicios)}"
+										value="Eliminar"></h:commandButton>
+								</p:column>
+							</p:dataTable>
+
+						</div>
+					</h:form>
+				</div>
+
+			</div>
+		</div>
+
 
 
 		<footer class="py-4 bg-light mt-auto">

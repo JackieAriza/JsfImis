@@ -108,7 +108,7 @@
 							<p:outputLabel for="codi" value="Productos" />
 							<p:selectOneMenu editable="true" id="codi"
 								class="focus:border-primary shadow-4"
-								value="#{ProductoBean.productos.idProductos}">
+								value="#{ProductoBean.carritoOrdenes}">
 								<f:selectItems value="#{OrdendecompraBean.productos}" var="p"
 									itemValue="#{p.idProducto}" itemLabel="#{p.nombreProducto}"></f:selectItems>
 							</p:selectOneMenu>
@@ -123,9 +123,10 @@
 						<h:inputHidden value="#{ProductoBean.producto.nombreProducto}" />
 						<h:inputHidden value="#{ProductoBean.producto.idProducto}" />
 						<p:panelGrid columns="4">
+						
 							<p:outputLabel for="nombreProducto" value="Nombre del producto" />
 							<p:inputText id="nombreProducto" disabled="true"
-								value="#{ProductoBean.producto.nombreProducto}"></p:inputText>
+								value="#{ProductoBean.carritoOrdenes}"></p:inputText>
 
 
 							<p:outputLabel for="preciounidad" value="Precio por unidad" />

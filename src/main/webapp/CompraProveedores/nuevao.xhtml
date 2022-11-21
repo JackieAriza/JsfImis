@@ -6,7 +6,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="../Template/template.xhtml">
 	<ui:define name="tuvariable">
-
+			<p:panel>
+				<p:growl id="message" showDetail="true" showSummary="true"></p:growl>
 		<div class="card mb-4">
 			<div class="card-header">
 				<i class="fas fa-table me-1"></i> Agregar orden de compra
@@ -16,9 +17,15 @@
 					<H2 class="text-warning"
 						style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">Agregar
 						orden de compra</H2>
+						
+						
 					<HR />
-					<h:form style="display: flex;justify-content: center; ">
+					
+						
+							
+					<h:form id="detallesOrden" enctype="multipart/form-data" style="display: flex;justify-content: left; ">
 						<h:panelGrid>
+						
 							<f:facet name="header">
 								<h:outputText value="Nueva Orden de compra"></h:outputText>
 							</f:facet>
@@ -55,15 +62,33 @@
 
 
 							<hr />
+							
+								<f:facet name="header">
+								<h:outputText value="Nueva Orden de compra"></h:outputText>
+							</f:facet>
 
 							<f:facet name="footer">
 								<h:commandButton class="btn btn-outline-warning"
 									actionListener="#{ordendecompraBean.guardar}"
 									action="#{ordendecompraBean.direccionar}" value="Guardar"></h:commandButton>
 							</f:facet>
-
+							
+						
+								<h:commandButton class="btn btn-outline-warning"
+									actionListener="#{ordendecompraBean.guardar}"
+									action="#{ordendecompraBean.direccionar}" value="Añadir"></h:commandButton>
+								<p:commandButton value="Agregar producto" onclick="PF('dlgl2').show()"
+									style="background-color: ; border-color: ; margin-top: 1%; font-family: Fredoka One, cursive" />
+								<p:dataTable value="#{ordendecompraBean.carritoOrdenes}" var="orden"
+								id="ordenes" style="margin-top: 25px">
+								
+								<p:column headerText="Nombre producto">
+							<h:outputText value="#{ordendecompraBean.obtenerProducto}"></h:outputText>
+						</p:column>
+							
+								</p:dataTable>
 						</h:panelGrid>
-					</h:form>
+					</h:form>		
 				</DIV>
 			</div>
 		</div>
@@ -78,7 +103,6 @@
 				</div>
 			</div>
 		</footer>
-
-
+		</p:panel>
 	</ui:define>
 </ui:composition>

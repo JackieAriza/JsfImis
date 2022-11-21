@@ -7,7 +7,7 @@
 	template="../Template/template.xhtml">
 	<ui:define name="tuvariable">
 
-		<h:form>
+	
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> Servicios
@@ -15,7 +15,7 @@
 				<div class="card-body">
 
 					<div class="card">
-						<h:form id="form">
+						<h:form id="form" enctype="multipart/form-data">
 
 							<div class="card crud-demo">
 
@@ -41,11 +41,11 @@
 											<p:ajax event="toggle" listener="#{servicioBean.onToggle}" />
 										</p:columnToggler>
 
-    <h:form enctype="multipart/form-data">
-    <p:growl showDetail="true" > </p:growl>
-        <p:fileUpload value="#{servicioBean.file}" mode="simple" skinSimple="true" multiple="true"/>
-        <h:commandButton value="Submit" ajax="false" action="#{servicioBean.cargardeproductos}" styleClass="mt-3 ui-button-outlined block"/>
-    </h:form>
+										
+											<p:growl showDetail="true">
+											</p:growl>
+											
+										
 
 									</p:toolbarGroup>
 									<div class="card">
@@ -53,6 +53,14 @@
 
 									</div>
 								</p:toolbar>
+								<p:fileUpload mode="simple" label="Importar excel"
+												accept=".xlsx" chooseIcon="pi pi-download"
+												value="#{servicioBean.file}" />
+
+											<p:commandButton value="Submit" ajax="false"
+												action="#{servicioBean.upload()}" update="datosPedido"
+												
+												styleClass="mt-3 ui-button-outlined block" />
 
 
 								<p:dataTable id="dt-products" widgetVar="dtProducts"
@@ -117,7 +125,7 @@
 
 				</div>
 			</div>
-		</h:form>
+	
 
 
 		<footer class="py-4 bg-light mt-auto">

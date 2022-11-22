@@ -24,8 +24,6 @@ public class Detalle_Por_Factura {
 	
 	private Double ValorUnitario;
 	
-	private Double Iva;
-	
 	private Double SubTotal;
 	
 	private Double TotalGeneral;
@@ -60,12 +58,7 @@ public class Detalle_Por_Factura {
 	public void setValorUnitario(Double valorUnitario) {
 		ValorUnitario = valorUnitario;
 	}
-	public Double getIva() {
-		return Iva;
-	}
-	public void setIva(Double iva) {
-		Iva = iva;
-	}
+	
 	public Double getSubTotal() {
 		return SubTotal;
 	}
@@ -93,16 +86,15 @@ public class Detalle_Por_Factura {
 	@Override
 	public String toString() {
 		return "Detalle_Por_Factura [IdDetalle=" + IdDetalle + ", CantidadDetalle=" + CantidadDetalle
-				+ ", ValorUnitario=" + ValorUnitario + ", Iva=" + Iva + ", SubTotal=" + SubTotal + ", TotalGeneral="
+				+ ", ValorUnitario=" + ValorUnitario + ", SubTotal=" + SubTotal + ", TotalGeneral="
 				+ TotalGeneral + ", factura=" + factura + ", producto=" + producto + "]";
 	}
-	public Detalle_Por_Factura(long idDetalle, long cantidadDetalle, Double valorUnitario, Double iva, Double subTotal,
+	public Detalle_Por_Factura(long idDetalle, long cantidadDetalle, Double valorUnitario, Double subTotal,
 			Double totalGeneral, Factura factura, Producto producto) {
 		super();
 		IdDetalle = idDetalle;
 		CantidadDetalle = cantidadDetalle;
 		ValorUnitario = valorUnitario;
-		Iva = iva;
 		SubTotal = subTotal;
 		TotalGeneral = totalGeneral;
 		this.factura = factura;

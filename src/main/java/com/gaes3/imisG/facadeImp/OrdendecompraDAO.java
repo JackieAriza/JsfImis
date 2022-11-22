@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.gaes3.imisG.modelo.Detalleordencompra;
 import com.gaes3.imisG.modelo.JPAUtil;
 import com.gaes3.imisG.modelo.Orden_de_compra;
 
@@ -55,6 +56,21 @@ public class OrdendecompraDAO {
 			return listaOrden_de_compra;
 		}
 		
+		public void insertarDetalles(List<Detalleordencompra> dc) {
+			entity.getTransaction().begin();
+			for(Detalleordencompra detalles: dc) {
+				entity.persist(detalles);
+			}
+			entity.getTransaction().commit();
+		}
 		
+		@SuppressWarnings("unchecked")
+		public List<Detalleordencompra> verDetalles(long id){
+			List<Detalleordencompra> listad = new ArrayList<>();
+			Query q = entity.createQuery("SELECT dc FROM Detalleordencompra dc WHERE dc.ordendecompra.id_orden_compra=:id");
+			q.setParameter("id", id);
+			listad = q.getResultList();
+			return listad;
+		}
 		
 }

@@ -6,105 +6,123 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="../Template/template.xhtml">
 	<ui:define name="tuvariable">
+		<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table me-1"></i> Orden de compra
+			</div>
+			<div class="card-body">
 
-		<h:form>
-			<div class="card mb-4">
-				<div class="card-header">
-					<i class="fas fa-table me-1"></i> Orden de compra
-				</div>
-				<div class="card-body">
-
-					<div class="card">
-						<h:form id="form">
-							<div class="card crud-demo">
+				<div class="card">
+					<h:form id="form">
+						<div class="card crud-demo">
 
 
 
-								<p:toolbar>
-									<p:toolbarGroup>
-										<h:commandButton class="btn btn-outline-success"
-											action="#{ordendecompraBean.listar()}" value="Nueva Orden"></h:commandButton>
-											<h:commandButton class="btn btn-outline-success"
-											action="#{ordendecompraBean.reporteOrden()}" value="Reporte Orden"></h:commandButton>
-									</p:toolbarGroup>
-									<p:toolbarGroup align="right">
+							<p:toolbar>
+								<p:toolbarGroup>
+									<h:commandButton class="btn btn-outline-success"
+										action="#{ordendecompraBean.listar()}" value="Nueva Orden"></h:commandButton>
+									<h:commandButton class="btn btn-outline-success"
+										action="#{ordendecompraBean.reporteOrden()}"
+										value="Reporte Orden"></h:commandButton>
+								</p:toolbarGroup>
+								<p:toolbarGroup align="right">
 									<p:commandButton value="Excel" icon="pi pi-upload"
-											styleClass="ui-button-help" ajax="false" >
-											<p:dataExporter type="xls" target="dt-products"
-												fileName="ordendecompra" visibleOnly="true" />
-										</p:commandButton>
-									</p:toolbarGroup>
-								</p:toolbar>
+										styleClass="ui-button-help" ajax="false">
+										<p:dataExporter type="xls" target="dt-products"
+											fileName="ordendecompra" visibleOnly="true" />
+									</p:commandButton>
+								</p:toolbarGroup>
+							</p:toolbar>
 
 
 
 
-								<p:dataTable id="dt-products" widgetVar="dtProducts"
-									var="orden" value="#{ordendecompraBean.obtenerOrdenes_de_compra()}"
-									reflow="true" styleClass="products-table"
-									selection="#{ordendecompraBean.obtenerOrdenes_de_compra()}"
-									rowKey="#{orden.id_orden_compra}" paginator="true" rows="10"
-									rowSelectMode="add" paginatorPosition="bottom">
-									
-									
-									<p:column filterBy="#{orden.id_orden_compra}"
-										visible="#{ordendecompraBean.list[0]}"
-										exportable="#{ordendecompraBean.list[0]}">
+							<p:dataTable id="dt-products" widgetVar="dtProducts" var="orden"
+								value="#{ordendecompraBean.obtenerOrdenes_de_compra()}"
+								reflow="true" styleClass="products-table"
+								selection="#{ordendecompraBean.obtenerOrdenes_de_compra()}"
+								rowKey="#{orden.id_orden_compra}" paginator="true" rows="10"
+								rowSelectMode="add" paginatorPosition="bottom">
 
-										<f:facet name="header">id</f:facet>
-										<h:outputText value="#{orden.id_orden_compra}"></h:outputText>
+
+								<p:column filterBy="#{orden.id_orden_compra}"
+									visible="#{ordendecompraBean.list[0]}"
+									exportable="#{ordendecompraBean.list[0]}">
+
+									<f:facet name="header">id</f:facet>
+									<h:outputText value="#{orden.id_orden_compra}"></h:outputText>
+								</p:column>
+								<p:column filterBy="#{orden.cantidad}"
+									visible="#{ordendecompraBean.list[1]}"
+									exportable="#{ordendecompraBean.list[1]}">
+
+									<f:facet name="header">Precio</f:facet>
+									<h:outputText value="#{orden.precio}">
+										<f:convertNumber currencySymbol="$" groupingUsed="true"
+											maxFractionDigits="2" type="currency" locale="es_CO" />
+									</h:outputText>
+								</p:column>
+								<p:column filterBy="#{orden.proveedor}"
+									visible="#{ordendecompraBean.list[2]}"
+									exportable="#{ordendecompraBean.list[2]}">
+									<f:facet name="header">Proveedor</f:facet>
+									<h:outputText value="#{orden.proveedor}"></h:outputText>
+								</p:column>
+
+								<p:column filterBy="#{orden.fecha_orden_compra}"
+									visible="#{ordendecompraBean.list[3]}"
+									exportable="#{ordendecompraBean.list[3]}">
+
+									<f:facet name="header">Fecha orden</f:facet>
+									<h:outputText value="#{orden.fecha_orden_compra}"></h:outputText>
+								</p:column>
+
+
+								<p:column exportable="false">
+									<f:facet name="header">Acciones</f:facet>
+									<p:commandButton class="btn btn-outline-info"
+										oncomplete="PF('dlgl2').show()"
+										actionListener="#{ordendecompraBean.ver(orden.id_orden_compra)}"
+										value="Ver detalles"></p:commandButton>
+
+								</p:column>
+
+							</p:dataTable>
+							<p:dialog widgetVar="dlgl2" id="modal" modal="true"
+								showEffect="fade" resizable="false" header="Detalle">
+								<p:dataTable value="#{ordendecompraBean.listad}" var="orden"
+									id="listadetalle" style="margin-top: 25px; width: 600px;">
+
+									<p:column headerText="Nombre producto">
+										<h:outputText value="#{orden.producto.nombreProducto}"></h:outputText>
 									</p:column>
-									<p:column filterBy="#{orden.cantidad}"
-										visible="#{ordendecompraBean.list[1]}"
-										exportable="#{ordendecompraBean.list[1]}">
 
-										<f:facet name="header">Cantidad</f:facet>
+									<p:column headerText="Cantidad">
 										<h:outputText value="#{orden.cantidad}"></h:outputText>
 									</p:column>
-									<p:column filterBy="#{orden.proveedor}"
-										visible="#{ordendecompraBean.list[2]}"
-										exportable="#{ordendecompraBean.list[2]}">
-										<f:facet name="header">Proveedor</f:facet>
-										<h:outputText value="#{orden.proveedor}"></h:outputText>
+									<p:column headerText="Valor por unidad">
+										<h:outputText value="#{orden.preciounitario}">
+											<f:convertNumber currencySymbol="$" groupingUsed="true"
+												maxFractionDigits="2" type="currency" locale="es_CO" />
+										</h:outputText>
 									</p:column>
 
-									<p:column filterBy="#{orden.producto}"
-										visible="#{ordendecompraBean.list[3]}"
-										exportable="#{ordendecompraBean.list[3]}">
-										<f:facet name="header">Productos</f:facet>
-										<h:outputText value="#{orden.producto}"></h:outputText>
+									<p:column headerText="Total">
+										<h:outputText value="#{orden.preciototal}">
+											<f:convertNumber currencySymbol="$" groupingUsed="true"
+												maxFractionDigits="2" type="currency" locale="es_CO" />
+										</h:outputText>
 									</p:column>
-									<p:column filterBy="#{orden.fecha_orden_compra}"
-										visible="#{ordendecompraBean.list[4]}"
-										exportable="#{ordendecompraBean.list[4]}">
-
-										<f:facet name="header">Fecha orden</f:facet>
-										<h:outputText value="#{orden.fecha_orden_compra}"></h:outputText>
-									</p:column>
-
-
-									<p:column exportable="false">
-										<f:facet name="header">Acciones</f:facet>
-										<h:commandButton class="btn btn-outline-info"
-											action="#{ordendecompraBean.editar(orden.id_orden_compra)}"
-											value="Editar"></h:commandButton>
-
-										<h:commandButton class="btn btn-outline-danger"
-											action="#{ordendecompraBean.eliminar(orden.id_orden_compra)}"
-											value="Eliminar"></h:commandButton>
-									</p:column>
-
-
-
 								</p:dataTable>
 
-							</div>
-						</h:form>
-					</div>
-
+							</p:dialog>
+						</div>
+					</h:form>
 				</div>
+
 			</div>
-		</h:form>
+		</div>
 
 
 		<footer class="py-4 bg-light mt-auto">
@@ -115,7 +133,6 @@
 				</div>
 			</div>
 		</footer>
-
 
 	</ui:define>
 </ui:composition>

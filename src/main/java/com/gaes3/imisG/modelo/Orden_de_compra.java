@@ -20,7 +20,9 @@ public class Orden_de_compra {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id_orden_compra;
 
-	private long cantidad ;
+	private Double precio;
+	
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha_orden_compra; 
 	
@@ -28,9 +30,6 @@ public class Orden_de_compra {
 	@JoinColumn(name="fk_id_proveedor")
 	private Proveedor proveedor;
 	
-	@ManyToOne 
-	@JoinColumn(name="fk_idProductos")
-	private Producto producto;
 	
 	public long getId_orden_compra() {
 		return id_orden_compra;
@@ -38,11 +37,12 @@ public class Orden_de_compra {
 	public void setId_orden_compra(long id_orden_compra) {
 		this.id_orden_compra = id_orden_compra;
 	}
-	public long getCantidad() {
-		return cantidad;
+
+	public Double getPrecio() {
+		return precio;
 	}
-	public void setCantidad(long cantidad) {
-		this.cantidad = cantidad;
+	public void setPrecio(Double precio) {
+		this.precio = precio;
 	}
 	public Date getFecha_orden_compra() {
 		return fecha_orden_compra;
@@ -56,26 +56,19 @@ public class Orden_de_compra {
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
 	}
-	public Producto getProducto() {
-		return producto;
-	}
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
+
 	@Override
 	public String toString() {
-		return "Orden_de_compra [id_orden_compra=" + id_orden_compra + ", cantidad=" + cantidad
-				+ ", fecha_orden_compra=" + fecha_orden_compra + ", proveedor=" + proveedor + ", producto=" + producto
-				+ "]";
+		return "Orden_de_compra [id_orden_compra=" + id_orden_compra + ", precio=" + precio
+				+ ", fecha_orden_compra=" + fecha_orden_compra + ", proveedor=" + proveedor + "]";
 	}
-	public Orden_de_compra(long id_orden_compra, long cantidad, Date fecha_orden_compra, Proveedor proveedor,
-			Producto producto) {
+	public Orden_de_compra(long id_orden_compra, Double precio, Date fecha_orden_compra, Proveedor proveedor) {
 		super();
 		this.id_orden_compra = id_orden_compra;
-		this.cantidad = cantidad;
+		this.precio = precio;
 		this.fecha_orden_compra = fecha_orden_compra;
 		this.proveedor = proveedor;
-		this.producto = producto;
+
 	}
 	public Orden_de_compra() {
 		super();

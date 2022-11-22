@@ -16,19 +16,17 @@ import com.gaes3.imisG.modelo.Usuario;
 @RequestScoped
 public class MailBean {
 
-	private List<String> destino = new ArrayList<>();
+	private static final ArrayList<String> destino = new ArrayList<String>();
 	private String asusto;
 	private String texto;
 	private String correos;
 	private UsuarioDAO u = new UsuarioDAO();
 
-	public List<String> getDestino() {
+	public ArrayList<String> getDestino() {
 		return destino;
 	}
 
-	public void setDestino(List<String> destino) {
-		this.destino = destino;
-	}
+
 
 	public String getAsusto() {
 		return asusto;
@@ -72,8 +70,10 @@ public class MailBean {
 		}
 
 	}
+	
 
 	public void agregarcorreo() {
+		
 		boolean v = false;
 		for (String d : destino) {
 			if (d.contentEquals(correos)) {
@@ -100,6 +100,26 @@ public class MailBean {
 			lista.add(user.getEmailUsuario());
 		}
 		return lista;
+	}
+	
+	public void boton() {
+		List<Usuario> lista = new ArrayList<>();
+		lista = u.obtenerUsuarios();
+		for(Usuario user: lista) {
+			destino.add(user.getEmailUsuario());
+		}
+		if (EmailSender.enviarEmail(destino, asusto, texto)) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Muy Bien", "Correo Enviado Correctamente"));
+			destino.clear();
+			correos = "";
+			asusto = "";
+			texto = "";
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Oh Rayos", "Correo Enviado No se Pudo Enviar"));
+		}
+
 	}
 
 }

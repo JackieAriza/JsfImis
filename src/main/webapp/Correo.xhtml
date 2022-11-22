@@ -156,6 +156,7 @@
 
 			</nav>
 		</div>
+
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="container-fluid px-4  ">
@@ -163,90 +164,77 @@
 						INFORMATION SYSTEM</h1>
 					<hr />
 
-
 					<div class="card mb-4">
-						<div class="card-header">
-							<i class="fas fa-table me-1"></i> Enviar Correo Electronico
-						</div>
+
 						<div class="card-body">
 							<DIV class="">
 								<H2 class="text-warning"
 									style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">Enviar
 									Correo Electronico</H2>
 								<HR />
-								<h:form style="display: flex;justify-content: center; ">
-									<h:panelGrid>
+								<h:form>
+									<p:growl id="messages" showDetail="true"></p:growl>
+
+									<p:dataTable id="correostabla" value="#{mailBean.destino}"
+										var="p">
+										<p:column headerText="Correos">
+											<h:outputText value="#{p}"></h:outputText>
+										</p:column>
+										<p:column>
+											<p:commandButton actionListener="#{mailBean.quitarCorreo(p)}"
+												update="correostabla"
+												class="rounded-button ui-button-warning ui-button-outlined"   icon="pi pi-trash"
+												></p:commandButton>
+										</p:column>
+									</p:dataTable>
+									<h:panelGrid style="display: flex;justify-content: center; ">
+										<h:outputLabel for="dest" value="Destino" />
+										<p:autoComplete id="dest" dropdown="true"
+											value="#{mailBean.correos}"
+											completeMethod="#{mailBean.listacorreos()}"
+											scrollHeight="250" />
 
 
-										<h:outputText for="email" value="Email"></h:outputText>
-										<h:inputText id="email" required="true"
-											requiredMessage="Ingresa Tu Correo Electronico."
-											validatorMessage="Correo Electronico Invalido"
+										<h:commandButton class="btn btn-outline-warning" ajax="false" type="submit"
+											value="Agregar correo" update="correostabla"
+											actionListener="#{mailBean.agregarcorreo()}" />
+
+
+
+										<h:outputLabel value="" />
+										<h:outputLabel for="asunt" value="Asunto" />
+										<p:inputText
 											style="padding:7px 100px; border-left:6px solid black;"
-											class="form-control" value="#{mailBean.destino}">
-											<f:validateLength minimum="2" />
-											<f:validateRegex
-												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-										</h:inputText>
-										<p:message for="email" display="default" />
-
-
-										<h:outputText for="asunto" value="Asunto"></h:outputText>
-										<h:inputText id="asunto" required="true"
-											requiredMessage="Ingresa Un Asunto."
+											class="form-control" id="txtasunto"
+											value="#{mailBean.asusto}" />
+										<h:outputLabel for="cuerpo" value="Cuerpo" />
+										<p:inputText
 											style="padding:7px 100px; border-left:6px solid black;"
-											class="form-control" value="#{mailBean.asusto}">
-											<f:validateLength minimum="2" />
-										</h:inputText>
-										<p:message for="asunto" display="default" />
+											class="form-control" id="txtcuerpo" value="#{mailBean.texto}" />
 
-
-										<h:outputText for="cuerpo" value="Cuerpo"></h:outputText>
-										<h:inputText id="cuerpo" required="true"
-											requiredMessage="Ingresa El Mensaje Que Desee Enviar."
-											style="padding:50px ; border-left:6px solid black;"
-											class="form-control" value="#{mailBean.texto}"
+										<hr />
+										<p:toolbarGroup align="right">
+										<h:commandButton value="Enviar "
+											class="btn btn-outline-warning"
+											action="#{mailBean.notificar()}" update="correostabla" />
 											
-											>
-											 
-											</h:inputText>
-										<p:message for="cuerpo" display="default" />
-														<h:panelGrid columns="2" cellspacing="6">
-						<h:outputLabel for="dest" value="Destino" />
-						<p:autoComplete id="dest" dropdown="true"
-							value="#{mailBean.correos}"
-							completeMethod="#{mailBean.listacorreos()}" scrollHeight="250" />
-
-
-						<p:commandButton ajax="false" type="submit" value="Agregar correo"
-							update="correostabla"
-							actionListener="#{mailBean.agregarcorreo()}" />
-						<h:outputLabel value="" />
-						<h:outputLabel for="asunt" value="Asunto" />
-						<p:inputText id="txtasunto" value="#{mailBean.asusto}" />
-						<h:outputLabel for="cuerpo" value="Cuerpo" />
-						<p:inputText id="txtcuerpo" value="#{mailBean.texto}" />
-					</h:panelGrid>
-
+											<h:commandButton style="float:right" value="Enviar a todos los usuarios"
+											class="btn btn-outline-warning"
+											action="#{mailBean.boton()}" update="correostabla" />
+										</p:toolbarGroup>
+									</h:panelGrid>
 									
 
 
-
-
-
-										<hr />
-
-
-
-										<f:facet name="footer">
-											<h:commandButton class="btn btn-outline-warning"
-												action="#{mailBean.notificar()}" value="Enviar"></h:commandButton>
-										</f:facet>
-									</h:panelGrid>
 								</h:form>
+								
+
 							</DIV>
 						</div>
 					</div>
+
+
+					<hr />
 
 
 
@@ -261,20 +249,10 @@
 					</footer>
 
 
-
-
 				</div>
 			</main>
-			<footer class="py-4 bg-light mt-auto">
-				<div class="container-fluid px-4">
-					<div
-						class="d-flex align-items-center justify-content-between small">
-
-
-					</div>
-				</div>
-			</footer>
 		</div>
+
 	</div>
 
 	<script
@@ -289,6 +267,5 @@
 	<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
 		crossorigin="anonymous"></script>
 	<script src="../resources/js/datatables-simple-demo.js"></script>
-
 </h:body>
 </html>

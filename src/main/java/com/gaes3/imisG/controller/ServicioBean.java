@@ -234,42 +234,38 @@ public class ServicioBean implements Serializable {
 
 	public void cargardeproductos() {
 
-		System.out.println(file);
-		if (file.getSize() > 0) {
-			System.out.println("Entrado");
-			try {
-				InputStream inputStream = file.getInputStream();
-				XSSFWorkbook libro = new XSSFWorkbook(inputStream);
-				Sheet sheet = libro.getSheetAt(0);
-				Iterator<Row> iterator = sheet.iterator();
-				int i = 0;
-				while (iterator.hasNext()) {
-					Row currentRow = iterator.next();
-					if (i > 0) {
-						if (currentRow.getCell(0) == null && currentRow.getCell(1) != null
-								&& currentRow.getCell(2) != null && currentRow.getCell(3) != null
-								&& currentRow.getCell(4) != null)
-							servicio.setNombre_Servicio(currentRow.getCell(1).getStringCellValue());
-						servicio.setValor_servicio((Double) currentRow.getCell(2).getNumericCellValue());
-						servicio.getCliente().setNombreCliente(currentRow.getCell(3).getStringCellValue());
-						servicio.getEquipo().setId_equipos((long) currentRow.getCell(4).getNumericCellValue());
-						s.guardar(servicio);
-						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-								"AVISO", "Se subio el dato correctamente"));
+		Date date = new Date();
+		try {
+			InputStream input = file.getInputStream();
+			System.out.println(file);
+			@SuppressWarnings("resource")
+			XSSFWorkbook libro = new XSSFWorkbook(input);
+			Sheet sheet = libro.getSheetAt(0);
+			Iterator<Row> iterator = sheet.iterator();
+			int i = 0;
+			while (iterator.hasNext()) {
+				Row currentRow = iterator.next();
+				if (i > 0) {
+					servicio.setNombre_Servicio(currentRow.getCell(1).getStringCellValue());
+					servicio.setValor_servicio(currentRow.getCell(2).getNumericCellValue());
+					cliente.setIdCliente((long) currentRow.getCell(3).getNumericCellValue());
+					equipo.setId_equipos((long) currentRow.getCell(4).getNumericCellValue());
+					servicio.setCliente(cliente);
+					servicio.setEquipo(equipo);
+					if (currentRow.getCell(0).getNumericCellValue() > 0) {
+						servicio.setId_servicios((int) currentRow.getCell(0).getNumericCellValue());
+						s.editar(servicio);
 					} else {
-						break;
+						s.guardar(servicio);
 					}
+					servicio = new Servicio();
 				}
 				i++;
-
-				libro.close();
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
 			}
-
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_FATAL, "AVISO", "Por Favor Seleciones un Archivo"));
+			System.out.println("Ingresados exitosamente");
+			PrimeFaces.current().ajax().update("datosVenta:Venta");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 
 	}

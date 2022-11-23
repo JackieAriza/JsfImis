@@ -293,7 +293,7 @@ public class OrdendecompraBean implements Serializable {
 		Map<String, Object> map = new HashMap<>();
 		map.put("createdBy", "Stiven Arboleda");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, dataSource);
-		String URLpdf = "C:\\Users\\YakelinAriza\\eclipse-workspace\\imisG\\src\\main\\webapp\\resources\\reporteOrden_.pdf";
+		String URLpdf = "C:\\Users\\horac\\JsfImis\\src\\main\\webapp\\resources\\orddendecompra_.pdf";
 		JasperExportManager.exportReportToPdfFile(jasperPrint, URLpdf);
 		return "Bien";
 	}

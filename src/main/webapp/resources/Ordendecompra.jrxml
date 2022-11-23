@@ -11,18 +11,14 @@
 		<![CDATA[]]>
 	</queryString>
 	<field name="id_orden_compra" class="java.lang.Long"/>
-	<field name="cantidad" class="java.lang.Long"/>
+	<field name="precio" class="java.lang.Double"/>
 	<field name="fecha_orden_compra" class="java.util.Date"/>
-	<field name="proveedor.id_proveedor" class="java.lang.Long"/>
+	<field name="proveedor.nombre_proveedor" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="130" splitType="Stretch">
-			<image>
-				<reportElement x="5" y="2" width="90" height="100" uuid="1c71fdfb-4224-41e4-8612-65ca6dd476a0"/>
-				<imageExpression><![CDATA["C:/Users/YakelinAriza/Downloads/WhatsApp Image 2022-09-14 at 2.31.24 PM.jpeg"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="110" y="0" width="90" height="40" uuid="8f9b095c-8f7a-443e-9283-927aee7d7d08"/>
 				<textElement>
@@ -74,6 +70,10 @@ Imisdgaes2soporte@gmail.com]]></text>
 				</textElement>
 				<text><![CDATA[Cra 104 a bis - 61 a 59]]></text>
 			</staticText>
+			<image>
+				<reportElement x="10" y="0" width="89" height="80" uuid="72fc216d-bf60-453b-bea1-fca8255cde66"/>
+				<imageExpression><![CDATA["C:/Users/horac/OneDrive/Escritorio/SENA/PORTAFOLIO APRENDIZ/FASE III/DISEÑO WEB II/PROYECTO DEFINITO/img/logo.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -90,7 +90,7 @@ Imisdgaes2soporte@gmail.com]]></text>
 	<columnHeader>
 		<band height="73">
 			<staticText>
-				<reportElement x="34" y="42" width="100" height="30" uuid="350eb192-ff2c-42a6-898a-a51f2fb65952"/>
+				<reportElement x="79" y="42" width="100" height="30" uuid="350eb192-ff2c-42a6-898a-a51f2fb65952"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -103,7 +103,7 @@ Imisdgaes2soporte@gmail.com]]></text>
 				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="135" y="42" width="100" height="30" uuid="d0b23426-a8c9-431f-b4a7-90e679e5febf"/>
+				<reportElement x="180" y="42" width="100" height="30" uuid="d0b23426-a8c9-431f-b4a7-90e679e5febf"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -113,10 +113,10 @@ Imisdgaes2soporte@gmail.com]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cantidad]]></text>
+				<text><![CDATA[Precio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="235" y="42" width="100" height="30" uuid="0fe8b31b-4ca7-4aca-99b3-c0d76b8db1a0"/>
+				<reportElement x="280" y="42" width="100" height="30" uuid="0fe8b31b-4ca7-4aca-99b3-c0d76b8db1a0"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -129,7 +129,7 @@ Imisdgaes2soporte@gmail.com]]></text>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="335" y="42" width="100" height="30" uuid="59bbe776-9cb8-421c-a5ed-9c6e5c6787b6"/>
+				<reportElement x="380" y="42" width="100" height="30" uuid="59bbe776-9cb8-421c-a5ed-9c6e5c6787b6"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -139,27 +139,14 @@ Imisdgaes2soporte@gmail.com]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Proveedor id]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="435" y="42" width="100" height="30" uuid="b9216f45-81d4-43bb-8d40-1e8c6340876c"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Producto id]]></text>
+				<text><![CDATA[Proveedor]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="31" splitType="Stretch">
 			<textField>
-				<reportElement x="34" y="0" width="100" height="31" uuid="9cc04749-d0a3-40a6-916c-3ba5f1689fcd"/>
+				<reportElement x="79" y="0" width="100" height="31" uuid="9cc04749-d0a3-40a6-916c-3ba5f1689fcd"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -170,7 +157,7 @@ Imisdgaes2soporte@gmail.com]]></text>
 				<textFieldExpression><![CDATA[$F{id_orden_compra}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="135" y="0" width="99" height="31" uuid="561e747b-79c4-4718-a24f-0dc2c74f2b9b"/>
+				<reportElement x="180" y="0" width="99" height="31" uuid="561e747b-79c4-4718-a24f-0dc2c74f2b9b"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -178,10 +165,10 @@ Imisdgaes2soporte@gmail.com]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="234" y="0" width="101" height="31" uuid="2e0239ff-7903-4086-bf6f-e93818be77ab"/>
+				<reportElement x="279" y="0" width="101" height="31" uuid="2e0239ff-7903-4086-bf6f-e93818be77ab"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -192,7 +179,7 @@ Imisdgaes2soporte@gmail.com]]></text>
 				<textFieldExpression><![CDATA[$F{fecha_orden_compra}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="335" y="0" width="101" height="31" uuid="8f470e12-38f2-4642-bf11-988481d262b2"/>
+				<reportElement x="380" y="0" width="100" height="31" uuid="8f470e12-38f2-4642-bf11-988481d262b2"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -200,18 +187,7 @@ Imisdgaes2soporte@gmail.com]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{proveedor.id_proveedor}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="435" y="0" width="99" height="31" uuid="4a555711-6dde-40ca-9235-865eaef2dd5f"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{proveedor.id_proveedor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{proveedor.nombre_proveedor}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -269,15 +269,19 @@ public class OrdendecompraBean implements Serializable {
 		}
 	}
 
-	public void deleteOrden(Orden_de_compra ordendecompra) {
-		try {
-			this.o.eliminar(cantidad);
-			this.Ordendecompras.remove(ordendecompra);
-			PrimeFaces.current().ajax().update("datosOrden:Orden");
-		} catch (Exception e) {
-			e.printStackTrace();
-			e.getMessage();
+	public void borrarDetalle(Detalleordencompra detalleordendecompra) {
+		
+		carritoOrdenes.remove(detalleordendecompra);
+		total=0.0;
+		for(Detalleordencompra dc: carritoOrdenes) {
+			total=total+dc.getPreciototal();
 		}
+		
+		PrimeFaces.current().ajax().update("datosDetalle");
+		PrimeFaces.current().ajax().update("datosCliente");
+		PrimeFaces.current().ajax().update("detallesOrden");
+		
+		
 	}
 
 	public String reporteOrden() throws FileNotFoundException, JRException {

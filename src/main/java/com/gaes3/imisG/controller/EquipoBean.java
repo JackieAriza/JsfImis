@@ -173,7 +173,43 @@ public class EquipoBean {
 	public void init() {
 		equipop = new Equipo();
 	}
+	
 	public void cargae() {
+		Date date = new Date();
+		try {
+			InputStream input = fileq.getInputStream();
+			System.out.println(fileq);
+			@SuppressWarnings("resource")
+			XSSFWorkbook libro = new XSSFWorkbook(input);
+			Sheet sheet = libro.getSheetAt(0);
+			Iterator<Row> iterator = sheet.iterator();
+			int i = 0;
+			while (iterator.hasNext()) {
+				Row currentRow = iterator.next();
+				if (i > 0) {
+					equipop.setMarca(currentRow.getCell(1).getStringCellValue());
+					equipop.setCantidad((long)currentRow.getCell(2).getNumericCellValue());
+					equipop.setFecha_Entrega(currentRow.getCell(3).getDateCellValue());
+					equipop.setEstado(currentRow.getCell(4).getStringCellValue());
+					
+					if (currentRow.getCell(0).getNumericCellValue() > 0) {
+						equipop.setId_equipos((long) currentRow.getCell(0).getNumericCellValue());
+						e.editar(equipop);
+					} else {
+						e.guardar(equipop);
+					}
+					equipop = new Equipo();
+				}
+				i++;
+			}
+			System.out.println("Ingresados exitosamente");
+			PrimeFaces.current().ajax().update("datosVenta:Venta");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void cargaeequipo() {
 		Date date = new Date();
 		try {
 			InputStream input = fileq.getInputStream();

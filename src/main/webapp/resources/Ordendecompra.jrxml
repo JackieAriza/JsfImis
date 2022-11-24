@@ -72,7 +72,7 @@ Imisdgaes2soporte@gmail.com]]></text>
 			</staticText>
 			<image>
 				<reportElement x="10" y="0" width="89" height="80" uuid="72fc216d-bf60-453b-bea1-fca8255cde66"/>
-				<imageExpression><![CDATA["C:/Users/horac/OneDrive/Escritorio/SENA/PORTAFOLIO APRENDIZ/FASE III/DISEÑO WEB II/PROYECTO DEFINITO/img/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:/Users/YakelinAriza/Downloads/WhatsApp Image 2022-09-14 at 2.31.24 PM.jpeg"]]></imageExpression>
 			</image>
 		</band>
 	</title>

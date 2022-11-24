@@ -49,6 +49,20 @@
 										maxFractionDigits="0" type="currency" locale="es_CO" />
 								</h:outputText>
 							</p:column>
+							
+							<p:column headerText="Acciones">
+							<p:commandButton onclick="PF('dlgl').show()" icon="pi pi-pencil"
+								class="rounded-button ui-button-flat ui-button-danger"
+								style=" color: #000000" />
+							<p:commandButton actionListener="#{ordendecompraBean.borrarDetalle(orden)}"
+								update="datosCliente" class="rounded-button ui-button-danger"
+								icon="pi pi-trash"
+								style="color: #ffffff; background-color: #841c26; border-color: #841c26">
+								<p:confirm type="popup" header="Confirmacion"
+									message="¿Estas seguro de eliminarlo?"
+									icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+						</p:column>
 
 						</p:dataTable>
 					</h:panelGrid>
@@ -95,6 +109,8 @@
 							<p:commandButton value="Agregar" oncomplete="PF('dlgl2').hide()"
 								actionListener="#{ordendecompraBean.agregar()}"
 								style="background-color: #; border-color: #841c26; color: #ffffff" />
+								
+								
 						</p:panelGrid>
 					</h:form>
 				</p:dialog>
@@ -115,7 +131,9 @@
 						<h:outputText value="#{ordendecompraBean.total}">
 							<f:convertNumber currencySymbol="$" groupingUsed="true"
 								maxFractionDigits="0" type="currency" locale="es_CO" />
+								
 						</h:outputText>
+						
 
 						<h:commandButton value="Generar orden" update=""
 							action="#{ordendecompraBean.generarDetalle()}" class="m-3"

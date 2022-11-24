@@ -60,7 +60,7 @@
 									<f:facet name="header">Precio</f:facet>
 									<h:outputText value="#{orden.precio}">
 										<f:convertNumber currencySymbol="$" groupingUsed="true"
-											maxFractionDigits="2" type="currency" locale="es_CO" />
+											maxFractionDigits="0" type="currency" locale="es_CO" />
 									</h:outputText>
 								</p:column>
 								<p:column filterBy="#{orden.proveedor}"

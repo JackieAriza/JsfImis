@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import com.gaes3.imisG.modelo.Detalle_Por_Factura;
 import com.gaes3.imisG.modelo.JPAUtil;
+import com.gaes3.imisG.modelo.Usuario;
 
 public class DetallePorFacturaDAO {
 
@@ -56,5 +57,13 @@ public class DetallePorFacturaDAO {
 		return listaDetalle;
 	}
 
+	
+	//BUSCAR EMPLEADOS
+	public List<Usuario> obtenerEmpleados(){
+		List<Usuario> listausuarios = new ArrayList<>();
+		Query q = entity.createQuery("SELECT u FROM Usuario u WHERE u.rol.idRol=1 OR u.rol.idRol=2");
+		listausuarios = q.getResultList();
+		return listausuarios;
+	}
 
 }

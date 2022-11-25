@@ -1,10 +1,12 @@
 package com.gaes3.imisG.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -13,11 +15,17 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.primefaces.PrimeFaces;
+import org.primefaces.model.file.UploadedFile;
 
 import com.gaes3.imisG.facadeImp.ClienteDAO;
 import com.gaes3.imisG.facadeImp.ProveedorDAO;
 import com.gaes3.imisG.facadeImp.Tipo_DocumentoDAO;
 import com.gaes3.imisG.modelo.Cliente;
+import com.gaes3.imisG.modelo.Servicio;
 import com.gaes3.imisG.modelo.Tipo_Documento;
 
 
@@ -29,7 +37,19 @@ public class ClienteBean implements Serializable{
 	private List<Tipo_Documento> obtenerDocumentos;
 	private Tipo_Documento tipo_Documento;
 	private List<Cliente> clienten;
+	private UploadedFile subir; 
+	private ClienteDAO c = new ClienteDAO();
+	
+	
 
+
+	public UploadedFile getSubir() {
+		return subir;
+	}
+
+	public void setSubir(UploadedFile subir) {
+		this.subir = subir;
+	}
 
 	public List<Tipo_Documento> getObtenerDocumentos() {
 		Tipo_DocumentoDAO t = new Tipo_DocumentoDAO();
@@ -186,6 +206,46 @@ public class ClienteBean implements Serializable{
 		System.out.println("Cliente eliminado");
 		return "/DashboardTecnico/listarTecnico.xhtml?faces-redirect=true";
 
+	}
+	public void cargame() {
+		Date date = new Date();
+		try {
+			InputStream input = subir.getInputStream();
+			System.out.println(subir);
+			@SuppressWarnings("resource")
+			XSSFWorkbook libro = new XSSFWorkbook(input);
+			Sheet sheet = libro.getSheetAt(0);
+			Iterator<Row> iterator = sheet.iterator();
+			int i = 0;
+			while (iterator.hasNext()) {
+				Row currentRow = iterator.next();
+				if (i > 0) {
+					System.out.println("mmm");
+					cliente.setNumDoc(currentRow.getCell(1).getStringCellValue());
+					System.out.println("aaa");
+					cliente.setNombreCliente(currentRow.getCell(2).getStringCellValue());
+					System.out.println("ddd");
+					cliente.setApellidoCliente(currentRow.getCell(3).getStringCellValue());
+					System.out.println("fff");
+					cliente.setTeleCliente(currentRow.getCell(4).getStringCellValue());
+					System.out.println("dfg");
+					cliente.setEmailCliente(currentRow.getCell(5).getStringCellValue());
+					tipo_Documento.setId_Tipo_Documento((int)currentRow.getCell(6).getNumericCellValue());
+					if (currentRow.getCell(0).getNumericCellValue() > 0) {
+						cliente.setIdCliente((int)currentRow.getCell(0).getNumericCellValue());
+						c.editar(cliente);
+					} else {
+						c.guardar(cliente);
+					}
+					cliente = new Cliente();
+				}
+				i++;
+			}
+			System.out.println("Ingresados exitosamente");
+			PrimeFaces.current().ajax().update("datosVenta:Venta");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 

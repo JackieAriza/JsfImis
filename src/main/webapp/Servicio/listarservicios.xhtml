@@ -94,7 +94,7 @@
 									visible="#{servicioBean.list[2]}">
 									
 									<f:facet name="header">Valor</f:facet>
-									<h:outputText value="#{servicio.valor_servicio}">
+									<h:outputText value="#{servicio.valor_servicio}" >
 									<f:convertNumber currencySymbol="$" groupingUsed="true"
 											maxFractionDigits="0" type="currency" locale="es_CO" />
 									</h:outputText>

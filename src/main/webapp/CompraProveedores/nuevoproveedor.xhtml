@@ -50,11 +50,13 @@
 
 							<h:inputText id="nombre" required="true"
 								requiredMessage="Por favor ingresa tu nombre."
+								validatorMessage="Este campo no debe contener datos numericos"
 								style="padding:7px 100px; border-left:6px solid black;"
 								class="form-control"
 								value="#{proveedorBean.proveedor.nombre_proveedor}">
-								<f:validateLength minimum="2" />
-
+								<f:validateRegex
+									pattern="^[a-zA-Z ]*$" />
+								
 							</h:inputText>
 							<p:message for="nombre" display="default" />
 
@@ -62,9 +64,13 @@
 							<h:outputText for="apellido" value="Apellidos"></h:outputText>
 							<h:inputText id="apellido" required="true"
 								requiredMessage="Por favor ingresa tu apellido."
+								validatorMessage="Este campo no debe contener datos numericos"
 								style="padding:7px 100px; border-left:6px solid black;"
 								class="form-control"
-								value="#{proveedorBean.proveedor.apellido_proveedor}"></h:inputText>
+								value="#{proveedorBean.proveedor.apellido_proveedor}">
+								<f:validateRegex
+									pattern="^[a-zA-Z ]*$" />
+									</h:inputText>
 							<p:message for="apellido" display="default" />
 
 

@@ -51,9 +51,7 @@
 							</p:column>
 							
 							<p:column headerText="Acciones">
-							<p:commandButton onclick="PF('dlgl').show()" icon="pi pi-pencil"
-								class="rounded-button ui-button-flat ui-button-danger"
-								style=" color: #000000" />
+							
 							<p:commandButton actionListener="#{ordendecompraBean.borrarDetalle(orden)}"
 								update="datosCliente" class="rounded-button ui-button-danger"
 								icon="pi pi-trash"
@@ -100,8 +98,12 @@
 
 
 							<p:outputLabel for="preciounidad" value="Precio por unidad" />
-							<p:inputNumber id="preciounidad"
-								value="#{ordendecompraBean.producto.valorProducto}"></p:inputNumber>
+							<p:inputNumber type="number" id="preciounidad" class="soloNumeros" min="1"
+							
+								value="#{ordendecompraBean.producto.valorProducto}">
+								
+								</p:inputNumber>
+								
 
 							<p:outputLabel for="cantidad" value="Cantidad" />
 							<p:inputNumber id="cantidad"

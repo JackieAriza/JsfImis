@@ -221,16 +221,17 @@ public class ClienteBean implements Serializable{
 				Row currentRow = iterator.next();
 				if (i > 0) {
 					System.out.println("mmm");
-					cliente.setNumDoc(currentRow.getCell(1).getStringCellValue());
+					cliente.setNumDoc((long)currentRow.getCell(1).getNumericCellValue());
 					System.out.println("aaa");
 					cliente.setNombreCliente(currentRow.getCell(2).getStringCellValue());
 					System.out.println("ddd");
 					cliente.setApellidoCliente(currentRow.getCell(3).getStringCellValue());
 					System.out.println("fff");
-					cliente.setTeleCliente(currentRow.getCell(4).getStringCellValue());
+					cliente.setTeleCliente((long)currentRow.getCell(4).getNumericCellValue());
 					System.out.println("dfg");
 					cliente.setEmailCliente(currentRow.getCell(5).getStringCellValue());
-					tipo_Documento.setId_Tipo_Documento((int)currentRow.getCell(6).getNumericCellValue());
+					tipo_Documento.setId_Tipo_Documento((long)currentRow.getCell(6).getNumericCellValue());
+					cliente.setTipo_documento(tipo_Documento);
 					if (currentRow.getCell(0).getNumericCellValue() > 0) {
 						cliente.setIdCliente((int)currentRow.getCell(0).getNumericCellValue());
 						c.editar(cliente);
@@ -247,6 +248,7 @@ public class ClienteBean implements Serializable{
 			System.out.println(e.getMessage());
 		}
 	}
+	
 	
 
 

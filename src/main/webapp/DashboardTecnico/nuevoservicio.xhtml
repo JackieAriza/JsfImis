@@ -26,10 +26,14 @@
 
 							<h:inputText id="ser" required="true"
 								requiredMessage="Ingresa nombre del servicio."
+								validatorMessage="Este campo no debe contener datos numericos"
 								style="padding:7px 100px; border-left:6px solid black;"
 								class="form-control"
 								value="#{servicioBean.servicio.nombre_Servicio}">
 								<f:validateLength minimum="2" />
+								<f:validateRegex
+									pattern="^[a-zA-Z ]*$" />
+								
 								
 							</h:inputText>
 							<p:message for="ser" display="default" />

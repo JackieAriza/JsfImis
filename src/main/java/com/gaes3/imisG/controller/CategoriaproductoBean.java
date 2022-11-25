@@ -3,9 +3,12 @@ package com.gaes3.imisG.controller;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +17,11 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.primefaces.PrimeFaces;
+import org.primefaces.model.file.UploadedFile;
 
 import com.gaes3.imisG.facadeImp.CategoriaproductoDAO;
 import com.gaes3.imisG.facadeImp.ProductoDAO;
@@ -31,14 +39,23 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @ManagedBean(name="categoriaproductoBean")
 @RequestScoped
 public class CategoriaproductoBean {
+	
+	private Categoriaproducto categoriaproducto;
 	private List<Categoriaproducto> categoriaproductorp;
 private static List<Boolean> list = Arrays.asList(true,true);
 private CategoriaproductoDAO c = new CategoriaproductoDAO();
+private UploadedFile subircat;
 	
 	
 	
 	
 
+	public UploadedFile getSubircat() {
+	return subircat;
+}
+public void setSubircat(UploadedFile subircat) {
+	this.subircat = subircat;
+}
 	public List<Boolean> getList() {
 		return list;
 	}
@@ -138,5 +155,39 @@ private CategoriaproductoDAO c = new CategoriaproductoDAO();
 		JasperExportManager.exportReportToPdfFile(jasperPrint,URLpdf);
 		return "Bien";
 	}
+	public void cargarCat() {
+		Date date = new Date();
+		try {
+			InputStream input = subircat.getInputStream();
+			System.out.println(subircat);
+			@SuppressWarnings("resource")
+			XSSFWorkbook libro = new XSSFWorkbook(input);
+			Sheet sheet = libro.getSheetAt(0);
+			Iterator<Row> iterator = sheet.iterator();
+			int i = 0;
+			while (iterator.hasNext()) {
+				Row currentRow = iterator.next();
+				if (i > 0) {
+			categoriaproducto.setNom_categoria(currentRow.getCell(1).getStringCellValue());
+					
+					if (currentRow.getCell(0).getNumericCellValue() > 0) {
+						categoriaproducto.setId_Categoriaproductos((int)currentRow.getCell(0).getNumericCellValue());
+						c.editar(categoriaproducto);		
+					
+					} else {
+						c.guardar(categoriaproducto);
+					}
+					categoriaproducto = new Categoriaproducto();
+				}
+				i++;
+			}
+			System.out.println("Ingresados exitosamente");
+			PrimeFaces.current().ajax().update("datosVenta:Venta");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }
+
+
 

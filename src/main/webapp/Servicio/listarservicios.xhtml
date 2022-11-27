@@ -61,10 +61,7 @@
 
 								</p:toolbarGroup>
 
-								<div class="card">
-									<h5>Multiple</h5>
-
-								</div>
+							
 							</p:toolbar>
 
 
@@ -95,8 +92,12 @@
 								<p:column filterBy="#{servicio.valor_servicio}"
 									exportable="#{servicioBean.list[2]}"
 									visible="#{servicioBean.list[2]}">
+									
 									<f:facet name="header">Valor</f:facet>
-									<h:outputText value="#{servicio.valor_servicio}"></h:outputText>
+									<h:outputText value="#{servicio.valor_servicio}" >
+									<f:convertNumber currencySymbol="$" groupingUsed="true"
+											maxFractionDigits="0" type="currency" locale="es_CO" />
+									</h:outputText>
 								</p:column>
 
 								<p:column filterBy="#{servicio.cliente}"

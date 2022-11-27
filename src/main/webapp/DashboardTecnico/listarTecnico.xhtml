@@ -79,7 +79,7 @@
 			</div>
 		</div>
 
-		<h:form>
+		
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> Clientes
@@ -87,7 +87,7 @@
 				<div class="card-body">
 
 					<div class="card">
-						<h:form id="form">
+						<h:form id="form" enctype="multipart/form-data">
 							<div class="card crud-demo">
 
 								<p:toolbar>
@@ -97,11 +97,20 @@
 									</p:toolbarGroup>
 									<p:toolbarGroup align="right">
 
-										<p:commandButton action="#{clienteBean.exportar()}"
-											value="Excel" icon="pi pi-upload" styleClass="ui-button-help"
-											ajax="false">
+												<p:commandButton value="Excel" icon="pi pi-save"
+													styleClass="ui-button-help" ajax="false">
+													<p:dataExporter type="xlsx" target="dt-products"
+														fileName="cliente" visibleOnly="true" />
+												</p:commandButton>
 
-										</p:commandButton>
+												<p:fileUpload mode="simple" skinSimple="true" styleClass=""
+													label="Importar excel" accept=".xlsx"
+													value="#{clienteBean.subir}" />
+
+												<p:commandButton value="Subir Excel" ajax="false"
+													icon="pi pi-upload" action="#{clienteBean.cargame()}"
+													update="datosPedido" styleClass="ui-button-outlined block" />
+
 									</p:toolbarGroup>
 								</p:toolbar>
 
@@ -172,7 +181,7 @@
 
 				</div>
 			</div>
-		</h:form>
+		
 
 
 		<footer class="py-4 bg-light mt-auto">

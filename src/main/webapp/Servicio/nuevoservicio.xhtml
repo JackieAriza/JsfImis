@@ -27,9 +27,14 @@
 
 							<h:inputText id="ser" required="true"
 								requiredMessage="Ingresa nombre del servicio."
+								validatorMessage="Este campo no debe contener datos numericos"
 								style="padding:7px 100px; border-left:6px solid black;"
 								class="form-control"
 								value="#{servicioBean.servicio.nombre_Servicio}">
+								<f:validateRegex
+									pattern="^[a-zA-Z ]*$" />
+								
+							
 								<f:validateLength minimum="2" />
 							</h:inputText>
 							<p:message for="ser" display="default" />
@@ -37,12 +42,16 @@
 							<h:outputText for="val" value="Valor"></h:outputText>
 							<h:inputText id="val" required="true"
 								requiredMessage="Ingresa el precio."
+								validatorMessage="no se aceptan numeros negativos"
 								style="padding:7px 100px; border-left:6px solid black;"
 								class="form-control"
 								value="#{servicioBean.servicio.valor_servicio}">
-								<f:validateLength minimum="2" />
+								 <f:validateLongRange minimum="1" ></f:validateLongRange>
+								
 							</h:inputText>
 							<p:message for="val" display="default" />
+						
+							
 
 
 							<label for="cliente">Cliente</label>

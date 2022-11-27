@@ -3,6 +3,7 @@ package com.gaes3.imisG.controller;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +22,11 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.PrimeFaces;
+import org.primefaces.model.file.UploadedFile;
 
 import com.gaes3.imisG.facadeImp.CategoriaproductoDAO;
 import com.gaes3.imisG.facadeImp.ProductoDAO;
@@ -53,11 +59,22 @@ public class ProductoBean implements Serializable {
     private static List<Boolean> list = Arrays.asList(true,true,true,true,true,true);
     private ProductoDAO p = new ProductoDAO();
 	private ProductoDAO productoDAO = new ProductoDAO();
+	private UploadedFile subirpr;
 
 	
 	
 	
 	
+
+	
+
+	public UploadedFile getSubirpr() {
+		return subirpr;
+	}
+
+	public void setSubirpr(UploadedFile subirpr) {
+		this.subirpr = subirpr;
+	}
 
 	public List<Boolean> getList() {
 		return list;
@@ -199,6 +216,43 @@ public class ProductoBean implements Serializable {
 		String URLpdf="C:\\Users\\YakelinAriza\\eclipse-workspace\\imisG\\src\\main\\webapp\\resources\\Lista_Productos.pdf";
 		JasperExportManager.exportReportToPdfFile(jasperPrint,URLpdf);
 		return "Bien";
+	}
+	
+	public void cargarProd() {
+		Date date = new Date();
+		try {
+			InputStream input = subirpr.getInputStream();
+			System.out.println(subirpr);
+			@SuppressWarnings("resource")
+			XSSFWorkbook libro = new XSSFWorkbook(input);
+			Sheet sheet = libro.getSheetAt(0);
+			Iterator<Row> iterator = sheet.iterator();
+			int i = 0;
+			while (iterator.hasNext()) {
+				Row currentRow = iterator.next();
+				if (i > 0) {
+					producto.setNombreProducto(currentRow.getCell(1).getStringCellValue());
+					producto.setValorProducto((long)currentRow.getCell(2).getNumericCellValue());
+					producto.setEstadoProducto(currentRow.getCell(3).getStringCellValue());
+					producto.setStock((long)currentRow.getCell(4).getNumericCellValue());
+					categoriaproducto.setId_Categoriaproductos((long)currentRow.getCell(5).getNumericCellValue());
+					producto.setCategoriaproducto(categoriaproducto);
+					
+					if (currentRow.getCell(0).getNumericCellValue() > 0) {
+						producto.setIdProductos((int)currentRow.getCell(0).getNumericCellValue());
+						p.editar(producto);
+					} else {
+						p.guardar(producto);
+					}
+					producto = new Producto();
+				}
+				i++;
+			}
+			System.out.println("Ingresados exitosamente");
+			PrimeFaces.current().ajax().update("datosVenta:Venta");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	//carrito orden encontrar producto
 	

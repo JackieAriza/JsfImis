@@ -4,9 +4,9 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="../Template/empleadoT.xhtml">
-	<ui:define name="Angel">
-	<h:form>
+	template="../Template/template.xhtml">
+	<ui:define name="tuvariable">
+	
 						<div class="card mb-4">
 							<div class="card-header">
 								<i class="fas fa-table me-1"></i> Productos
@@ -14,28 +14,36 @@
 							<div class="card-body">
 
 								<div class="card">
-									<h:form id="form">
+									<h:form id="form" enctype="multipart/form-data">
 										<div class="card crud-demo">
 
 
 
 											<p:toolbar>
 												<p:toolbarGroup>
-													<h:commandButton class="btn btn-outline-success" action="#{productoBean.empleadodashnuevo()}"
+													<h:commandButton class="btn btn-outline-success" action="#{productoBean.nuevo()}"
 														value="Nuevo producto"></h:commandButton>
 														
 														<h:commandButton class="btn btn-outline-success"
 											action="#{productoBean.reporte()}" value="Reporte Productos" ajax="false">
 											</h:commandButton>
+											
+											<p:fileUpload mode="simple" skinSimple="true" styleClass=""
+											label="Importar excel" accept=".xlsx"
+											value="#{productoBean.subirpr}" />
+
+										<p:commandButton value="Subir Excel" ajax="false"
+											icon="pi pi-upload" action="#{productoBean.cargarProd()}"
+											update="datosPedido" styleClass="ui-button-outlined block" />
 
 							
 												</p:toolbarGroup>
 												<p:toolbarGroup align="right">
 
-													<p:commandButton action="#{productoBean.exportar()}"
-											value="Export" icon="pi pi-upload"
-											styleClass="ui-button-help" ajax="false">
-
+													<p:commandButton value="Excel" icon="pi pi-upload"
+											styleClass="ui-button-help" ajax="false" >
+											<p:dataExporter type="xls" target="dt-products"
+												fileName="Lista Productos" visibleOnly="true" />
 										</p:commandButton>
 												</p:toolbarGroup>
 											</p:toolbar>
@@ -92,7 +100,7 @@
 												<p:column exportable="false">
 													<f:facet name="header">Acciones</f:facet>
 													<h:commandButton class="btn btn-outline-info"
-														action="#{productoBean.empleadodasheditar(producto.idProductos)}"
+														action="#{productoBean.editar(producto.idProductos)}"
 														value="Editar"></h:commandButton>
 
 													<h:commandButton class="btn btn-outline-danger"
@@ -107,6 +115,7 @@
 
 							</div>
 						</div>
-					</h:form>
+		
+
 </ui:define>
 </ui:composition>

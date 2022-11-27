@@ -17,13 +17,13 @@ public class Cliente {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long IdCliente;
 	@Column(nullable = false)
-	private String NumDoc;
+	private long NumDoc;
 	@Column(nullable = false)
 	private String NombreCliente;
 	@Column(nullable = false)
 	private String ApellidoCliente;
 	@Column(nullable = false)
-	private String TeleCliente;
+	private long TeleCliente;
 	@Column(nullable = false, unique = true)
 	private String EmailCliente;
 	
@@ -47,12 +47,7 @@ public class Cliente {
 	public void setIdCliente(long idCliente) {
 		IdCliente = idCliente;
 	}
-	public String getNumDoc() {
-		return NumDoc;
-	}
-	public void setNumDoc(String numDoc) {
-		NumDoc = numDoc;
-	}
+
 	public String getNombreCliente() {
 		return NombreCliente;
 	}
@@ -65,10 +60,17 @@ public class Cliente {
 	public void setApellidoCliente(String apellidoCliente) {
 		ApellidoCliente = apellidoCliente;
 	}
-	public String getTeleCliente() {
+	
+	public long getNumDoc() {
+		return NumDoc;
+	}
+	public void setNumDoc(long numDoc) {
+		NumDoc = numDoc;
+	}
+	public long getTeleCliente() {
 		return TeleCliente;
 	}
-	public void setTeleCliente(String teleCliente) {
+	public void setTeleCliente(long teleCliente) {
 		TeleCliente = teleCliente;
 	}
 	public String getEmailCliente() {

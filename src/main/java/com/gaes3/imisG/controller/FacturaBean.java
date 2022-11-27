@@ -54,7 +54,7 @@ public class FacturaBean implements Serializable {
 	private List<FormaPago> obtenerFormaPagos;
 	private FormaPago formaPago;
 	
-<<<<<<< HEAD
+
 	private LineChartModel lineModel;
 	
 	
@@ -65,9 +65,9 @@ public class FacturaBean implements Serializable {
 	public void setLineModel(LineChartModel lineModel) {
 		this.lineModel = lineModel;
 	}
-=======
+
 	private List<Detalle_Por_Factura> obtenerDetalles;
->>>>>>> 29e80fdba78285f7b862f38dd91dfe1796842212
+
 
 	public Factura getFactura() {
 		return factura;
@@ -200,7 +200,7 @@ public class FacturaBean implements Serializable {
 		PrimeFaces.current().ajax().update("detalles");
 	}
 
-<<<<<<< HEAD
+
 	public String empleadodasheditar(long id) {
 		FacturaDAO facturaDAO = new FacturaDAO();
 		Factura c = new Factura();
@@ -279,6 +279,4 @@ public class FacturaBean implements Serializable {
         lineModel.setData(data);
     }
 
-=======
->>>>>>> 29e80fdba78285f7b862f38dd91dfe1796842212
 }

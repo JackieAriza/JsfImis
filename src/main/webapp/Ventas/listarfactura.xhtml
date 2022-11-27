@@ -7,99 +7,118 @@
 	template="../Template/template.xhtml">
 	<ui:define name="tuvariable">
 
-		<h:form>
-			<div class="card mb-4">
-				<div class="card-header">
-					<i class="fas fa-table me-1"></i> Factura
-				</div>
-				<div class="card-body">
+		<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table me-1"></i> Factura
+			</div>
+			<div class="card-body">
 
-					<div class="card">
-						<h:form id="form">
-							<div class="card crud-demo">
-
-
-
-								<p:toolbar>
-									<p:toolbarGroup>
-										<h:commandButton class="btn btn-outline-success"
-											 action="#{facturaBean.nuevo()}" value="Nueva Factura"></h:commandButton>
-									</p:toolbarGroup>
-									<p:toolbarGroup align="right">
-
-										<p:commandButton action="#{facturaBean.exportar()}"
-											value="Excel" icon="pi pi-upload"
-											styleClass="ui-button-help" ajax="false">
-
-										</p:commandButton>
-									</p:toolbarGroup>
-								</p:toolbar>
+				<div class="card">
+					<h:form id="form">
+						<div class="card crud-demo">
 
 
 
+							<p:toolbar>
+								<p:toolbarGroup>
+									<h:commandButton class="btn btn-outline-success"
+										action="#{detalleporfacturaBean.nuevo()}"
+										value="Nueva Factura"></h:commandButton>
+								</p:toolbarGroup>
+								<p:toolbarGroup align="right">
+									<p:commandButton action="#{facturaBean.exportar()}"
+										value="Excel" icon="pi pi-upload" styleClass="ui-button-help"
+										ajax="false">
+									</p:commandButton>
+								</p:toolbarGroup>
+							</p:toolbar>
+							
+							<p:dataTable id="dt-products" widgetVar="dtProducts"
+								var="factura" value="#{facturaBean.obtenerFacturas()}"
+								reflow="true" styleClass="products-table"
+								selection="#{facturaBean.obtenerFacturas()}"
+								rowKey="#{factura.idFactura}" paginator="true" rows="10"
+								rowSelectMode="add" paginatorPosition="bottom">
+								<p:column>
+									<f:facet name="header">Id Factura</f:facet>
+									<h:outputText value="#{factura.idFactura}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">Total</f:facet>
+									<h:outputText value="#{factura.totalfactura}">
+									<f:convertNumber currencySymbol="$" groupingUsed="true"
+											maxFractionDigits="0" type="currency" locale="es_CO" />
+									</h:outputText>
+								</p:column>
 
-								<p:dataTable id="dt-products" widgetVar="dtProducts"
-									var="factura" value="#{facturaBean.obtenerFacturas()}"
-									reflow="true" styleClass="products-table"
-									selection="#{facturaBean.obtenerFacturas()}"
-									rowKey="#{factura.idFactura}" paginator="true" rows="10"
-									rowSelectMode="add" paginatorPosition="bottom">
+								<p:column>
+									<f:facet name="header">Cliente</f:facet>
+									<h:outputText value="#{factura.cliente}"></h:outputText>
+								</p:column>
 
+								<p:column>
+									<f:facet name="header">Forma de pago</f:facet>
+									<h:outputText value="#{factura.formaPago}"></h:outputText>
+								</p:column>
 
+								<p:column>
+									<f:facet name="header">Usuario</f:facet>
+									<h:outputText value="#{factura.usuario}"></h:outputText>
+								</p:column>
 
+								<p:column>
 
-									<p:column>
-										<f:facet name="header">Id Factura</f:facet>
-										<h:outputText value="#{factura.idFactura}"></h:outputText>
-									</p:column>
-									<p:column>
-										<f:facet name="header">Total</f:facet>
-										<h:outputText value="#{factura.totalfactura}"></h:outputText>
-									</p:column>
+									<f:facet name="header">Fecha</f:facet>
+									<h:outputText value="#{factura.fecha_registro}"></h:outputText>
+								</p:column>
 
-									<p:column>
-										<f:facet name="header">Cliente</f:facet>
-										<h:outputText value="#{factura.cliente}"></h:outputText>
-									</p:column>
+								<p:column>
+									<f:facet name="header">Acciones</f:facet>
+									<p:commandButton class="btn btn-outline-info"
+										actionListener="#{facturaBean.verFactura(factura.idFactura)}"
+										value="Ver Detalles" oncomplete="PF('dlgl').show()"></p:commandButton>
+								</p:column>
+							</p:dataTable>
+						</div>
+					</h:form>
 
-									<p:column>
-										<f:facet name="header">Forma de pago</f:facet>
-										<h:outputText value="#{factura.formaPago}"></h:outputText>
-									</p:column>
+					<p:dialog widgetVar="dlgl" id="dlgl" showEffect="fade"
+						resizable="false" header="Detalles de la factura" width="1000" modal="true">
+						<p:dataTable id="detalles" widgetVar="detalles "
+							var="detalle_por_factura" value="#{facturaBean.obtenerDetalles}"
+							reflow="true" styleClass="products-table"
+							rowKey="#{detalle_por_factura.idDetalle}" paginator="true"
+							rows="10" rowSelectMode="add" paginatorPosition="bottom">
+							<p:column>
+								<f:facet name="header">Cantidad</f:facet>
+								<h:outputText value="#{detalle_por_factura.cantidadDetalle}"></h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header">Valor Unitario</f:facet>
+								<h:outputText value="#{detalle_por_factura.valorUnitario}">
+								<f:convertNumber currencySymbol="$" groupingUsed="true"
+											maxFractionDigits="0" type="currency" locale="es_CO" />
+								</h:outputText>
+							</p:column>
 
-									<p:column>
-										<f:facet name="header">Usuario</f:facet>
-										<h:outputText value="#{factura.usuario}"></h:outputText>
-									</p:column>
+							<p:column>
+								<f:facet name="header">Total General</f:facet>
+								<h:outputText value="#{detalle_por_factura.totalGeneral}">
+								<f:convertNumber currencySymbol="$" groupingUsed="true"
+											maxFractionDigits="0" type="currency" locale="es_CO" />
+								</h:outputText>
+							</p:column>
 
-									<p:column>
-
-										<f:facet name="header">Fecha</f:facet>
-										<h:outputText value="#{factura.fecha_registro}"></h:outputText>
-									</p:column>
-
-									<p:column>
-										<f:facet name="header">Acciones</f:facet>
-										<h:commandButton class="btn btn-outline-info"
-											action="#{facturaBean.editar(factura.idFactura)}"
-											value="Editar"></h:commandButton>
-								
-										<h:commandButton class="btn btn-outline-danger"
-											action="#{facturaBean.eliminar(factura.idFactura)}"
-											value="Eliminar"></h:commandButton>
-									</p:column>
-
-
-
-								</p:dataTable>
-
-							</div>
-						</h:form>
-					</div>
-
+							<p:column>
+								<f:facet name="header">Producto</f:facet>
+								<h:outputText
+									value="#{detalle_por_factura.producto.nombreProducto}"></h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:dialog>
 				</div>
 			</div>
-		</h:form>
+		</div>
 
 
 		<footer class="py-4 bg-light mt-auto">

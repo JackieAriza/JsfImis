@@ -50,9 +50,10 @@ public class DetallePorFacturaDAO {
 	}
 	
 	//LISTAR CLIENTES
-	public List<Detalle_Por_Factura> obtenerDetallePorFacturas() {
+	public List<Detalle_Por_Factura> obtenerDetallePorFacturas(long id) {
 		List<Detalle_Por_Factura> listaDetalle = new ArrayList<>();
-		Query q= entity.createQuery("SELECT d FROM Detalle_Por_Factura d");
+		Query q= entity.createQuery("SELECT d FROM Detalle_Por_Factura d WHERE d.factura.idFactura = :id");
+		q.setParameter("id", id);
 		listaDetalle= q.getResultList();
 		return listaDetalle;
 	}

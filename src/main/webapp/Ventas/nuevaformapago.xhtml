@@ -19,23 +19,18 @@
 					<HR />
 					<h:form style="display: flex;justify-content: center; ">
 						<h:panelGrid >
-						
-
-							<h:outputText value="Tipo de Pago"></h:outputText>
-							<h:inputText
-								style="padding:7px 100px; border-left:6px solid black;"
-								class="form-control" value="#{formapago.tipoPago}"></h:inputText>
-
-
-
-							<hr />
-
-
-
+							<h3 >Tipo de Pago</h3>
+							<p:inputText style="padding:7px 100px; border-left:6px solid black;" 
+							validatorMessage="Solo puede contener letras" class="form-control" 
+							value="#{formapago.tipoPago}">
+							<f:validateRegex pattern="^[a-zA-Z]*$" />							
+							</p:inputText>			
+							<hr/>
+							<p:growl id="mensaje" showDetail="true" showSummary="true"></p:growl>
 							<f:facet name="footer">
-								<h:commandButton class="btn btn-outline-warning"
-									
-									action="#{formapagoBean.guardar(formapago)}" value="Guardar"></h:commandButton>
+								<p:commandButton class="btn btn-outline-warning"
+									action="#{formapagoBean.guardar(formapago)}" update="mensaje"
+									value="Añadir"></p:commandButton>
 							</f:facet>
 						</h:panelGrid>
 					</h:form>

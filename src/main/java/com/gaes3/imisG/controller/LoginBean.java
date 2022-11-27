@@ -49,7 +49,6 @@ public class LoginBean implements Serializable {
 		String usuarioRol = "";
 		System.out.println("Usuario");
 		usuarioRol = this.usuarioDAO.validarUsuario(usuario);
-		System.out.println(usuarioRol);
 		HttpSession session = SessionUtils.getSession();
 		System.out.println(session);
 		switch (usuarioRol) {
@@ -59,6 +58,7 @@ public class LoginBean implements Serializable {
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuarioRol);
 			break;
 		case "Empleado":
+			System.out.println(usuarioRol);
 			session.setAttribute("username", usuario.getNomUsuario());
 			path = "DashboardEmpleado/empleado.jsf?faces-redirect=true";
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuarioRol);

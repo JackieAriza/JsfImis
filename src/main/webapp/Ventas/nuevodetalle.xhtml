@@ -20,10 +20,10 @@
 						Carrito de ventas</H2>
 					<HR />
 					<h:form id="detallesVenta">
-						<p:commandButton value="Agregar producto"
+						<p:commandButton value="Agregar Producto"
 							onclick="PF('dlgl2').show()"
-							style="background-color: #841c26; border-color: #841c26; margin-top: 1%; font-family: Fredoka One, cursive" />
-						<p:commandButton value="Limpiar carrito"
+							style="background-color: #003049; border-color: #003049; margin: 10px; font-family: Fredoka One, cursive" />
+						<p:commandButton value="Limpiar Carrito" 
 							actionListener="#{detalleporfacturaBean.limpiarcarrito()}"></p:commandButton>
 						<p:dataTable var="detalle_por_factura" id="ventas"
 							value="#{detalleporfacturaBean.listacarrito}" reflow="true"
@@ -102,7 +102,7 @@
 								<p:commandButton value="Generar Venta"
 									actionListener="#{detalleporfacturaBean.generarVenta()}"
 									update="datosVenta,mensaje"
-									style="background-color: #841c26; border-color: #841c26; color: #ffffff" />
+									style="background-color: #003049; border-color: #003049; color: #ffffff" />
 							</p:panelGrid>
 						</h:form>
 					</div>

@@ -16,13 +16,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.PrimeFaces;
 
 import com.gaes3.imisG.controller.FacturaBean;
 import com.gaes3.imisG.facadeImp.ClienteDAO;
+import com.gaes3.imisG.facadeImp.DetallePorFacturaDAO;
 import com.gaes3.imisG.facadeImp.FacturaDAO;
 import com.gaes3.imisG.facadeImp.FormapagoDAO;
 import com.gaes3.imisG.facadeImp.UsuarioDAO;
 import com.gaes3.imisG.modelo.Cliente;
+import com.gaes3.imisG.modelo.Detalle_Por_Factura;
 import com.gaes3.imisG.modelo.Factura;
 import com.gaes3.imisG.modelo.FormaPago;
 import com.gaes3.imisG.modelo.Usuario;
@@ -43,6 +46,8 @@ public class FacturaBean implements Serializable {
 
 	private List<FormaPago> obtenerFormaPagos;
 	private FormaPago formaPago;
+	
+	private List<Detalle_Por_Factura> obtenerDetalles;
 
 	public Factura getFactura() {
 		return factura;
@@ -60,6 +65,15 @@ public class FacturaBean implements Serializable {
 
 	public void setObtenerClientes(List<Cliente> obtenerClientes) {
 		this.obtenerClientes = obtenerClientes;
+	}
+
+	
+	public List<Detalle_Por_Factura> getObtenerDetalles() {
+		return obtenerDetalles;
+	}
+
+	public void setObtenerDetalles(List<Detalle_Por_Factura> obtenerDetalles) {
+		this.obtenerDetalles = obtenerDetalles;
 	}
 
 	public Cliente getCliente() {
@@ -160,56 +174,10 @@ public class FacturaBean implements Serializable {
 		return facturaDAO.obtenerFacturas();
 	}
 
-	public String editar(long id) {
-		FacturaDAO facturaDAO = new FacturaDAO();
-		Factura c = new Factura();
-		c = facturaDAO.buscar(id);
-		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-		sessionMap.put("factura", c);
-		return "/Ventas/editarfactura.xhtml?faces-redirect=true";
+	public void verFactura(long id) {
+		DetallePorFacturaDAO d = new DetallePorFacturaDAO();
+		obtenerDetalles = d.obtenerDetallePorFacturas(id);
+		PrimeFaces.current().ajax().update("detalles");
 	}
-
-	public String empleadodasheditar(long id) {
-		FacturaDAO facturaDAO = new FacturaDAO();
-		Factura c = new Factura();
-		c = facturaDAO.buscar(id);
-		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-		sessionMap.put("factura", c);
-		return "/DashboardEmpleado/editarfactura.xhtml?faces-redirect=true";
-	}
-
-	public String actualizar(Factura factura) {
-
-		factura.setUsuario(usuario);
-		factura.setCliente(cliente);
-		factura.setFormaPago(formaPago);
-		FacturaDAO facturaDAO = new FacturaDAO();
-		facturaDAO.editar(factura);
-		return "/Ventas/listarfactura.xhtml?faces-redirect=true";
-	}
-
-	public String empleadodashactualizar(Factura factura) {
-
-		factura.setUsuario(usuario);
-		factura.setCliente(cliente);
-		factura.setFormaPago(formaPago);
-		FacturaDAO facturaDAO = new FacturaDAO();
-		facturaDAO.editar(factura);
-		return "/DashboardEmpleado/listarfactura.xhtml?faces-redirect=true";
-	}
-
-	// eliminar una factura
-	public String eliminar(long idFactura) {
-		FacturaDAO facturaDAO = new FacturaDAO();
-		facturaDAO.eliminar(idFactura);
-		return "/Ventas/listarfactura.xhtml?faces-redirect=true";
-	}
-
-	public String empleadodasheliminar(long idFactura) {
-		FacturaDAO facturaDAO = new FacturaDAO();
-		facturaDAO.eliminar(idFactura);
-		return "/DashboardEmpleado/listarfactura.xhtml?faces-redirect=true";
-	}
-
 
 }

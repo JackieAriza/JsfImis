@@ -29,7 +29,7 @@ public class VentasPorMesDTO {
 
 	public VentasPorMesDTO() {
 		super();
-		// TODO Auto-generated constructor stub
+		// TODO  Auto-generated constructor stub
 	}
 
 	@Override

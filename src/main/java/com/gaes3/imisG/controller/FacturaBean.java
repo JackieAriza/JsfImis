@@ -134,7 +134,7 @@ public class FacturaBean implements Serializable {
 	}
 
 	public String empleadodashnuevo() {
-		return "/DashboardEmpleado/nuevafactura.xhtml?faces-redirect=true";
+		return "/DashboardEmpleado/nuevodetalle.xhtml?faces-redirect=true";
 	}
 
 	public void guardar(ActionEvent event) {

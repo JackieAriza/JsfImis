@@ -44,11 +44,17 @@
 							</p:column>
 							<p:column>
 								<f:facet name="header">Valor Unitario</f:facet>
-								<h:outputText value="#{detalle_por_factura.valorUnitario}"></h:outputText>
+								<h:outputText value="#{detalle_por_factura.valorUnitario}">
+								<f:convertNumber currencySymbol="$" groupingUsed="true"
+											maxFractionDigits="0" type="currency" locale="es_CO" />
+								</h:outputText>
 							</p:column>
 							<p:column>
 								<f:facet name="header">Total General</f:facet>
-								<h:outputText value="#{detalle_por_factura.totalGeneral}"></h:outputText>
+								<h:outputText value="#{detalle_por_factura.totalGeneral}">
+								<f:convertNumber currencySymbol="$" groupingUsed="true"
+											maxFractionDigits="0" type="currency" locale="es_CO" />
+								</h:outputText>
 							</p:column>
 							<p:column>
 								<p:commandButton

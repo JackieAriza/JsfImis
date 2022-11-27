@@ -53,7 +53,9 @@
 							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
 								class="form-control" value="#{productoBean.producto.stock}"
 								id="Stock" required="true"
-							    requiredMessage="Por favor digite el numero de productos registrados"></h:inputText>
+							    requiredMessage="Por favor digite el numero de productos registrados"
+							    validatorMessage="El valor no puede ser negativo">
+							 <f:validateLongRange minimum="1" ></f:validateLongRange></h:inputText>
 								<p:message for="Stock" display="default" />
 
 							<label for="categoriaproducto">Categoria</label>

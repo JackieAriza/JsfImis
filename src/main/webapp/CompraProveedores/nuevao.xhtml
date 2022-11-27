@@ -49,19 +49,27 @@
 										maxFractionDigits="0" type="currency" locale="es_CO" />
 								</h:outputText>
 							</p:column>
-							
-							<p:column headerText="Acciones">
-							
-							<p:commandButton actionListener="#{ordendecompraBean.borrarDetalle(orden)}"
-								update="datosCliente" class="rounded-button ui-button-danger"
-								icon="pi pi-trash"
-								style="color: #ffffff; background-color: #841c26; border-color: #841c26">
-								<p:confirm type="popup" header="Confirmacion"
-									message="¿Estas seguro de eliminarlo?"
-									icon="pi pi-exclamation-triangle" />
-							</p:commandButton>
-						</p:column>
 
+							<p:column headerText="Acciones">
+
+								<p:commandButton
+									actionListener="#{ordendecompraBean.borrarDetalle(orden)}"
+									update="datosCliente" class="rounded-button ui-button-danger"
+									icon="pi pi-trash"
+									style="color: #ffffff; background-color: #841c26; border-color: #841c26">
+									<p:confirm type="popup" header="Confirmacion"
+										message="¿Estas seguro de eliminarlo?"
+										icon="pi pi-exclamation-triangle" />
+								</p:commandButton>
+							</p:column>
+							<p:confirmPopup global="true">
+								<p:commandButton value="No" type="button"
+									styleClass="ui-confirm-popup-no ui-button-flat"
+									style="background-color: #; border-color: #; color: #" />
+								<p:commandButton value="Yes" type="button"
+									styleClass="ui-confirm-popup-yes"
+									style="background-color: #; border-color: #" />
+							</p:confirmPopup>
 						</p:dataTable>
 					</h:panelGrid>
 				</h:form>
@@ -98,12 +106,12 @@
 
 
 							<p:outputLabel for="preciounidad" value="Precio por unidad" />
-							<p:inputNumber type="number" id="preciounidad" class="soloNumeros" min="1"
-							
+							<p:inputNumber type="number" id="preciounidad"
+								class="soloNumeros" min="1"
 								value="#{ordendecompraBean.producto.valorProducto}">
-								
-								</p:inputNumber>
-								
+
+							</p:inputNumber>
+
 
 							<p:outputLabel for="cantidad" value="Cantidad" />
 							<p:inputNumber id="cantidad"
@@ -111,8 +119,8 @@
 							<p:commandButton value="Agregar" oncomplete="PF('dlgl2').hide()"
 								actionListener="#{ordendecompraBean.agregar()}"
 								style="background-color: #; border-color: #841c26; color: #ffffff" />
-								
-								
+
+
 						</p:panelGrid>
 					</h:form>
 				</p:dialog>
@@ -129,27 +137,20 @@
 								var="p" itemValue="#{p.id_proveedor}"
 								itemLabel="#{p.nombre_proveedor} #{p.apellido_proveedor}"></f:selectItems>
 						</p:selectOneMenu>
-						<h6>Total: </h6>
+						<h6>Total:</h6>
 						<h:outputText value="#{ordendecompraBean.total}">
 							<f:convertNumber currencySymbol="$" groupingUsed="true"
 								maxFractionDigits="0" type="currency" locale="es_CO" />
-								
+
 						</h:outputText>
-						
+
 
 						<h:commandButton value="Generar orden" update=""
+							redirect="..ordendecompra.xhtml"
 							action="#{ordendecompraBean.generarDetalle()}" class="m-3"
 							style="background-color: #; border-color: #; color: #"></h:commandButton>
 
 					</p:panelGrid>
-					<p:confirmPopup global="true">
-						<p:commandButton value="No" type="button"
-							styleClass="ui-confirm-popup-no ui-button-flat"
-							style="background-color: #; border-color: #; color: #" />
-						<p:commandButton value="Yes" type="button"
-							styleClass="ui-confirm-popup-yes"
-							style="background-color: #; border-color: #" />
-					</p:confirmPopup>
 				</h:form>
 
 

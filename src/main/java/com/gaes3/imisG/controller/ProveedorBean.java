@@ -163,12 +163,10 @@ public class ProveedorBean implements Serializable {
 		return "/CompraProveedores/listaproveedor.xhtml?faces-redirect=true";
 	}
 
-	public String eliminar(long id) {
+	public void eliminar(long id) {
 		ProveedorDAO proveedorDAO = new ProveedorDAO();
 		proveedorDAO.eliminar(id);
-		System.out.println("Proveedor eliminado");
-		return "/CompraProveedores/listaproveedor.xhtml?faces-redirect=true";
-
+		PrimeFaces.current().ajax().update("form:tabla");
 	}
 
 	public String prueba() throws FileNotFoundException, JRException {
@@ -232,6 +230,21 @@ public class ProveedorBean implements Serializable {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	public class ConfirmView {
+
+	    public void confirm() {
+	        addMessage("Confirmed", "You have accepted");
+	    }
+
+	    public void delete() {
+	        addMessage("Confirmed", "Record deleted");
+	    }
+
+	    public void addMessage(String summary, String detail) {
+	        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+	        FacesContext.getCurrentInstance().addMessage(null, message);
+	    }
 	}
 
 }

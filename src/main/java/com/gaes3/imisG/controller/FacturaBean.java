@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.PrimeFaces;
 
 import org.primefaces.model.charts.ChartData;
 import org.primefaces.model.charts.line.LineChartDataSet;
@@ -25,10 +26,12 @@ import org.primefaces.model.charts.optionconfig.title.Title;
 
 import com.gaes3.imisG.controller.FacturaBean;
 import com.gaes3.imisG.facadeImp.ClienteDAO;
+import com.gaes3.imisG.facadeImp.DetallePorFacturaDAO;
 import com.gaes3.imisG.facadeImp.FacturaDAO;
 import com.gaes3.imisG.facadeImp.FormapagoDAO;
 import com.gaes3.imisG.facadeImp.UsuarioDAO;
 import com.gaes3.imisG.modelo.Cliente;
+import com.gaes3.imisG.modelo.Detalle_Por_Factura;
 import com.gaes3.imisG.modelo.Factura;
 import com.gaes3.imisG.modelo.FormaPago;
 import com.gaes3.imisG.modelo.Usuario;
@@ -51,6 +54,7 @@ public class FacturaBean implements Serializable {
 	private List<FormaPago> obtenerFormaPagos;
 	private FormaPago formaPago;
 	
+<<<<<<< HEAD
 	private LineChartModel lineModel;
 	
 	
@@ -61,6 +65,9 @@ public class FacturaBean implements Serializable {
 	public void setLineModel(LineChartModel lineModel) {
 		this.lineModel = lineModel;
 	}
+=======
+	private List<Detalle_Por_Factura> obtenerDetalles;
+>>>>>>> 29e80fdba78285f7b862f38dd91dfe1796842212
 
 	public Factura getFactura() {
 		return factura;
@@ -78,6 +85,15 @@ public class FacturaBean implements Serializable {
 
 	public void setObtenerClientes(List<Cliente> obtenerClientes) {
 		this.obtenerClientes = obtenerClientes;
+	}
+
+	
+	public List<Detalle_Por_Factura> getObtenerDetalles() {
+		return obtenerDetalles;
+	}
+
+	public void setObtenerDetalles(List<Detalle_Por_Factura> obtenerDetalles) {
+		this.obtenerDetalles = obtenerDetalles;
 	}
 
 	public Cliente getCliente() {
@@ -138,7 +154,7 @@ public class FacturaBean implements Serializable {
 	}
 
 	public String empleadodashnuevo() {
-		return "/DashboardEmpleado/nuevafactura.xhtml?faces-redirect=true";
+		return "/DashboardEmpleado/nuevodetalle.xhtml?faces-redirect=true";
 	}
 
 	public void guardar(ActionEvent event) {
@@ -178,15 +194,13 @@ public class FacturaBean implements Serializable {
 		return facturaDAO.obtenerFacturas();
 	}
 
-	public String editar(long id) {
-		FacturaDAO facturaDAO = new FacturaDAO();
-		Factura c = new Factura();
-		c = facturaDAO.buscar(id);
-		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-		sessionMap.put("factura", c);
-		return "/Ventas/editarfactura.xhtml?faces-redirect=true";
+	public void verFactura(long id) {
+		DetallePorFacturaDAO d = new DetallePorFacturaDAO();
+		obtenerDetalles = d.obtenerDetallePorFacturas(id);
+		PrimeFaces.current().ajax().update("detalles");
 	}
 
+<<<<<<< HEAD
 	public String empleadodasheditar(long id) {
 		FacturaDAO facturaDAO = new FacturaDAO();
 		Factura c = new Factura();
@@ -265,4 +279,6 @@ public class FacturaBean implements Serializable {
         lineModel.setData(data);
     }
 
+=======
+>>>>>>> 29e80fdba78285f7b862f38dd91dfe1796842212
 }

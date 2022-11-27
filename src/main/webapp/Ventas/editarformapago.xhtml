@@ -21,20 +21,16 @@
 						<h:panelGrid >
 							
 							<h:outputText value="Forma de Pago"></h:outputText>
-							<h:inputText style="padding:7px 100px; border-left:6px solid black;" class="form-control" value="#{formapago.tipoPago}"></h:inputText>
-
-
-
-
-
-							<hr />
-
+							<p:inputText style="padding:7px 100px; border-left:6px solid black;" validatorMessage="Solo puede contener letras" class="form-control" value="#{formaPago.tipoPago}">
+							<f:validateRegex pattern="^[a-zA-Z]*$" />							
+							</p:inputText>			
+							<hr/>
+							<p:growl id="mensaje" showDetail="true" showSummary="true"></p:growl>
 							<f:facet name="footer">
-								<h:commandButton class="btn btn-outline-warning"
-									action="#{formapagoBean.actualizar(formapago)}"
-									value="actualizar"></h:commandButton>
+								<p:commandButton class="btn btn-outline-warning"
+									action="#{formapagoBean.actualizar(formaPago)}" update="mensaje"
+									value="Actualizar"></p:commandButton>
 							</f:facet>
-
 						</h:panelGrid>
 					</h:form>
 				</DIV>

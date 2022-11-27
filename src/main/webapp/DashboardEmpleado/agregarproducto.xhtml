@@ -32,7 +32,9 @@
 							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
 								class="form-control" value="#{productoBean.producto.valorProducto}"
 								id="Valor" required="true"
-							requiredMessage="Por favor ingrese un valor para el producto">
+							requiredMessage="Por favor ingrese un valor para el producto"
+							validatorMessage="El valor no puede ser negativo">
+							 <f:validateLongRange minimum="1" ></f:validateLongRange></h:inputText>
 							</h:inputText>
 								<p:message for="Valor" display="default" />
 

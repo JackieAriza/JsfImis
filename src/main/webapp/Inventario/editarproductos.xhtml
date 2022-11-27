@@ -30,7 +30,9 @@
 							<h:outputText value="Valor"></h:outputText>
 							<h:inputText style="padding:7px 100px; border-left:6px solid black;" class="form-control" value="#{producto.valorProducto}"
 							id="Valor" required="true"
-							    requiredMessage="Por favor un valor para el Producto">
+							    requiredMessage="Por favor un valor para el Producto"
+							    validatorMessage="El valor no puede ser negativo">
+							 <f:validateLongRange minimum="1" ></f:validateLongRange></h:inputText>
 							    </h:inputText>
 								<p:message for="Valor" display="default" ></p:message>
 

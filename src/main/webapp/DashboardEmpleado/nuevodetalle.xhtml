@@ -11,72 +11,183 @@
 			<div class="card-header">
 				<i class="fas fa-table me-1"></i> Detalle
 			</div>
+			<p:growl globalOnly="true" id="alerta" showDetail="true"
+				showSummary="true"></p:growl>
 			<div class="card-body">
 				<DIV class="">
 					<H2 class="text-warning"
-						style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">Agregar
-						Detalle de venta</H2>
+						style="font-size: 30px; font-family: Arial, Helvetica, Verdana; font-weight: 500; text-align: center;">
+						Carrito de ventas</H2>
 					<HR />
-					<h:form style="display: flex;justify-content: center; ">
-						<h:panelGrid >
-			
-							<h:outputText value="Cantidad"></h:outputText>
-							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
-								class="form-control" 
-								value="#{detalleporfacturaBean.detalleporfactura.cantidadDetalle}"></h:inputText>
-
-
-							<h:outputText value="Valor unitario"></h:outputText>
-							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
-								class="form-control" 
-								value="#{detalleporfacturaBean.detalleporfactura.valorUnitario}"></h:inputText>
-
-
-							<h:outputText value="Iva"></h:outputText>
-							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
-								class="form-control" 
-								value="#{detalleporfacturaBean.detalleporfactura.iva}"></h:inputText>
-
-
-							<h:outputText value="Sub Total"></h:outputText>
-							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
-								class="form-control" 
-								value="#{detalleporfacturaBean.detalleporfactura.subTotal}"></h:inputText>
-
-							<h:outputText value="Total General"></h:outputText>
-							<h:inputText style="padding:7px 100px; border-left:6px solid black;"
-								class="form-control" 
-								value="#{detalleporfacturaBean.detalleporfactura.totalGeneral}"></h:inputText>
-
-
-							<label for="factura">Factura</label>
-							<h:selectOneMenu
-								value="#{detalleporfacturaBean.factura.idFactura}"
-								style="padding:7px 100px; border-left:6px solid black;"
-								class="form-control" >
-								<f:selectItems value="#{detalleporfacturaBean.obtenerFactura}"
-									var="factura" itemValue="#{factura.idFactura}" />
-							</h:selectOneMenu>
-
-							<label for="producto">Producto</label>
-							<h:selectOneMenu
-								value="#{detalleporfacturaBean.producto.idProductos}"
-								style="padding:7px 100px; border-left:6px solid black;"
-								class="form-control" >
-								<f:selectItems value="#{detalleporfacturaBean.obtenerProductos}"
-									var="producto" itemValue="#{producto.idProductos}" />
-							</h:selectOneMenu>
-							
-							<hr/>
-
-							<f:facet name="footer">
-								<h:commandButton class="btn btn-outline-warning"
-									action="#{detalleporfacturaBean.empleadodashguardar(detalle_por_factura)}"
-									value="Guardar"></h:commandButton>
-							</f:facet>
-
-						</h:panelGrid>
+					<h:form id="detallesVenta">
+						<p:commandButton value="Agregar producto"
+							onclick="PF('dlgl2').show()"
+							style="background-color: #003049; border-color: #003049; margin: 10px; font-family: Fredoka One, cursive" />
+						<p:commandButton value="Limpiar carrito"
+							actionListener="#{detalleporfacturaBean.limpiarcarrito()}"></p:commandButton>
+						<p:dataTable var="detalle_por_factura" id="ventas"
+							value="#{detalleporfacturaBean.listacarrito}" reflow="true"
+							styleClass="products-table" paginator="true" rows="10"
+							paginatorPosition="bottom">
+							<p:column>
+								<f:facet name="header">#</f:facet>
+								<h:outputText value="#{detalle_por_factura.idDetalle}"></h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header">Producto</f:facet>
+								<h:outputText
+									value="#{detalle_por_factura.producto.nombreProducto}"></h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header">Cantidad</f:facet>
+								<h:outputText value="#{detalle_por_factura.cantidadDetalle}"></h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header">Valor Unitario</f:facet>
+								<h:outputText value="#{detalle_por_factura.valorUnitario}">
+								<f:convertNumber currencySymbol="$" groupingUsed="true"
+											maxFractionDigits="0" type="currency" locale="es_CO" />
+								</h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header">Total General</f:facet>
+								<h:outputText value="#{detalle_por_factura.totalGeneral}">
+								<f:convertNumber currencySymbol="$" groupingUsed="true"
+											maxFractionDigits="0" type="currency" locale="es_CO" />
+								</h:outputText>
+							</p:column>
+							<p:column>
+								<p:commandButton
+									actionListener="#{detalleporfacturaBean.eliminarDetalleCarrito(detalle_por_factura)}"
+									value="Eliminar"></p:commandButton>
+								<p:commandButton
+									actionListener="#{detalleporfacturaBean.editarDetalleCarrito(detalle_por_factura)}"
+									value="Editar"></p:commandButton>
+							</p:column>
+						</p:dataTable>
 					</h:form>
+
+					<div class=" mt-3 d-flex justify-content-center">
+						<h:form id="datosclientes">
+							<p:growl id="mensaje" showDetail="true" showSummary="true"></p:growl>
+							<p:panelGrid columns="8">
+							
+								<p:outputLabel for="empleado" value="Empleados" />
+								<p:selectOneMenu id="empleado"
+									class="focus:border-primary shadow-4"
+									value="#{detalleporfacturaBean.usuario.id_usuario}"
+									filterMatchMode="startsWith" filter="true">
+									<f:selectItem itemValue="" itemLabel="Seleccione"></f:selectItem>
+									<f:selectItems
+										value="#{detalleporfacturaBean.listaUsuarios}" var="p"
+										itemValue="#{p.id_usuario}" itemLabel="#{p.nomUsuario} #{p.apeUsuario} - #{p.rol.nombreRol}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<p:outputLabel for="cliente" value="Cliente" />
+								<p:selectOneMenu id="cliente"
+									class="focus:border-primary shadow-4"
+									value="#{detalleporfacturaBean.cliente.idCliente}"
+									filterMatchMode="startsWith" filter="true">
+									<f:selectItem itemValue="" itemLabel="Seleccione"></f:selectItem>
+									<f:selectItems
+										value="#{detalleporfacturaBean.listaclientes}" var="p"
+										itemValue="#{p.idCliente}" itemLabel="#{p.nombreCliente} #{p.apellidoCliente}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<p:outputLabel for="formapago" value="Metodo de pago" />
+								<p:selectOneMenu id="formapago"
+									class="focus:border-primary shadow-4"
+									value="#{detalleporfacturaBean.formapago.idPago}"
+									filterMatchMode="startsWith" filter="true">
+									<f:selectItem itemValue="" itemLabel="Seleccione"></f:selectItem>
+									<f:selectItems
+										value="#{detalleporfacturaBean.formaspago}" var="p"
+										itemValue="#{p.idPago}" itemLabel="#{p.tipoPago}"></f:selectItems>
+								</p:selectOneMenu>
+								<h:outputText value="Total: #{detalleporfacturaBean.totalventa}"></h:outputText>
+								<p:commandButton value="Generar Venta"
+									actionListener="#{detalleporfacturaBean.generarVenta()}"
+									update="datosVenta,mensaje"
+									style="background-color: #003049; border-color: #003049; color: #ffffff" />
+							</p:panelGrid>
+						</h:form>
+					</div>
+
+					<p:dialog widgetVar="dlgl2" id="dlgl2" showEffect="fade"
+						resizable="false" header="Agregar producto">
+						<h:form>
+							<p:panelGrid columns="4">
+
+								<p:outputLabel for="codi" value="Productos" />
+								<p:selectOneMenu id="codi" class="focus:border-primary shadow-4"
+									value="#{detalleporfacturaBean.producto.idProductos}"
+									filterMatchMode="startsWith" filter="true">
+									<f:selectItem itemValue="" itemLabel="Seleccione"></f:selectItem>
+									<f:selectItems
+										value="#{detalleporfacturaBean.obtenerProductos}" var="p"
+										itemValue="#{p.idProductos}" itemLabel="#{p.nombreProducto}"></f:selectItems>
+								</p:selectOneMenu>
+								<p:growl id="mensaje" showDetail="true" showSummary="true"></p:growl>
+								<p:commandButton value="Buscar"
+									actionListener="#{detalleporfacturaBean.encontrar()}"
+									update="datosVenta,mensaje"
+									style="background-color: #841c26; border-color: #841c26; color: #ffffff" />
+							</p:panelGrid>
+						</h:form>
+
+						<h:form id="datosVenta">
+							<h:inputHidden
+								value="#{detalleporfacturaBean.producto.nombreProducto}" />
+							<h:inputHidden
+								value="#{detalleporfacturaBean.producto.idProductos}" />
+							<p:panelGrid columns="4">
+								<p:outputLabel for="nombrePlato" value="Nombre del producto" />
+								<p:inputText id="nombrePlato" disabled="true"
+									value="#{detalleporfacturaBean.producto.nombreProducto}"></p:inputText>
+
+
+								<p:outputLabel for="preciounidad" value="Precio por unidad" />
+								<p:inputNumber id="preciounidad"
+									value="#{detalleporfacturaBean.producto.valorProducto}"></p:inputNumber>
+
+								<p:outputLabel for="cantidad" value="Cantidad" />
+								<p:inputNumber id="cantidad"
+									value="#{detalleporfacturaBean.producto.stock}"></p:inputNumber>
+								<p:growl id="mensaje" showDetail="true" showSummary="true"></p:growl>
+								<p:commandButton value="Agregar" oncomplete="PF('dlgl2').hide()"
+									update="mensaje"
+									actionListener="#{detalleporfacturaBean.agregar()}"
+									style="background-color: #841c26; border-color: #841c26; color: #ffffff" />
+							</p:panelGrid>
+						</h:form>
+					</p:dialog>
+
+					<p:dialog widgetVar="dlgl" id="dlgl" showEffect="fade"
+						resizable="false" header="Editar">
+						<h:form id="datosVenta2">
+							<h:inputHidden
+								value="#{detalleporfacturaBean.producto.nombreProducto}" />
+							<h:inputHidden
+								value="#{detalleporfacturaBean.producto.idProductos}" />
+							<h:inputHidden value="#{detalleporfacturaBean.id}" />
+							<p:panelGrid columns="4">
+
+
+								<p:outputLabel for="preciounidad" value="Precio por unidad" />
+								<p:inputNumber id="preciounidad"
+									value="#{detalleporfacturaBean.producto.valorProducto}"></p:inputNumber>
+
+								<p:outputLabel for="cantidad" value="Cantidad" />
+								<p:inputNumber id="cantidad"
+									value="#{detalleporfacturaBean.producto.stock}"></p:inputNumber>
+								<p:growl id="mensaje" showDetail="true" showSummary="true"></p:growl>
+								<p:commandButton value="Actualizar"
+									oncomplete="PF('dlgl').hide()" update="mensaje"
+									actionListener="#{detalleporfacturaBean.editarDetalle()}"
+									style="background-color: #841c26; border-color: #841c26; color: #ffffff" />
+							</p:panelGrid>
+						</h:form>
+					</p:dialog>
 				</DIV>
 			</div>
 		</div>

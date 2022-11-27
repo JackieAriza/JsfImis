@@ -220,13 +220,6 @@ public class DetallePorFacturaBean implements Serializable {
 		d.guardar(detalleporfactura);
 		return "/DashboardEmpleado/detalleporfactura.xhtml";
 	}
-
-	public List<Detalle_Por_Factura> obtenerDetallePorFactura() {
-		System.out.println("Entrando a obtener");
-		DetallePorFacturaDAO d = new DetallePorFacturaDAO();
-		return d.obtenerDetallePorFacturas();
-	}
-
 	public String editar(long id) {
 		DetallePorFacturaDAO detalleporfacturaDAO = new DetallePorFacturaDAO();
 		Detalle_Por_Factura d = new Detalle_Por_Factura();
@@ -288,40 +281,44 @@ public class DetallePorFacturaBean implements Serializable {
 		long cantidadtotal = 0;
 		p = productoDao.buscar(producto.getIdProductos());
 		if (producto.getStock() > 0) {
-			if (p.getStock() >= producto.getStock()) {
-				for (Detalle_Por_Factura detalle : listacarrito) {
-					if (producto.getIdProductos() == detalle.getProducto().getIdProductos()) {
-						verificar = true;
-						cantidadtotal = cantidadtotal + detalle.getCantidadDetalle();
-					}
-				}
-				if (verificar == true) {
-					cantidadtotal = cantidadtotal + producto.getStock();
-				}
-				if (p.getStock() >= cantidadtotal) {
-					df.setIdDetalle(listacarrito.size() + 1);
-					df.setCantidadDetalle(producto.getStock());
-					df.setProducto(producto);
-					df.setSubTotal(producto.getValorProducto() * producto.getStock());
-					df.setValorUnitario(producto.getValorProducto());
-					df.setTotalGeneral(producto.getValorProducto() * producto.getStock());
-					listacarrito.add(df);
-					totalventa = 0;
+			if (producto.getValorProducto() > 0) {
+				if (p.getStock() >= producto.getStock()) {
 					for (Detalle_Por_Factura detalle : listacarrito) {
-						totalventa = totalventa + detalle.getTotalGeneral();
+						if (producto.getIdProductos() == detalle.getProducto().getIdProductos()) {
+							verificar = true;
+							cantidadtotal = cantidadtotal + detalle.getCantidadDetalle();
+						}
 					}
-					addMessage("Exitoso", "El producto fue agregado exitosamente");
-					df = new Detalle_Por_Factura();
-					producto = new Producto();
-					PrimeFaces.current().ajax().update("datosVenta");
-					PrimeFaces.current().ajax().update("detallesVenta:ventas");
-					PrimeFaces.current().ajax().update("datosclientes");
+					if (verificar == true) {
+						cantidadtotal = cantidadtotal + producto.getStock();
+					}
+					if (p.getStock() >= cantidadtotal) {
+						df.setIdDetalle(listacarrito.size() + 1);
+						df.setCantidadDetalle(producto.getStock());
+						df.setProducto(producto);
+						df.setSubTotal(producto.getValorProducto() * producto.getStock());
+						df.setValorUnitario(producto.getValorProducto());
+						df.setTotalGeneral(producto.getValorProducto() * producto.getStock());
+						listacarrito.add(df);
+						totalventa = 0;
+						for (Detalle_Por_Factura detalle : listacarrito) {
+							totalventa = totalventa + detalle.getTotalGeneral();
+						}
+						addMessage("Exitoso", "El producto fue agregado exitosamente");
+						df = new Detalle_Por_Factura();
+						producto = new Producto();
+						PrimeFaces.current().ajax().update("datosVenta");
+						PrimeFaces.current().ajax().update("detallesVenta:ventas");
+						PrimeFaces.current().ajax().update("datosclientes");
+					} else {
+						addMessageError("Error", "La suma total de los productos es igual a " + cantidadtotal
+								+ " y no puede ser mayor a " + p.getStock() + " que es la cantidad del inventario");
+					}
 				} else {
-					addMessageError("Error", "La suma total de los productos es igual a " + cantidadtotal
-							+ " y no puede ser mayor a " + p.getStock() + " que es la cantidad del inventario");
+					addMessageError("Error", "La cantidad no puede ser mayor a la que existe en el inventario");
 				}
-			} else {
-				addMessageError("Error", "La cantidad no puede ser mayor a la que existe en el inventario");
+			}else{
+				addMessageError("¡Error!", "El precio por unidad no puede ser menor o igual a 0");
 			}
 		} else {
 			addMessageError("Error", "La cantidad no puede ser menor o igual a 0");
@@ -457,22 +454,22 @@ public class DetallePorFacturaBean implements Serializable {
 
 	public void generarVenta() {
 		FacturaDAO facturaDao = new FacturaDAO();
-		if(listacarrito.size()>0){		
+		if (listacarrito.size() > 0) {
 			factura.setCliente(cliente);
 			factura.setFecha_registro(new Date());
 			factura.setFormaPago(formapago);
 			factura.setUsuario(usuario);
-			for(Detalle_Por_Factura df: listacarrito) {
-				totalventa= totalventa + df.getTotalGeneral();
+			for (Detalle_Por_Factura df : listacarrito) {
+				totalventa = totalventa + df.getTotalGeneral();
 			}
 			factura.setTotalfactura(totalventa);
 			facturaDao.guardar(factura);
 			factura = new Factura();
 			obtenerFactura = facturaDao.obtenerFacturas();
-			for(Factura f: obtenerFactura) {
+			for (Factura f : obtenerFactura) {
 				factura = f;
 			}
-			for(Detalle_Por_Factura df: listacarrito) {
+			for (Detalle_Por_Factura df : listacarrito) {
 				df.setIdDetalle(0);
 				df.setFactura(factura);
 				detalleDao.guardar(df);
@@ -481,18 +478,19 @@ public class DetallePorFacturaBean implements Serializable {
 				p.setStock(p.getStock() - df.getCantidadDetalle());
 				productoDao.editar(p);
 			}
-			addMessage("Exitoso", "La venta #"+factura.getIdFactura() + " generada exitosamente con un valor total de $" + factura.getTotalfactura());
+			addMessage("Exitoso", "La venta #" + factura.getIdFactura()
+					+ " generada exitosamente con un valor total de $" + factura.getTotalfactura());
 			factura = new Factura();
 			cliente = new Cliente();
 			formapago = new FormaPago();
 			listacarrito.clear();
 			usuario = new Usuario();
-			totalventa=0.0;
+			totalventa = 0.0;
 			init();
 			PrimeFaces.current().ajax().update("datosVenta");
 			PrimeFaces.current().ajax().update("detallesVenta:ventas");
 			PrimeFaces.current().ajax().update("datosclientes");
-		}else {
+		} else {
 			addMessageError("Error", "El carrito no puede quedar vacío");
 		}
 	}

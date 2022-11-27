@@ -6,15 +6,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="../Template/template.xhtml">
 	<ui:define name="tuvariable">
-		<h:form>
-			<div class="card mb-4">
+				<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> Categoria
 				</div>
 				<div class="card-body">
 
 					<div class="card">
-						<h:form id="form">
+						<h:form id="form" enctype="multipart/form-data">
 							<div class="card crud-demo">
 
 
@@ -33,6 +32,7 @@
 											<p:dataExporter type="xls" target="dt-products"
 												fileName="Categoria Productos" visibleOnly="true" />
 										</p:commandButton>
+								
 									</p:toolbarGroup>
 								</p:toolbar>
 
@@ -81,7 +81,5 @@
 
 				</div>
 			</div>
-		</h:form>
-
 	</ui:define>
 </ui:composition>

@@ -1,8 +1,11 @@
 package com.gaes3.imisG.controller;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -14,8 +17,12 @@ import com.gaes3.imisG.modelo.Usuario;
 
 @ManagedBean(name = "mailBean")
 @RequestScoped
-public class MailBean {
+public class MailBean implements Serializable  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1763962130937944172L;
 	private static final ArrayList<String> destino = new ArrayList<String>();
 	private String asusto;
 	private String texto;
@@ -26,7 +33,7 @@ public class MailBean {
 		return destino;
 	}
 
-
+	
 
 	public String getAsusto() {
 		return asusto;

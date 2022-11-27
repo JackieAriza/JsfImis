@@ -21,6 +21,10 @@
 
 </h:head>
 <h:body class="sb-nav-fixed">
+<f:metadata>
+		<f:event type="preRenderView"
+			listener="#{loginBean.verificarSesionAdministrador}" />
+	</f:metadata>
 
 	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
@@ -53,8 +57,10 @@
 					aria-labelledby="navbarDropdown">
 					<li><a class="dropdown-item" href="#!">Configuracion</a></li>
 					<li><hr class="dropdown-divider" /></li>
-					<li><a class="dropdown-item"
-						href="#{loginBean.cerrarSesionn()}">Cerrar Sesion</a></li>
+					<li><h:form>
+							<p:commandButton action="#{loginBean.cerrarSesion}"
+								class="dropdown-item" value="Cerrar Sesión"></p:commandButton>
+						</h:form></li>
 				</ul></li>
 		</ul>
 	</nav>
@@ -69,7 +75,7 @@
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-tachometer-alt"></i>
 							</div> Usuarios
-						</a> <a class="nav-link" href="./Correo.jsf">
+						</a> <a class="nav-link" href="../Correo.jsf">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-tachometer-alt"></i>
 							</div> Noticaciones

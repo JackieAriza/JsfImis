@@ -174,7 +174,8 @@
 
 
 								<p:outputLabel for="preciounidad" value="Precio por unidad" />
-								<p:inputNumber id="preciounidad"
+								<p:inputNumber  type="number" id="preciounidad"
+								class="soloNumeros" min="1"
 									value="#{detalleporfacturaBean.producto.valorProducto}"></p:inputNumber>
 
 								<p:outputLabel for="cantidad" value="Cantidad" />

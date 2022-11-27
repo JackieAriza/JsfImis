@@ -17,6 +17,12 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletResponse;
 
 
+import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.line.LineChartDataSet;
+import org.primefaces.model.charts.line.LineChartModel;
+import org.primefaces.model.charts.line.LineChartOptions;
+import org.primefaces.model.charts.optionconfig.title.Title;
+
 import com.gaes3.imisG.controller.FacturaBean;
 import com.gaes3.imisG.facadeImp.ClienteDAO;
 import com.gaes3.imisG.facadeImp.FacturaDAO;
@@ -26,6 +32,7 @@ import com.gaes3.imisG.modelo.Cliente;
 import com.gaes3.imisG.modelo.Factura;
 import com.gaes3.imisG.modelo.FormaPago;
 import com.gaes3.imisG.modelo.Usuario;
+import com.gaes3.imisG.modelo.VentasPorMesDTO;
 
 @ManagedBean(name = "facturaBean")
 @RequestScoped
@@ -43,6 +50,17 @@ public class FacturaBean implements Serializable {
 
 	private List<FormaPago> obtenerFormaPagos;
 	private FormaPago formaPago;
+	
+	private LineChartModel lineModel;
+	
+	
+	public LineChartModel getLineModel() {
+		return lineModel;
+	}
+
+	public void setLineModel(LineChartModel lineModel) {
+		this.lineModel = lineModel;
+	}
 
 	public Factura getFactura() {
 		return factura;
@@ -112,7 +130,7 @@ public class FacturaBean implements Serializable {
 		cliente = new Cliente();
 		usuario = new Usuario();
 		formaPago = new FormaPago();
-
+		createLineModel();
 	}
 
 	public String nuevo() {
@@ -211,5 +229,40 @@ public class FacturaBean implements Serializable {
 		return "/DashboardEmpleado/listarfactura.xhtml?faces-redirect=true";
 	}
 
+	
+	public void createLineModel() {
+		List<VentasPorMesDTO> ventasmes = new ArrayList<>();
+		FacturaDAO fDao = new FacturaDAO();
+		ventasmes = fDao.ventasPorMes();
+		System.out.println(ventasmes);
+        lineModel = new LineChartModel();
+        ChartData data = new ChartData();
+
+        LineChartDataSet dataSet = new LineChartDataSet();
+        List<Object> values = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
+        for(VentasPorMesDTO vm: ventasmes) {
+        	labels.add(vm.getMes());
+        	values.add(vm.getValorTotal());
+        }
+        dataSet.setData(values);
+        dataSet.setFill(true);
+        dataSet.setLabel("Ventas mes a mes");
+        dataSet.setBorderColor("rgb(75, 192, 192)");
+        dataSet.setTension(0.1);
+        data.addChartDataSet(dataSet);
+
+        data.setLabels(labels);
+
+        //Options
+        LineChartOptions options = new LineChartOptions();
+        Title title = new Title();
+        title.setDisplay(true);
+        title.setText("Line Chart");
+        options.setTitle(title);
+
+        lineModel.setOptions(options);
+        lineModel.setData(data);
+    }
 
 }

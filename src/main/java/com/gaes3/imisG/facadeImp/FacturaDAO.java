@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import com.gaes3.imisG.modelo.Factura;
 import com.gaes3.imisG.modelo.JPAUtil;
+import com.gaes3.imisG.modelo.VentasPorMesDTO;
 
 public class FacturaDAO {
 	EntityManager entity = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -52,4 +53,14 @@ public class FacturaDAO {
 		listaFacturas = q.getResultList();
 		return listaFacturas;
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<VentasPorMesDTO> ventasPorMes() {
+		List<VentasPorMesDTO> ventasMes = new ArrayList<>();
+		Query q = entity.createQuery("SELECT NEW com.gaes3.imisG.modelo.VentasPorMesDTO(MONTHNAME(v.Fecha_registro) as mes, SUM(v.totalfactura) as total) FROM Factura v WHERE YEAR(v.Fecha_registro) = 2022 GROUP BY MONTHNAME(v.Fecha_registro)");
+		ventasMes = q.getResultList();
+		return ventasMes;
+	}
+   
 }

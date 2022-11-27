@@ -73,21 +73,48 @@ public class LoginBean implements Serializable {
 
 	}
 
-	public void verificarSesion(ComponentSystemEvent event) throws IOException {
+	public void verificarSesionAdministrador(ComponentSystemEvent event) throws IOException {
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") == null) {
-			ec.redirect(ec.getRequestContextPath()+"/500.xhtml");
+		String u ="";
+		u = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+		if (u == null) {
+			ec.redirect(ec.getRequestContextPath()+"/index.jsf");
+		}else if(u.equalsIgnoreCase("Empleado")) {
+			ec.redirect(ec.getRequestContextPath()+"/DashboardEmpleado/empleado.jsf");
+		}else if(u.equalsIgnoreCase("Tecnico")) {
+			ec.redirect(ec.getRequestContextPath()+"/DashboardTecnico/listarTecnico.jsf");
+		}
+	}
+	
+	public void verificarSesionEmpleado(ComponentSystemEvent event) throws IOException {
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+		String u ="";
+		u = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+		if (u == null) {
+			ec.redirect(ec.getRequestContextPath()+"/index.jsf");
+		}else if(u.equalsIgnoreCase("Administrador")) {
+			ec.redirect(ec.getRequestContextPath()+"/Dashboard/inicioDash.jsf");
+		}else if(u.equalsIgnoreCase("Tecnico")) {
+			ec.redirect(ec.getRequestContextPath()+"/DashboardTecnico/listarTecnico.jsf");
+		}
+	}
+	
+	public void verificarSesionTecnico(ComponentSystemEvent event) throws IOException {
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+		String u ="";
+		u = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+		if (u == null) {
+			ec.redirect(ec.getRequestContextPath()+"/index.jsf");
+		}else if(u.equalsIgnoreCase("Administrador")) {
+			ec.redirect(ec.getRequestContextPath()+"/Dashboard/inicioDash.jsf");
+		}else if(u.equalsIgnoreCase("Empleado")) {
+			ec.redirect(ec.getRequestContextPath()+"/DashboardEmpleado/empleado.jsf");
 		}
 	}
 
-	public String cerrarSesion() {
+	public void cerrarSesion() throws IOException {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		System.out.println("Cerrando");
-		return "../login.jsf";
-	}
-	public String cerrarSesionn() {
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		System.out.println("Cerrando");
-		return "./login.jsf";
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+		ec.redirect(ec.getRequestContextPath()+"/login.jsf");
 	}
 }

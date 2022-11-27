@@ -22,7 +22,10 @@
 
 </h:head>
 <h:body class="sb-nav-fixed">
-
+	<f:metadata>
+		<f:event type="preRenderView"
+			listener="#{loginBean.verificarSesionEmpleado}" />
+	</f:metadata>
 	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
 		<a class="navbar-brand ps-3 text-warning"
@@ -54,7 +57,10 @@
 					aria-labelledby="navbarDropdown">
 					<li><a class="dropdown-item" href="#!">Configuracion</a></li>
 					<li><hr class="dropdown-divider" /></li>
-					<li><a class="dropdown-item" href="../index.jsf">Cerrar Sesion</a></li>
+					<li><h:form>
+							<p:commandButton action="#{loginBean.cerrarSesion}"
+								class="dropdown-item" value="Cerrar Sesión"></p:commandButton>
+						</h:form></li>
 				</ul></li>
 		</ul>
 	</nav>
@@ -78,8 +84,11 @@
 						<div class="collapse" id="collapseInventario"
 							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" href="../DashboardEmpleado/listarproducto.jsf">Productos</a>
-								<a class="nav-link" href="../DashboardEmpleado/listarcategoriaproducto.jsf">Categoria Producto</a>
+								<a class="nav-link"
+									href="../DashboardEmpleado/listarproducto.jsf">Productos</a> <a
+									class="nav-link"
+									href="../DashboardEmpleado/listarcategoriaproducto.jsf">Categoria
+									Producto</a>
 							</nav>
 						</div>
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
@@ -95,10 +104,13 @@
 						<div class="collapse" id="collapseVentas"
 							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" href="../DashboardEmpleado/listarfactura.jsf">Facturas</a> 
-									
-									<a class="nav-link" href="../DashboardEmpleado/listarformapago.jsf">FormaPago</a>
-									<a class="nav-link" href="../DashboardEmpleado/detalleporfactura.jsf">Detalle de factura</a>
+								<a class="nav-link"
+									href="../DashboardEmpleado/listarfactura.jsf">Facturas</a> <a
+									class="nav-link"
+									href="../DashboardEmpleado/listarformapago.jsf">FormaPago</a> <a
+									class="nav-link"
+									href="../DashboardEmpleado/detalleporfactura.jsf">Detalle
+									de factura</a>
 							</nav>
 						</div>
 					</div>

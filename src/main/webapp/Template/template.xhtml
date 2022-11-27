@@ -24,6 +24,10 @@
 
 <h:body class="sb-nav-fixed">
 
+	<f:metadata>
+		<f:event type="preRenderView"
+			listener="#{loginBean.verificarSesionAdministrador}" />
+	</f:metadata>
 	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
 		<a class="navbar-brand ps-3 text-warning"
@@ -55,7 +59,10 @@
 					aria-labelledby="navbarDropdown">
 					<li><a class="dropdown-item" href="#!">Configuracion</a></li>
 					<li><hr class="dropdown-divider" /></li>
-					<li><a class="dropdown-item" href="../index.jsf">Cerrar Sesion</a></li>
+					<li><h:form>
+							<p:commandButton action="#{loginBean.cerrarSesion}"
+								class="dropdown-item" value="Cerrar Sesión"></p:commandButton>
+						</h:form></li>
 				</ul></li>
 		</ul>
 	</nav>
@@ -70,12 +77,11 @@
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-tachometer-alt"></i>
 							</div> Usuarios
+						</a> <a class="nav-link" href="../Correo.jsf">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> Noticaciones
 						</a>
-						<a class="nav-link" href="../Correo.jsf">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-tachometer-alt"></i>
-								</div> Noticaciones
-							</a>
 						<div class="sb-sidenav-menu-heading">Interface</div>
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
 							data-bs-target="#collapseSoporteTecnico" aria-expanded="false"
@@ -109,7 +115,9 @@
 							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
 								<a class="nav-link" href="../Inventario/listarproducto.jsf">Productos</a>
-								<a class="nav-link" href="../Inventario/listarcategoriaproducto.jsf">Categoria Producto</a>
+								<a class="nav-link"
+									href="../Inventario/listarcategoriaproducto.jsf">Categoria
+									Producto</a>
 							</nav>
 						</div>
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
@@ -145,10 +153,11 @@
 						<div class="collapse" id="collapseVentas"
 							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" href="../Ventas/listarfactura.jsf">Facturas</a> 
-									
-									<a class="nav-link" href="../Ventas/listarformapago.jsf">FormaPago</a>
-									<a class="nav-link" href="../Ventas/detalleporfactura.jsf">Detalle de factura</a>
+								<a class="nav-link" href="../Ventas/listarfactura.jsf">Facturas</a>
+
+								<a class="nav-link" href="../Ventas/listarformapago.jsf">FormaPago</a>
+								<a class="nav-link" href="../Ventas/detalleporfactura.jsf">Detalle
+									de factura</a>
 							</nav>
 						</div>
 					</div>
@@ -190,5 +199,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
 		crossorigin="anonymous"></script>
 	<script src="../resources/js/datatables-simple-demo.js"></script>
+
+
 </h:body>
+<H1>Si buenas</H1>
 </html>

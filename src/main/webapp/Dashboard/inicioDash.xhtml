@@ -22,7 +22,10 @@
 </h:head>
 <h:body class="sb-nav-fixed">
 
-
+	<f:metadata>
+		<f:event type="preRenderView"
+			listener="#{loginBean.verificarSesionAdministrador}" />
+	</f:metadata>
 	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
 		<a class="navbar-brand ps-3 text-warning"
@@ -35,13 +38,6 @@
 		<!-- Navbar Search-->
 		<form
 			class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-			<div class="input-group">
-				<input class="form-control" type="text" placeholder="Search for..."
-					aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-				<button class="btn btn-primary" id="btnNavbarSearch" type="button">
-					<i class="fas fa-search"></i>
-				</button>
-			</div>
 		</form>
 		<!-- Navbar-->
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -53,7 +49,10 @@
 					aria-labelledby="navbarDropdown">
 					<li><a class="dropdown-item" href="#!">Configuracion</a></li>
 					<li><hr class="dropdown-divider" /></li>
-					<li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+					<li><h:form>
+							<p:commandButton action="#{loginBean.cerrarSesion}"
+								class="dropdown-item" value="Cerrar Sesión"></p:commandButton>
+						</h:form></li>
 				</ul></li>
 		</ul>
 	</nav>
@@ -158,81 +157,25 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="container-fluid px-4  ">
-					<h1 class="mt-4 mb-2 text-center">INVENTORY MAGNAGEMENT
+					<h1 class="mt-4 mb-2 text-center">INVENTORY MANAGEMENT
 						INFORMATION SYSTEM</h1>
 					<hr />
 
-					<div class="row ">
-						<div class="col-xl-3 col-md-6">
-							<div class="card bg-primary text-white mb-4">
-								<div class="card-body">Nuevos Clientes</div>
-								<div
-									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">Ver Mas</a>
-									<div class="small text-white">
-										<i class="fas fa-angle-right"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-md-6">
-							<div class="card bg-warning text-white mb-4">
-								<div class="card-body">Soportes Pendientes</div>
-								<div
-									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">Ver Mas</a>
-									<div class="small text-white">
-										<i class="fas fa-angle-right"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-md-6">
-							<div class="card bg-success text-white mb-4">
-								<div class="card-body">Nuevos Productos</div>
-								<div
-									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">Ver Mas</a>
-									<div class="small text-white">
-										<i class="fas fa-angle-right"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-md-6">
-							<div class="card bg-danger text-white mb-4">
-								<div class="card-body">Ventas</div>
-								<div
-									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">Ver Mas</a>
-									<div class="small text-white">
-										<i class="fas fa-angle-right"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+
 					<div class="row">
-						<div class="col-xl-6">
+						<div class="col-xl-1"></div>
+						<div class="col-xl-10">
 							<div class="card mb-4">
 								<div class="card-header">
-									<i class="fas fa-chart-area me-1"></i> Ventas
+									<i class="fas fa-chart-pie me-1"></i> Ventas mes a mes
 								</div>
 								<div class="card-body">
-									<canvas id="myAreaChart" width="100%" height="40"></canvas>
+									<p:lineChart model="#{facturaBean.lineModel}"
+										style="width: 100%; height: 400px;" />
 								</div>
 							</div>
 						</div>
-						<div class="col-xl-6">
-							<div class="card mb-4">
-								<div class="card-header">
-									<i class="fas fa-chart-pie me-1"></i> Informacion en general
-								</div>
-								<div class="card-body">
-									<canvas id="myPieChart" width="100%" height="50"></canvas>
-								</div>
-							</div>
-						</div>
+						<div class="col-xl-1"></div>
 					</div>
 
 					<div class="card mb-4">
@@ -272,10 +215,10 @@
 
 										<p:dataTable id="dt-products" widgetVar="dtProducts"
 											var="cliente" value="#{clienteBean.obtenerClientes()}"
-											reflow="true" styleClass="products-table"
+											reflow="true" styleClass="products-table" 
 											selection="#{clienteBean.obtenerClientes()}"
 											rowKey="#{cliente.idCliente}" paginator="true" rows="10"
-											rowSelectMode="add" paginatorPosition="bottom">
+											rowSelectMode="add" paginatorPosition="bottom" resizeMode="expand">
 
 
 

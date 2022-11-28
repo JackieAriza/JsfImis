@@ -1,11 +1,14 @@
 package com.gaes3.imisG.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +40,14 @@ import com.gaes3.imisG.modelo.FormaPago;
 import com.gaes3.imisG.modelo.Usuario;
 import com.gaes3.imisG.modelo.VentasPorMesDTO;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 @ManagedBean(name = "facturaBean")
 @RequestScoped
 public class FacturaBean implements Serializable {
@@ -56,6 +67,7 @@ public class FacturaBean implements Serializable {
 	
 
 	private LineChartModel lineModel;
+	private FacturaDAO c = new FacturaDAO();
 	
 	
 	public LineChartModel getLineModel() {
@@ -278,5 +290,21 @@ public class FacturaBean implements Serializable {
         lineModel.setOptions(options);
         lineModel.setData(data);
     }
+	
+	public String pruebaa() throws FileNotFoundException, JRException {
+		List<Factura> fac = new ArrayList<>();
+		fac = c.obtenerFacturas();
+		String UrlRelativa = FacesContext.getCurrentInstance().getExternalContext().getRealPath("resources/Factura.jrxml");
+				
+				File file = new File(UrlRelativa);
+				JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(fac);
+				Map<String, Object> map = new HashMap<>();
+				map.put("WcreateBy", "Daniel Morales");
+				JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, dataSource);
+				String URLpdf = "C:\\Users\\harol\\Downloads\\JsfImis-master\\JsfImis-master\\src\\main\\webapp\\resources\\Lista_Ventas_.pdf";
+				JasperExportManager.exportReportToPdfFile(jasperPrint, URLpdf);
+				return "Bien";
+	}
 
 }
